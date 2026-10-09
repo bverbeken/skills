@@ -21,9 +21,18 @@ The user is sitting in a talk, typing short notes on their phone (often through 
 - Fix obvious typos in names/commands, and mention it in one short line so they can correct you.
 - Replies: one or two short lines. No summaries, they're reading on a phone during a talk.
 
+## Where the notes go
+
+Work this out once, before the first note:
+
+1. **Find the user's notes.** Check the CLAUDE.md files (global and project) for where they keep notes, e.g. "my Obsidian vault is in ~/Notes". Write there even if the current project is somewhere else: conference notes don't belong in a code repo.
+2. **Find an existing conference folder** in there, at any depth and in any language (`Conferences/`, `Conferenties/`, `Talks/`, or notes tagged `conference`). Use it and copy its conventions: naming, day folders, attachments.
+3. **Follow the notes' own CLAUDE.md rules** on where new folders may go.
+4. **Nothing found?** Ask once where to put them, suggesting the default below, before creating any top-level folder.
+
 ## Structure
 
-Default layout (if the project already has a conferences folder or conventions in its CLAUDE.md, use those instead):
+Default layout, for when there's no conference folder yet:
 
 ```
 Conferences/<Conf><YY>/                     e.g. Devoxx26
@@ -33,7 +42,7 @@ Conferences/<Conf><YY>/                     e.g. Devoxx26
     └── <Short title> - <Speaker>.md        one note per talk
 ```
 
-If the conference folder exists already, use it and its conventions. Create the day folder on the first talk of the day.
+Create the day folder on the first talk of the day.
 
 ### Index note
 ```
