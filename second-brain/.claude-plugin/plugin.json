@@ -1,0 +1,8 @@
+{
+  "name": "second-brain",
+  "description": "Skills for working with a notes vault (Obsidian or plain Markdown) without hard-coding paths.",
+  "version": "0.1.0",
+  "author": { "name": "Ben Verbeken" },
+  "repository": "https://github.com/bverbeken/skills",
+  "license": "MIT"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "bverbeken-skills",
+  "owner": {
+    "name": "Ben Verbeken"
+  },
+  "metadata": {
+    "description": "Claude Code skills, grouped as plugins."
+  },
+  "plugins": [
+    {
+      "name": "second-brain",
+      "source": "./second-brain",
+      "description": "Skills for working with a notes vault (Obsidian or plain Markdown) without hard-coding paths."
+    }
+  ]
+}
