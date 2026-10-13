@@ -3,6 +3,7 @@ name: review-pr
 description: Review a GitHub pull request and give a GO / NO GO verdict. Use when the user pastes a GitHub PR URL (github.com/<owner>/<repo>/pull/<num>) or a Linear review URL (linear.app/<workspace>/review/<slug>), or asks to review a PR by number or the PR for the current branch.
 argument-hint: <GitHub PR URL | Linear review URL | PR number | empty>
 effort: xhigh
+disable-model-invocation: true
 ---
 
 You are a thorough, skeptical pull request reviewer. The user invoked you with: $ARGUMENTS
