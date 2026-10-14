@@ -28,5 +28,5 @@ Copy a skill folder into `~/.claude/skills/` (all projects) or `.claude/skills/`
 git clone https://github.com/bverbeken/skills.git
 cp -r skills/conference-notes ~/.claude/skills/
 cp -r skills/second-brain/skills/find-in-vault ~/.claude/skills/
-cp -r skills/review/skills/* ~/.claude/skills/   # all nine review skills: they need each other
+cp -r skills/review/skills/* ~/.claude/skills/   # all ten review skills: they need each other
 ```

@@ -17,6 +17,8 @@ A full code review in one command. Say `review 142` or paste a PR link. Claude r
 
 Each check can also run on its own, for example `/review-tests 142`.
 
+**Re-review.** After you reviewed a PR and the author answered, `re-review 142` checks only the answered threads: yours, and every answered thread from a review bot such as Copilot. For each one it says RESOLVED, NOT RESOLVED (with the example that still fails) or NEW PROBLEM, runs `review-bugs` on the fix commits, and ends with GO / NO GO. `review` reminds you of it when it sees you reviewed the PR before.
+
 ## What it does
 
 - **Takes any target.** A PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or nothing for the current branch (uncommitted changes included).
@@ -65,7 +67,7 @@ Saying "review 142" or "is this PR ready to merge?" also works.
 
 ## Install
 
-All nine skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
+All ten skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
 
 **By copying** (no updates, you copy again to get changes):
 

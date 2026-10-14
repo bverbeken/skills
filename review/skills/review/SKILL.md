@@ -10,6 +10,8 @@ Review the target in `$ARGUMENTS` with eight checks and give one report. `STEPS.
 
 Run steps 1, 2 and 3 of `STEPS.md`. Run them without asking for confirmation. If one fails, stop and report the problem.
 
+When the target is a PR that the user reviewed before (`gh pr view --json reviews`, compared with `gh api user -q .login`), and it has answers in threads since that review, print one line and continue: `You reviewed this before and there are <n> replies: "re-review <num>" checks only those.`
+
 ## 2. Run the checks in parallel
 
 The checks are the skills next to this one: `review-tests`, `review-spec`, `review-bugs`, `review-performance`, `review-style`, `review-refactoring`, `review-architecture`, `review-consumers`. Their files are at `<this skill's folder>/../review-<check>/SKILL.md`.
