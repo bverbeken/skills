@@ -63,28 +63,54 @@ The retry can send the same webhook twice.
 
 Saying "review 142" or "is this PR ready to merge?" also works.
 
-## Telling it about your project
-
-Claude reads these from your `CLAUDE.md` / `AGENTS.md`:
-
-- **The issue tracker**, for example "Issues live in Linear, team API" or "Issues are GitHub issues in this repo".
-- **The consumers**, for example "The REST API is used by the SDKs in `sdk-java`, `sdk-python` and `sdk-js`." Consumers must be checked out next to the repo. The review says which ones it could not check.
-- **Coding standards and decisions**: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, ADRs, a glossary. The checks find them by themselves.
-
 ## Install
 
-Install the plugin, so all nine skills sit together. The checks find the shared steps in `review/STEPS.md` next to them.
+All nine skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
+
+**By copying** (no updates, you copy again to get changes):
+
+```bash
+git clone https://github.com/bverbeken/skills.git
+cp -r skills/review/skills/* ~/.claude/skills/
+```
+
+**As a plugin** (updates with `/plugin marketplace update bverbeken-skills`):
 
 ```
 /plugin marketplace add bverbeken/skills
 /plugin install review@bverbeken-skills
 ```
 
+As a plugin, the skill names get a prefix: `/review:review 142`, `/review:review-tests 142`. Saying "review 142" works either way.
+
 ## Requirements
 
-- [GitHub CLI](https://cli.github.com/) (`gh`), logged in
-- Claude Code's built-in `/code-review`, for `review-bugs`
-- Optional: an MCP server for your issue tracker (Linear, Jira, …), and for anything the issues link to (for example Intercom)
+- A recent Claude Code. `review-bugs` runs its built-in `/code-review`.
+- `git`. The review checks out PRs and branches in separate worktrees.
+- The [GitHub CLI](https://cli.github.com/) (`gh`), logged in with access to your repos.
+- An MCP server for your issue tracker (Linear, Jira, …), unless your issues are GitHub issues. Without it, the spec is only the PR description and the commits.
+- Optional: MCP servers for what your issues link to, for example a support tool. The review reads those links too.
+- Your repos checked out side by side in one folder. The review finds the repo for a PR link there, and checks the consumers there. Run Claude from that folder or from one of the repos.
+
+## Set up your project
+
+Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing.
+
+Example:
+
+```markdown
+## Code reviews
+
+Issues live in Linear, team ACME, with IDs like ACME-123. Read them with the Linear MCP tools.
+
+Who depends on what:
+- The REST API in `acme-api` is used by the SDKs `acme-java`, `acme-python` and `acme-js`.
+- The shared types in `acme-types` are used by `acme-web` and `acme-mobile`.
+```
+
+- **Issue tracker**: where issues live and how their IDs look. For GitHub issues: "Issues are GitHub issues in this repo."
+- **Consumers**: which repos use which code. A consumer that isn't checked out next to the others is reported as "not checked".
+- **Coding standards and decisions**: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, ADRs, a glossary. The checks find these by themselves, so only name them when they live somewhere unusual.
 
 ## Credits
 
