@@ -11,6 +11,11 @@
       "name": "second-brain",
       "source": "./second-brain",
       "description": "Skills for working with a notes vault (Obsidian or plain Markdown) without hard-coding paths."
+    },
+    {
+      "name": "review",
+      "source": "./review",
+      "description": "A full code review: eight checks in parallel and a GO / NO GO verdict."
     }
   ]
 }
