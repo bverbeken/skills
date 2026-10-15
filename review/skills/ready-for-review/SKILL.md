@@ -2,7 +2,6 @@
 name: ready-for-review
 description: "Take one of your own draft PRs out of draft, but only after a full strict review finds nothing but nits: no blocking finding, no suggestion beyond a nit, green CI, no conflicts."
 argument-hint: "[PR number | PR link | empty]"
-disable-model-invocation: true
 ---
 
 Mark the draft PR in `$ARGUMENTS` ready for review, only when it is **clean**. Clean means: the full `review` finds nothing but **nits** (see step 4), and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.

@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-15
 
+- `ready-for-review`: Claude can now start it on its own, for example when you say a PR is ready. Before, only `/ready-for-review` started it.
 - `review`: handles PRs that already have comments. On your own PR it checks every open thread against the code and drafts a reply, and checks resolved threads again. On a colleague's PR it rechecks your answered threads and answered bot threads, and drops findings that were already settled. Findings already in a thread are not reported twice.
 - `review`: drafts paste-ready replies for threads, and on a colleague's PR a comment for each new finding.
 - `re-review`: removed. `review` does what it did.
