@@ -4,6 +4,9 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-15
 
+- `review`: handles PRs that already have comments. On your own PR it checks every open thread against the code and drafts a reply, and checks resolved threads again. On a colleague's PR it rechecks your answered threads and answered bot threads, and drops findings that were already settled. Findings already in a thread are not reported twice.
+- `review`: drafts paste-ready replies for threads, and on a colleague's PR a comment for each new finding.
+- `re-review`: removed. `review` does what it did.
 - `ready-for-review`: new skill. It takes your own draft PR out of draft, only when the strict review finds nothing at all and CI, conflicts, review threads and local changes are clean.
 - `review`: own work is now reviewed strictly. When the PR is yours, or there is no PR, anything a careful colleague would comment on results in **NO GO**. A colleague's PR keeps the normal bar.
 - `review`: breaking a written repo rule (in `CLAUDE.md`, `AGENTS.md`, `CONTRIBUTING.md` or the coding standards) now blocks, in both modes. The finding quotes the rule.

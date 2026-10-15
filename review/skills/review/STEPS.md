@@ -96,27 +96,52 @@ Print the report in the terminal. Post nothing: no `gh pr review`, `gh pr commen
 <owner/repo> · +<adds>/-<dels> across <N> files · base: <base> · mode: <own (strict) | colleague>
 Spec: <the sources, e.g. ISSUE-12 + 1 support conversation, or: PR description and commits only>
 CI: <status from gh pr checks, or: no PR yet>
+Threads: <the line from THREADS.md step 2, or: none>
 
 **Blocking** (verified)
-- [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>.
+- [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>. [D<n>]
+
+**Threads**
+- [<starter>] `<location>` <VERDICT> (blocking) — <one sentence>. [D<n>]
 
 **Suggestions**
-- [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>.
+- [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>. [D<n>]
+
+**Already raised**
+- [<check>] `<location>` — <finding> — by <starter>: <thread URL>.
 
 **Dropped in verification**
-- [<check>] `<location>` — <finding> — <why it was wrong>.
+- [<check or starter>] `<location>` — <finding> — <why it was wrong>.
+
+**Waiting for an answer**: <n> threads (<starter>: `<location>`, …)
 
 **Checks**: tests <n> · spec <n> · bugs <n> · performance <n> · style <n> · refactoring <n> · architecture <n> · consumers <n> (<what was not checked>)
+
+### Drafts
+
+**D1 · reply to <starter> · `<location>` · <VERDICT>** · [open thread ↗](<url>)
+> **<author>:** <their comment, verbatim>
+_Why:_ <one sentence, from the code>
+**Reply:**
+<paste-ready text>
+
+**D2 · new comment · `<location>`**
+**Comment:**
+<paste-ready text>
 
 # GO      (or: # NO GO)
 <one line: why>
 ```
 
+- **Threads** lists every thread in the triage and recheck groups of `THREADS.md`, with its verdict. Add `(blocking)` when its finding is blocking.
+- **Drafts** are only written by `review`, never by a check run on its own. Number them in the order they appear in the report, and put the `[D<n>]` tag on the line they belong to.
+  - A reply for each thread with a draft reply from `THREADS.md` step 3. Quote the comment you answer verbatim: the newest one when the thread has answers, after one line that sums up the earlier exchange. Trim a quote longer than 12 lines and end it with `> …(trimmed)`.
+  - In colleague mode, also a new comment for each finding from the checks: written as the user, friendly, one to three sentences, with the example that fails. In own mode the user fixes their own findings, so there is no comment to draft.
 - Merge findings from different checks about the same problem into one line, with all their checks: `[bugs, spec]`. Count it once per check on the "Checks" line.
 - Sort blocking findings first, then suggestions, each grouped by check.
 - One sentence per finding, plus the optional `Fix:` sentence. The details stay in `evidence`.
 - Leave out empty sections, but always print the "Checks" line, with 0 for a check that found nothing.
-- `GO` means merge it. `NO GO` means at least one confirmed blocking finding. There is nothing in between.
+- `GO` means merge it. `NO GO` means at least one confirmed blocking finding, from a check or from a thread. There is nothing in between.
 - The verdict line only says why: the worst blocking finding for NO GO, or that none survived for GO. It gives no advice.
 - No praise, no summary beyond the verdict line.
 - A check run on its own lists only its own count on the "Checks" line, and ends with `# GO (<check> only)` or `# NO GO (<check> only)`.

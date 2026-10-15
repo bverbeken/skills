@@ -1,24 +1,24 @@
 ---
 name: review
-description: "Review <PR number, GitHub or Linear link, issue ID, or branch>: a full code review with eight checks in parallel (tests, spec, bugs, performance, style, refactoring, architecture, consumers) and a GO / NO GO verdict. Use when the user says \"review <something>\", pastes a PR link to review, asks if a change is ready to merge, or another skill wants its work reviewed."
+description: "Review <PR number, GitHub or Linear link, issue ID, or branch> at any stage, before or after comments came in: eight checks in parallel (tests, spec, bugs, performance, style, refactoring, architecture, consumers), the open review threads checked against the code, draft replies, and a GO / NO GO verdict. Use when the user says \"review <something>\", pastes a PR link to review, asks if a change is ready to merge, says a reviewer replied, asks to handle the comments on a PR, or another skill wants its work reviewed."
 argument-hint: "[PR number | PR link | issue | branch | empty] [--only check,check]"
 ---
 
-Review the target in `$ARGUMENTS` with eight checks and give one report. `STEPS.md` in this skill's folder holds the shared steps: read it first.
+Review the target in `$ARGUMENTS` and give one report. `STEPS.md` in this skill's folder holds the shared steps: read it first.
 
 ## 1. Set up once
 
 Run steps 1, 2 and 3 of `STEPS.md`. Run them without asking for confirmation. If one fails, stop and report the problem.
 
-When the target is a PR that the user reviewed before (`gh pr view --json reviews`, compared with `gh api user -q .login`), and it has answers in threads since that review, print one line and continue: `You reviewed this before and there are <n> replies: "re-review <num>" checks only those.`
+When the target is a PR, read `THREADS.md` in this skill's folder and run its steps 1 and 2. They sort the PR's existing comments into groups.
 
 ## 2. Run the checks in parallel
 
 The checks are the skills next to this one: `review-tests`, `review-spec`, `review-bugs`, `review-performance`, `review-style`, `review-refactoring`, `review-architecture`, `review-consumers`. Their files are at `<this skill's folder>/../review-<check>/SKILL.md`.
 
-Run all eight, or only the ones named in `--only` (for example `--only bugs,tests`).
+Run all eight, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always look at the full diff, also when the PR was reviewed before.
 
-Start one `Agent` (general-purpose) per check, all in one message, so they run at the same time. Give each one:
+Start one `Agent` (general-purpose) per check, all in one message, so they run at the same time. In the same message, start the thread agents of `THREADS.md` step 3. Give each check agent:
 
 - The path of its check file, and the path of `STEPS.md`.
 - `<contextFile>`.
@@ -26,4 +26,8 @@ Start one `Agent` (general-purpose) per check, all in one message, so they run a
 
 ## 3. Verify and report
 
-Wait until all checks have returned, then collect their findings. Run step 5 of `STEPS.md` on the blocking ones, then step 6 for the report.
+Wait until all agents have returned. When the PR has threads, run step 4 of `THREADS.md` to remove duplicate findings. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
+
+When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
+
+Then run step 6 of `STEPS.md` for the report.
