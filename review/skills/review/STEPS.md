@@ -20,6 +20,8 @@ For a PR, get its data once: `gh pr view <num> -R <owner>/<repo> --json title,bo
 
 If the argument fits no row, or a ref does not resolve, stop and say what failed.
 
+Then set the **mode**. It is **own** when there is no PR, or the PR's author is the user (`gh api user -q .login`). It is **colleague** otherwise. Own work is reviewed before anyone else sees it, so its bar is much higher: see step 4.
+
 ## 2. Find the repo and check out the code
 
 The user should not have to `cd` into the right repo.
@@ -48,7 +50,7 @@ There is always some spec: everything that says what the change should do. Colle
 - Every link in those that you have a tool for: support conversations, docs, other issues, PRs, designs. Follow them one level deep.
 - The PR description and the commit messages.
 
-Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. List each source by name or link at the top.
+Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. List each source by name or link at the top.
 
 If there is no issue, the spec is the PR description and the commit messages. Say so at the top of `<contextFile>`.
 
@@ -67,9 +69,11 @@ Report every finding in this form:
   verified: <yes, only when the check's own tool already verified it>
 ```
 
-**Blocking** means: merging this as it is causes wrong behavior, data loss, a security hole, a broken dependent project, or a spec requirement that is missing without explanation. Each check skill says which of its findings can block. Everything else is a suggestion.
+**Blocking** means: merging this as it is causes wrong behavior, data loss, a security hole, a broken dependent project, or a spec requirement that is missing without explanation. Breaking a **written repo rule** (a rule in the repo's `CLAUDE.md`, `AGENTS.md`, `CONTRIBUTING.md`, coding standards, or the files they import) also blocks: quote the rule. Each check skill says which of its other findings can block. Everything else is a suggestion.
 
 Test: if you would tell the user to fix it before merging, it is blocking.
+
+In **own** mode, the check skills' blocking rules are only the floor. A finding also blocks when a careful colleague would comment on it in review: a missing or wrong-level test, an unhandled edge of the input, a query nobody has costed, a spec question, an unclear name. Only pure taste, where a colleague would let it pass, stays a suggestion. Rules like "test findings never block" apply in **colleague** mode only.
 
 Leave out nits: pure polish that changes nothing for the reader or for the behavior.
 
@@ -77,7 +81,7 @@ Judge by what the code will do in production. Check claims in the PR description
 
 ## 5. Verify blocking findings
 
-For each blocking finding without `verified: yes`, start one `Agent`, all in one message, in the foreground. Give it `<contextFile>` and the finding, and this brief: "Try to prove this finding wrong. Read the code in `<reviewDir>`, the callers and the tests. Answer `REJECTED` only when the failure it describes cannot happen. How likely or how bad the failure is was already decided by the check: leave that alone. Otherwise answer `CONFIRMED`. Add one sentence why."
+For each blocking finding without `verified: yes`, start one `Agent`, all in one message, in the foreground. Give it `<contextFile>` and the finding, and this brief: "Try to prove this finding wrong. Read the code in `<reviewDir>`, the callers and the tests. Answer `REJECTED` only when the failure it describes cannot happen, or, for a finding that is not about a failure (a broken repo rule, a missing test), when what it describes is not true of the code. How likely or how bad the failure is was already decided by the check: leave that alone. Otherwise answer `CONFIRMED`. Add one sentence why."
 
 A confirmed finding stays blocking. A rejected one moves to "Dropped in verification", with the reason.
 
@@ -89,7 +93,7 @@ Print the report in the terminal. Post nothing: no `gh pr review`, `gh pr commen
 
 ```
 ## PR #<num>: <title>      (or: ## Branch <name>)
-<owner/repo> · +<adds>/-<dels> across <N> files · base: <base>
+<owner/repo> · +<adds>/-<dels> across <N> files · base: <base> · mode: <own (strict) | colleague>
 Spec: <the sources, e.g. ISSUE-12 + 1 support conversation, or: PR description and commits only>
 CI: <status from gh pr checks, or: no PR yet>
 

@@ -21,4 +21,4 @@ Skip anything a linter, formatter or type checker enforces.
 
 ## Blocking
 
-Style findings never block. They are always suggestions.
+STANDARD findings block: they break a written repo rule. In colleague mode, CONSISTENCY findings are suggestions.

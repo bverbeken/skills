@@ -30,4 +30,4 @@ Small moves to another package belong to `review-refactoring`. Report placement 
 
 ## Blocking
 
-CONTRADICTS DECISION blocks when the change doesn't explain why. Everything else is a suggestion.
+CONTRADICTS DECISION blocks when the change doesn't explain why. In colleague mode, everything else is a suggestion.

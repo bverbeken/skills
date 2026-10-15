@@ -17,8 +17,8 @@ For every code path the diff adds or changes, find the test that covers it. Read
 - **MISSING TEST**: a new or changed path without a test, including error paths and the edge cases the spec names.
 - **WEAK TEST**: a test that runs the code but asserts nothing that would fail if the behavior broke.
 - **WEAKENED TEST**: an assertion loosened, a test deleted or skipped, with no reason in the PR or commits.
-- **WRONG LEVEL**: a unit test with mocks where the project tests this kind of code against real systems, or the other way round. Follow what the project's existing tests do.
+- **WRONG LEVEL**: a test at a level the repo's written testing rule does not want, for example edge cases in slow end-to-end tests where the rule asks for unit or integration tests, or mocks where the project tests against real systems. Read the rule first in `CLAUDE.md`, `AGENTS.md`, `CONTRIBUTING.md` and the files they import. The written rule wins over the existing tests and over what the issue asks for. Without a written rule, follow what the project's existing tests do.
 
 ## Blocking
 
-Test findings never block. They are always suggestions.
+WRONG LEVEL against a written rule blocks: it breaks a written repo rule. In colleague mode, other test findings are suggestions.

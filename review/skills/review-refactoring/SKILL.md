@@ -34,4 +34,4 @@ Each smell is a judgement call: write "possible Feature Envy", and say how to fi
 
 ## Blocking
 
-Refactoring findings never block. They are always suggestions.
+In colleague mode, refactoring findings are suggestions.

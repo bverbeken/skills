@@ -23,4 +23,4 @@ Quote the source for each finding: the sentence and where it comes from.
 
 ## Blocking
 
-MISSING and WRONG block when the difference is not explained. UNASKED and SPEC QUESTION are suggestions.
+MISSING and WRONG block when the difference is not explained. In colleague mode, UNASKED and SPEC QUESTION are suggestions.

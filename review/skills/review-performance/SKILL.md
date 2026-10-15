@@ -19,9 +19,10 @@ Read the changed code and what it calls. Look for:
 - **BLOCKING CALL**: a slow or remote call on a path that serves user requests, where the project does such work in the background.
 - **COMPLEXITY**: a nested loop or a search on data that grows with customers, events or time.
 - **LOAD**: code that runs on several servers or uses a shared service (database, cache, queue). Estimate what each server reads and writes per minute at the busiest moment. Count reads too.
+- **LARGEST REQUEST**: the biggest single request the code allows, for example the longest date range or the largest page size. Estimate the rows and pages it reads with a cold cache, and whether an index alone can answer it. A rarely called endpoint can still be slow for the user who calls it.
 
 Estimate data sizes from the code, the schema and the docs. Say what you assumed, for example "assuming 10,000 rows per customer".
 
 ## Blocking
 
-A performance finding blocks only when, at the expected production load, the code would fail, time out or overload a shared service. Everything else is a suggestion.
+A performance finding blocks when, at the expected production load, the code would fail, time out or overload a shared service. In colleague mode, everything else is a suggestion.
