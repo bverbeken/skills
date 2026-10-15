@@ -24,6 +24,7 @@ Each check can also run on its own, for example `/review-tests 142`.
 - **Takes any target.** A PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or nothing for the current branch (uncommitted changes included).
 - **Leaves your checkout alone.** Anything other than the current branch is checked out in a separate git worktree. The worktree stays, so you can ask follow-up questions.
 - **Reads the whole spec.** The issue, its comments, its parent, every link it can open (support conversations, docs), the PR description and the commits.
+- **Strict on your own work.** When the PR is yours, or there is no PR yet, anything a careful colleague would comment on blocks. A colleague's PR gets the normal bar. Breaking a written repo rule blocks in both cases.
 - **Verifies before it blocks.** Every blocking finding goes to a separate agent that tries to prove it wrong. Only confirmed findings count toward NO GO. The rejected ones are listed, so you can disagree.
 - **Never posts and never changes code.** The review is only printed in your terminal.
 - **Reads, doesn't run.** It doesn't run tests or linters: CI does that. The CI status is in the header.
@@ -69,7 +70,7 @@ Saying "review 142" or "is this PR ready to merge?" also works.
 
 All ten skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
 
-**By copying** (no updates, you copy again to get changes):
+**By copying** (no updates, you copy again to get changes; [`CHANGELOG.md`](CHANGELOG.md) lists what changed):
 
 ```bash
 git clone https://github.com/bverbeken/skills.git
