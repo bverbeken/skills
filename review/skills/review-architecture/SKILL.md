@@ -1,6 +1,6 @@
 ---
 name: review-architecture
-description: "Check whether a change fits the codebase's design and its recorded decisions. One of the eight checks of `review`; run it alone for architecture only."
+description: "Check whether a change fits the codebase's design and its recorded decisions. One of the checks of `review`; run it alone for architecture only."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---

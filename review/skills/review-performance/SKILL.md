@@ -1,6 +1,6 @@
 ---
 name: review-performance
-description: "Look for performance problems in a change: slow queries, wasted work, load on shared services. One of the eight checks of `review`; run it alone for performance only."
+description: "Look for performance problems in a change: slow queries, wasted work, load on shared services. One of the checks of `review`; run it alone for performance only."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---

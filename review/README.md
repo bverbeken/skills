@@ -1,6 +1,6 @@
 # review
 
-A full code review in one command, at any stage of a PR. Say `review 142` or paste a PR link. Claude runs eight checks in parallel, checks the comments already on the PR against the code, verifies every blocking finding, drafts the replies, and ends with a clear **GO** or **NO GO**.
+A full code review in one command, at any stage of a PR. Say `review 142` or paste a PR link. Claude runs nine checks in parallel, checks the comments already on the PR against the code, verifies every blocking finding, drafts the replies, and ends with a clear **GO** or **NO GO**.
 
 ## The checks
 
@@ -14,6 +14,7 @@ A full code review in one command, at any stage of a PR. Say `review 142` or pas
 | `review-refactoring` | Names, duplicate code, code in the wrong place, code smells. |
 | `review-architecture` | Does the change fit the codebase's design and its recorded decisions (ADRs, glossary)? |
 | `review-consumers` | Does the change break the projects that depend on it? |
+| `review-description` | Can a teammate who only reads the PR description say what was wrong, why, and what changes? An agent reads it cold, with nothing else. Runs only on a PR. |
 
 Each check can also run on its own, for example `/review-tests 142`.
 
@@ -57,7 +58,7 @@ CI: all checks passed
 **Dropped in verification**
 - [spec] `src/webhooks/sender.ts:12` — Max 3 retries is missing — the constant is set in config/webhooks.ts.
 
-**Checks**: tests 1 · spec 0 · bugs 1 · performance 1 · style 0 · refactoring 0 · architecture 0 · consumers 0
+**Checks**: tests 1 · spec 0 · bugs 1 · performance 1 · style 0 · refactoring 0 · architecture 0 · consumers 0 · description 0
 
 # NO GO
 The retry can send the same webhook twice.

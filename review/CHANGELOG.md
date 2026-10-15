@@ -4,6 +4,8 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-15
 
+- `review-description`: a new check. An agent reads the PR description with nothing else, and says in its own words what was wrong, why, and what changes. What it misreads or misses becomes a finding. `review` runs it only on a PR. Other skills can run it on a text they wrote, such as a PR description or an issue.
+- `ready-for-review`: also runs `review-description`. On your own PR every finding counts, so a description a teammate would misread or find unclear keeps the PR in draft.
 - `ready-for-review`: Claude can now start it on its own, for example when you say a PR is ready. Before, only `/ready-for-review` started it.
 - `review`: handles PRs that already have comments. On your own PR it checks every open thread against the code and drafts a reply, and checks resolved threads again. On a colleague's PR it rechecks your answered threads and answered bot threads, and drops findings that were already settled. Findings already in a thread are not reported twice.
 - `review`: drafts paste-ready replies for threads, and on a colleague's PR a comment for each new finding.

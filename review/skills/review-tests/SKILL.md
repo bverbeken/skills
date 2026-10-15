@@ -1,6 +1,6 @@
 ---
 name: review-tests
-description: "Check whether a change is well tested. One of the eight checks of `review`; run it alone for a quick look at the tests."
+description: "Check whether a change is well tested. One of the checks of `review`; run it alone for a quick look at the tests."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---

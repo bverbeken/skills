@@ -1,6 +1,6 @@
 ---
 name: review-spec
-description: "Check whether a change does what its issue, linked conversations and PR say it should. One of the eight checks of `review`; run it alone to compare a change with its spec."
+description: "Check whether a change does what its issue, linked conversations and PR say it should. One of the checks of `review`; run it alone to compare a change with its spec."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---

@@ -1,6 +1,6 @@
 ---
 name: review-bugs
-description: "Hunt for bugs in a change with Claude Code's built-in code-review. One of the eight checks of `review`; run it alone for bugs only."
+description: "Hunt for bugs in a change with Claude Code's built-in code-review. One of the checks of `review`; run it alone for bugs only."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---

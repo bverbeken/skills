@@ -1,6 +1,6 @@
 ---
 name: review-consumers
-description: "Check whether a change breaks the projects that depend on it. One of the eight checks of `review`; run it alone for consumers only."
+description: "Check whether a change breaks the projects that depend on it. One of the checks of `review`; run it alone for consumers only."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---

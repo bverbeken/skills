@@ -66,7 +66,7 @@ Print one line: `Threads: <n> to triage · <n> to recheck · <n> waiting · <n> 
 
 ## 3. Check the threads
 
-Run this at the same time as the eight checks: start these agents in the same message as the check agents.
+Run this at the same time as the checks: start these agents in the same message as the check agents.
 
 Start one `Agent` (general-purpose) per thread in **triage** and **recheck**. When there are more than 10, give each agent the threads of one file. Give each agent: the thread or threads (every comment, verbatim, with path, lines and URL), `<contextFile>`, `<reviewDir>`, the mode, and the brief for its group below. Each agent returns, per thread: the verdict, one sentence why, a finding in the form of step 4 of `STEPS.md` when the verdict asks for one (with `check: <starter>`), and the draft reply.
 
@@ -103,7 +103,7 @@ In colleague mode, also run the `review-bugs` check (`../review-bugs/SKILL.md`) 
 
 ## 4. Remove duplicate findings
 
-When all agents have answered, compare each finding from the eight checks with the threads. A finding matches a thread when it is about the same problem in the same code, even if the words differ.
+When all agents have answered, compare each finding from the checks with the threads. A finding matches a thread when it is about the same problem in the same code, even if the words differ.
 
 | The finding matches | What to do |
 |---|---|

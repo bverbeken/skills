@@ -1,6 +1,6 @@
 ---
 name: review-refactoring
-description: "Find refactoring opportunities in a change: names, duplicate code, code in the wrong place, code smells. One of the eight checks of `review`; run it alone for refactoring only."
+description: "Find refactoring opportunities in a change: names, duplicate code, code in the wrong place, code smells. One of the checks of `review`; run it alone for refactoring only."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---

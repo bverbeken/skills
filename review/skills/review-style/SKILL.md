@@ -1,6 +1,6 @@
 ---
 name: review-style
-description: "Check a change against the repo's documented coding standards and the style of the code around it. One of the eight checks of `review`; run it alone for style only."
+description: "Check a change against the repo's documented coding standards and the style of the code around it. One of the checks of `review`; run it alone for style only."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---
