@@ -26,7 +26,7 @@ When the PR's branch is checked out locally, compare it with GitHub. Each differ
 
 Run the `review` skill (`../review/SKILL.md`) on the PR, all eight checks, and print its report. The mode is **own (strict)**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub.
 
-Each blocking finding in the report is a **finding problem**. Each suggestion is a finding problem too, unless it is a nit (see step 4). Findings that were dropped in verification don't count.
+Each blocking finding in the report is a **finding problem**. Each suggestion is a finding problem too, unless it is a nit (see step 4). So is every thread in the report's **Threads** section with a FIX, NOT RESOLVED or NEW PROBLEM verdict. Findings that were dropped in verification don't count.
 
 ## 3. Check the PR state
 
