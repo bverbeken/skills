@@ -1,11 +1,11 @@
 ---
 name: ready-for-review
-description: "Take one of your own draft PRs out of draft, but only after a full strict review finds nothing at all: no blocking finding, no suggestion, green CI, no conflicts."
+description: "Take one of your own draft PRs out of draft, but only after a full strict review finds nothing but nits: no blocking finding, no suggestion beyond a nit, green CI, no conflicts."
 argument-hint: "[PR number | PR link | empty]"
 disable-model-invocation: true
 ---
 
-Mark the draft PR in `$ARGUMENTS` ready for review, only when it is **clean**. Clean means: the full `review` finds nothing, not even a suggestion, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
+Mark the draft PR in `$ARGUMENTS` ready for review, only when it is **clean**. Clean means: the full `review` finds nothing but **nits** (see step 4), and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
 
 ## 1. Check the PR
 
@@ -26,7 +26,7 @@ When the PR's branch is checked out locally, compare it with GitHub. Each differ
 
 Run the `review` skill (`../review/SKILL.md`) on the PR, all eight checks, and print its report. The mode is **own (strict)**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub.
 
-Each finding in the report, blocking or suggestion, is a **finding problem**. Findings that were dropped in verification don't count.
+Each blocking finding in the report is a **finding problem**. Each suggestion is a finding problem too, unless it is a nit (see step 4). Findings that were dropped in verification don't count.
 
 ## 3. Check the PR state
 
@@ -46,13 +46,31 @@ When there is any finding problem or state problem, leave the PR in draft and en
 - [<check or state>] <one sentence per problem>
 ```
 
-List every problem, findings first, then state problems. The user wants a fully clean PR, so a suggestion counts as much as a blocking finding.
+List every problem, findings first, then state problems. The user wants a clean PR, so every suggestion that is not a nit counts as much as a blocking finding.
 
-When there is none, run `gh pr ready <num> -R <owner>/<repo>` and end with:
+A **nit** is a suggestion that passes all three tests:
+
+- Fixing it changes nothing in production: no behavior, no data, no query, no API text, no config.
+- Fixing it changes no test outcome, and leaving it cannot hide a bug.
+- The fix is a few lines in one place.
+
+| Suggestion | Nit? |
+|---|---|
+| The same one-line expression appears in two tests | yes |
+| A log message could be worded better | yes |
+| A test hard-codes a value that production reads from a constant | no: the test can drift from production |
+| A config value is not validated | no: it changes behavior |
+| A query costs more than needed | no |
+| The API description could be clearer | no: a user reads it |
+
+When you are not sure, it is not a nit.
+
+When there is no problem, run `gh pr ready <num> -R <owner>/<repo>` and end with:
 
 ```
 # READY
 PR #<num> is out of draft: <url>
+Nits left: <one line per nit, or: none>
 ```
 
 `gh pr ready` is the only change this skill makes on GitHub. It posts no comments and changes no code.
