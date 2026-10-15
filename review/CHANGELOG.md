@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-15
 
+- `ready-for-review`: new skill. It takes your own draft PR out of draft, only when the strict review finds nothing at all and CI, conflicts, review threads and local changes are clean.
 - `review`: own work is now reviewed strictly. When the PR is yours, or there is no PR, anything a careful colleague would comment on results in **NO GO**. A colleague's PR keeps the normal bar.
 - `review`: breaking a written repo rule (in `CLAUDE.md`, `AGENTS.md`, `CONTRIBUTING.md` or the coding standards) now blocks, in both modes. The finding quotes the rule.
 - `review`: the report header shows the mode: `own (strict)` or `colleague`.

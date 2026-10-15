@@ -19,6 +19,8 @@ Each check can also run on its own, for example `/review-tests 142`.
 
 **Re-review.** After you reviewed a PR and the author answered, `re-review 142` checks only the answered threads: yours, and every answered thread from a review bot such as Copilot. For each one it says RESOLVED, NOT RESOLVED (with the example that still fails) or NEW PROBLEM, runs `review-bugs` on the fix commits, and ends with GO / NO GO. `review` reminds you of it when it sees you reviewed the PR before.
 
+**Ready for review.** `/ready-for-review 142` takes your own draft PR out of draft, but only when it is fully clean. It runs the full `review` in strict mode. Any finding stops it, a suggestion too. So do failing or pending CI, merge conflicts, unresolved review threads, and local changes that are not pushed. It refuses PRs that are not yours.
+
 ## What it does
 
 - **Takes any target.** A PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or nothing for the current branch (uncommitted changes included).
@@ -68,7 +70,7 @@ Saying "review 142" or "is this PR ready to merge?" also works.
 
 ## Install
 
-All ten skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
+All eleven skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
 
 **By copying** (no updates, you copy again to get changes; [`CHANGELOG.md`](CHANGELOG.md) lists what changed):
 
