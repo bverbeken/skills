@@ -87,7 +87,7 @@ Everything else is a suggestion in own mode too: duplication, style taste, a tes
 
 A repo rule is **in force** when both are true:
 
-- A file the agents load states it: the repo's `CLAUDE.md` or `AGENTS.md`, or a file they import.
+- A file the agents load states it: a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it, or a file they import.
 - Most of the existing code follows it. Count it. Example: `interface Props` in 27 files and `type Props` in 25 is no majority, so "use interfaces for props" is not in force.
 
 The user's own rules (`~/.claude/CLAUDE.md` and the files it imports) are in force for the user's own code, whatever the codebase does.

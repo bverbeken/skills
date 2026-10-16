@@ -19,6 +19,8 @@ Keep its bug findings: wrong behavior, crashes, security holes, data loss, race 
 
 Turn each kept finding into the form of step 4 of `STEPS.md`. Set `verified: yes` for findings it marks CONFIRMED. Leave it out for PLAUSIBLE ones.
 
+Then read every line the diff adds, in code, config and tests, for a **SECRET**: an API key, a token, a password, a private key, or a connection string with a password in it. A value that is obviously fake, like `test-key` or `password123` in a test, is not a secret.
+
 ## Blocking
 
-A bug blocks when it matches the definition of blocking in `STEPS.md`. Otherwise it is a suggestion.
+A SECRET always blocks. A bug blocks when it matches the definition of blocking in `STEPS.md`. Otherwise it is a suggestion.
