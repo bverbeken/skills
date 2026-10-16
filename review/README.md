@@ -1,6 +1,6 @@
 # review
 
-A full code review in one command, at any stage of a PR. Say `review 142` or paste a PR link. Claude runs nine checks in parallel, checks the comments already on the PR against the code, verifies every blocking finding, drafts the replies, and ends with a clear **GO** or **NO GO**.
+A full code review in one command, at any stage of a PR. Say `review 142` or paste a PR link. Claude runs ten checks in parallel, checks the comments already on the PR against the code, verifies every blocking finding, drafts the replies, and ends with a clear **GO** or **NO GO**.
 
 ## The checks
 
@@ -11,6 +11,7 @@ A full code review in one command, at any stage of a PR. Say `review 142` or pas
 | `review-bugs` | Bugs of every kind, including security. Runs Claude Code's built-in `/code-review`. |
 | `review-performance` | N+1 queries, unbounded reads, missing indexes, wasted work, load on shared services. |
 | `review-style` | The repo's documented standards, and consistency with the code around it. |
+| `review-comments` | Every comment the change adds, and the test, name or extracted method that should replace it. |
 | `review-refactoring` | Names, duplicate code, code in the wrong place, code smells. |
 | `review-architecture` | Does the change fit the codebase's design and its recorded decisions (ADRs, glossary)? |
 | `review-consumers` | Does the change break the projects that depend on it? |
@@ -58,7 +59,7 @@ CI: all checks passed
 **Dropped in verification**
 - [spec] `src/webhooks/sender.ts:12` — Max 3 retries is missing — the constant is set in config/webhooks.ts.
 
-**Checks**: tests 1 · spec 0 · bugs 1 · performance 1 · style 0 · refactoring 0 · architecture 0 · consumers 0 · description 0
+**Checks**: tests 1 · spec 0 · bugs 1 · performance 1 · style 0 · comments 0 · refactoring 0 · architecture 0 · consumers 0 · description 0
 
 # NO GO
 The retry can send the same webhook twice.
@@ -79,7 +80,7 @@ Saying "review 142" or "is this PR ready to merge?" also works.
 
 ## Install
 
-All ten skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
+All twelve skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
 
 **By copying** (no updates, you copy again to get changes; [`CHANGELOG.md`](CHANGELOG.md) lists what changed):
 

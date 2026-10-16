@@ -1,6 +1,6 @@
 # Review steps
 
-Shared by `review` and the nine check skills. Each skill says which steps it runs.
+Shared by `review` and the ten check skills. Each skill says which steps it runs.
 
 ## 1. Resolve the target
 
@@ -59,7 +59,7 @@ If there is no issue, the spec is the PR description and the commit messages. Sa
 Report every finding in this form:
 
 ```
-- check: <tests | spec | bugs | performance | style | refactoring | architecture | consumers | description>
+- check: <tests | spec | bugs | performance | style | comments | refactoring | architecture | consumers | description>
   level: <blocking | suggestion>
   type: <short label in caps, e.g. MISSING TEST, N+1, DUPLICATION, WRONG LAYER>
   location: <path:line, or the consumer repo and path:line>
@@ -115,7 +115,7 @@ Threads: <the line from THREADS.md step 2, or: none>
 
 **Waiting for an answer**: <n> threads (<starter>: `<location>`, …)
 
-**Checks**: tests <n> · spec <n> · bugs <n> · performance <n> · style <n> · refactoring <n> · architecture <n> · consumers <n> · description <n> (<what was not checked>)
+**Checks**: tests <n> · spec <n> · bugs <n> · performance <n> · style <n> · comments <n> · refactoring <n> · architecture <n> · consumers <n> · description <n> (<what was not checked>)
 
 ### Drafts
 

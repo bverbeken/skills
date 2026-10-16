@@ -17,7 +17,7 @@ Compare the diff with:
 - **STANDARD**: a documented rule. Cite the file and the rule.
 - **CONSISTENCY**: how the same thing is done in the code around it, for example naming, error handling, logging, file layout, how tests are set up. Cite an existing example with its path.
 
-Skip anything a linter, formatter or type checker enforces.
+Skip anything a linter, formatter or type checker enforces. Skip code comments: `review-comments` checks those.
 
 ## Blocking
 

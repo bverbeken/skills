@@ -2,6 +2,11 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-16
+
+- `review-comments`: a new check. It lists every comment a change adds and says which test, name or extracted method should replace it. Only a comment about code outside the repo, with a link (for example a browser bug), can stay, and you decide. On your own work every other comment blocks.
+- `review-style`: leaves comments to `review-comments`.
+
 ## 2026-10-15
 
 - `review-description`: a new check. An agent reads the PR description with nothing else, and says in its own words what was wrong, why, and what changes. What it misreads or misses becomes a finding. `review` runs it only on a PR. Other skills can run it on a text they wrote, such as a PR description or an issue.
