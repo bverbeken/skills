@@ -73,13 +73,14 @@ Report every finding in this form:
 
 Test: if you would tell the user to fix it before merging, it is blocking.
 
-In **own** mode, a finding blocks when it is one of these five kinds, whatever the check skill says:
+In **own** mode, a finding blocks when it is one of these six kinds, whatever the check skill says:
 
 - a bug a user can see;
 - a missing test for a behavior the PR adds or fixes;
 - a spec requirement that is missing without explanation;
 - a broken rule in force;
-- a name or a text that makes a reader understand the change wrong.
+- a name or a text that makes a reader understand the change wrong;
+- a screenshot or test steps the PR needs and lacks (`review-description`, PR material).
 
 Everything else is a suggestion in own mode too: duplication, style taste, a test at another level, a risk that needs unlikely input, performance that costs little.
 

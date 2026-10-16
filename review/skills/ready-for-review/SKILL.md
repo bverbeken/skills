@@ -71,6 +71,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
 1. Decide if the fix is clear. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
+   - The fix needs something only the user can make, such as a screenshot or a video.
    - The thread's verdict is DISCUSS or CLARIFY.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread.

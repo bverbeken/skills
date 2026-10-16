@@ -4,6 +4,8 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-16
 
+- `review-description`: checks a PR for screenshots and test steps. A visible UI change needs a screenshot, with a before and an after when it changes an existing UI. A change a person can see or call needs numbered test steps with a place to start and a result to see. On your own PR these findings block, so the PR goes public with them.
+- `ready-for-review`: asks you when a fix needs something only you can make, such as a screenshot.
 - Rules in force: a `CLAUDE.md` or `AGENTS.md` in a folder above the repo now counts too, for example a workspace that holds many repos.
 - `review-tests`: a new finding, MISSING LEVEL. The repo's written rule asks for a test at a certain level, for example an end-to-end test for a UI change, and the diff has none. It is always a suggestion.
 - `review-style`: a new finding, DEBUG LEFTOVER: an added `console.log`, `debugger`, `print` or focused test (`.only`, `fit`). It always blocks.

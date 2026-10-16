@@ -24,12 +24,25 @@ There are two roles. The **caller** knows the change: the session that wrote the
 
 Fix a finding in the text, never in the brief: the reader stands for the people who will read the text.
 
+## PR material
+
+Only for a PR's text. The caller checks it against the diff; the cold reader plays no part.
+
+- **NO TEST STEPS**: a person can see or call the change (a UI, an API, a CLI, an email), and the body has no steps to try it. A refactor, a test-only change, a dependency bump with no visible change, or internal code with no entry point a reviewer can reach needs no steps. Automated tests are not test steps.
+- **UNCLEAR TEST STEPS**: the steps are not numbered with one action each, do not say where to start (a link, a URL or a command), or do not end with what the reader should see.
+- **NO SCREENSHOT**: the diff changes what a user sees (layout, styling, copy on screen, a new or changed UI element, a rendered chart or email), and the body has no image or video: a GitHub attachment, `![...]`, `<img>`, or an `.mp4`/`.mov` link. Behavior that only shows in motion, like dragging or an animation, needs a video.
+- **NO BEFORE/AFTER**: the diff changes an existing UI, and the body shows only one side. A new UI needs only the after.
+
+When another skill runs the check on a text it wrote before the PR exists, it fixes the test step findings in the text, and reports screenshot findings to the user as a reminder. The text gets no placeholder for a screenshot.
+
 ## Findings
 
-Location: `PR description` or `issue <ID>`. Evidence: the reader's own words. Set `verified: yes`: the cold read is the proof.
+Location: `PR description` or `issue <ID>`. Evidence: the reader's own words, or for PR material the file in the diff that shows the change is visible or callable. Set `verified: yes`: the cold read or the diff is the proof.
 
 ## Blocking
 
 A MISREAD blocks: the reader will understand the change wrong. A GAP or HARD TO READ blocks only when the reader then guesses wrong about how the change behaves. Example: the reader can't tell how many points the graph leaves out at its end. A missing issue ID or a long list is a suggestion.
+
+In own mode, every PR material finding blocks: a PR goes public with its screenshots and test steps. In colleague mode, they are suggestions.
 
 Fix a description finding with a direct edit of the PR description. It needs no commit.
