@@ -21,4 +21,4 @@ Skip anything a linter, formatter or type checker enforces. Skip code comments: 
 
 ## Blocking
 
-STANDARD findings block: they break a written repo rule. In colleague mode, CONSISTENCY findings are suggestions.
+STANDARD findings block when they break a rule in force (`../review/STEPS.md` step 4). In colleague mode, CONSISTENCY findings are suggestions.

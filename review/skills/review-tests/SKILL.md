@@ -21,4 +21,4 @@ For every code path the diff adds or changes, find the test that covers it. Read
 
 ## Blocking
 
-WRONG LEVEL against a written rule blocks: it breaks a written repo rule. In colleague mode, other test findings are suggestions.
+WRONG LEVEL blocks when it breaks a rule in force (`../review/STEPS.md` step 4). In colleague mode, other test findings are suggestions.

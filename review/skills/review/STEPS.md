@@ -20,7 +20,7 @@ For a PR, get its data once: `gh pr view <num> -R <owner>/<repo> --json title,bo
 
 If the argument fits no row, or a ref does not resolve, stop and say what failed.
 
-Then set the **mode**. It is **own** when there is no PR, or the PR's author is the user (`gh api user -q .login`). It is **colleague** otherwise. Own work is reviewed before anyone else sees it, so its bar is much higher: see step 4.
+Then set the **mode**. It is **own** when there is no PR, or the PR's author is the user (`gh api user -q .login`). It is **colleague** otherwise. Own mode has its own list of what blocks: see step 4.
 
 ## 2. Find the repo and check out the code
 
@@ -69,11 +69,36 @@ Report every finding in this form:
   verified: <yes, only when the check's own tool already verified it>
 ```
 
-**Blocking** means: merging this as it is causes wrong behavior, data loss, a security hole, a broken dependent project, or a spec requirement that is missing without explanation. Breaking a **written repo rule** (a rule in the repo's `CLAUDE.md`, `AGENTS.md`, `CONTRIBUTING.md`, coding standards, or the files they import) also blocks: quote the rule. Each check skill says which of its other findings can block. Everything else is a suggestion.
+**Blocking** means: merging this as it is causes wrong behavior, data loss, a security hole, a broken dependent project, or a spec requirement that is missing without explanation. Breaking a **rule in force** also blocks: quote the rule. Each check skill says which of its other findings can block. Everything else is a suggestion.
 
 Test: if you would tell the user to fix it before merging, it is blocking.
 
-In **own** mode, the check skills' blocking rules are only the floor. A finding also blocks when a careful colleague would comment on it in review: a missing or wrong-level test, an unhandled edge of the input, a query nobody has costed, a spec question, an unclear name. Only pure taste, where a colleague would let it pass, stays a suggestion. Rules like "test findings never block" apply in **colleague** mode only.
+In **own** mode, a finding blocks when it is one of these five kinds, whatever the check skill says:
+
+- a bug a user can see;
+- a missing test for a behavior the PR adds or fixes;
+- a spec requirement that is missing without explanation;
+- a broken rule in force;
+- a name or a text that makes a reader understand the change wrong.
+
+Everything else is a suggestion in own mode too: duplication, style taste, a test at another level, a risk that needs unlikely input, performance that costs little.
+
+### Rules in force
+
+A repo rule is **in force** when both are true:
+
+- A file the agents load states it: the repo's `CLAUDE.md` or `AGENTS.md`, or a file they import.
+- Most of the existing code follows it. Count it. Example: `interface Props` in 27 files and `type Props` in 25 is no majority, so "use interfaces for props" is not in force.
+
+The user's own rules (`~/.claude/CLAUDE.md` and the files it imports) are in force for the user's own code, whatever the codebase does.
+
+A rule that is not in force gives a suggestion at most. Say why it is not in force.
+
+Report each broken rule once, as one finding with a count and the locations. Example: "20 code comments without a link", not 20 findings.
+
+### Moved code
+
+Judge the lines whose content the PR writes. A line that only moved, also with a small edit such as a rename, does not block for a problem it already had on the base branch. List that problem as a suggestion, marked "already on <base>".
 
 Leave out nits: pure polish that changes nothing for the reader or for the behavior.
 
@@ -93,7 +118,7 @@ Print the report in the terminal. Post nothing: no `gh pr review`, `gh pr commen
 
 ```
 ## PR #<num>: <title>      (or: ## Branch <name>)
-<owner/repo> · +<adds>/-<dels> across <N> files · base: <base> · mode: <own (strict) | colleague>
+<owner/repo> · +<adds>/-<dels> across <N> files · base: <base> · mode: <own | colleague>
 Spec: <the sources, e.g. ISSUE-12 + 1 support conversation, or: PR description and commits only>
 CI: <status from gh pr checks, or: no PR yet>
 Threads: <the line from THREADS.md step 2, or: none>

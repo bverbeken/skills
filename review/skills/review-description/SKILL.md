@@ -28,4 +28,6 @@ Location: `PR description` or `issue <ID>`. Evidence: the reader's own words. Se
 
 ## Blocking
 
-A MISREAD blocks: the reader will understand the change wrong. In colleague mode, GAP and HARD TO READ are suggestions.
+A MISREAD blocks: the reader will understand the change wrong. A GAP or HARD TO READ blocks only when the reader then guesses wrong about how the change behaves. Example: the reader can't tell how many points the graph leaves out at its end. A missing issue ID or a long list is a suggestion.
+
+Fix a description finding with a direct edit of the PR description. It needs no commit.
