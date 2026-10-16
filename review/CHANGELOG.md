@@ -4,6 +4,9 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-16
 
+- `ready-for-review`: now fixes what the review finds. It writes a TODO checklist in the PR description, fixes the items one by one (blocking first), and asks you when a fix needs your choice. Before marking the PR ready, it removes the ticked items, so the public description shows only the change.
+- `ready-for-review`: replies briefly to each open Copilot thread and resolves it, also when the comment is not worth fixing. Only Copilot comments worth fixing keep the PR in draft. Open threads from people still do.
+- `review-description`: skips the TODO list that `ready-for-review` keeps in the PR description.
 - `review-comments`: a new check. It lists every comment a change adds and says which test, name or extracted method should replace it. Only a comment about code outside the repo, with a link (for example a browser bug), can stay, and you decide. On your own work every other comment blocks.
 - `review-style`: leaves comments to `review-comments`.
 

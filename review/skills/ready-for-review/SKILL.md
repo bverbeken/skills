@@ -1,10 +1,10 @@
 ---
 name: ready-for-review
-description: "Take one of your own draft PRs out of draft, but only after a full own-mode review finds no blocking finding, CI is green and there are no conflicts."
+description: "Get one of your own draft PRs ready for review: run a full own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and take the PR out of draft once it is clean."
 argument-hint: "[PR number | PR link | empty]"
 ---
 
-Mark the draft PR in `$ARGUMENTS` ready for review, only when it is **clean**. Clean means: the full `review` finds no blocking finding, and nothing about the PR's state on GitHub stops it. Suggestions don't stop it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
+Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: the full `review` finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
 
 ## 1. Check the PR
 
@@ -33,28 +33,90 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads, from bots or from people (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`).
+- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5.
 - New commits: the head commit changed since step 1. The review checked older code.
 
-## 4. Decide
+## 4. Write the TODO list
 
-When there is any finding problem or state problem, leave the PR in draft and end with:
+When there is no problem and no suggestion, go to step 7.
+
+Otherwise put a **TODO list** in the PR description, between two markers, after the rest of the body:
+
+```
+<!-- ready-for-review:todo -->
+## TODO
+
+### Blocking
+- [ ] [bugs] `src/Order.kt:42` Empty cart returns null instead of 0.
+- [ ] [CI] `unit-tests` fails on `OrderTest.emptyCart`.
+
+### Suggestions
+- [ ] [refactoring] `src/Order.kt:30` Extract the discount rule into `Discount.apply`.
+<!-- /ready-for-review:todo -->
+```
+
+- **Blocking**: every finding problem, then every state problem.
+- **Suggestions**: every suggestion from the review, most useful first.
+- One line per item: the check or state, the location, one sentence.
+
+Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers: the rest of the description is the user's. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
+
+## 5. Handle bot threads
+
+A **bot** is a login that ends in `[bot]` or matches `copilot` (case-insensitive). For each open bot thread with a DISMISS verdict, post a **bot reply** and resolve the thread (see "Bot replies" below). A bot thread with a FIX verdict is already a TODO item: it gets its reply in step 6, once it is fixed.
+
+## 6. Fix the items
+
+Take the unticked items one by one, blocking first, then suggestions, in list order. For each item:
+
+1. Decide if the fix is clear. **Stop and ask the user** when any of these is true, and wait for the answer:
+   - The fix needs a choice that the spec, the code and the item don't make.
+   - The thread's verdict is DISCUSS or CLARIFY.
+   - The fix changes code outside the PR's files, or behavior the PR does not touch.
+   - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread.
+   - You tried and the item is still not fixed.
+
+   Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list and note it as skipped.
+2. Fix it. For a bug or a missing test: write the test first and see it fail, then fix the code. For failing CI: read the failing job's log (`gh run view <run-id> --log-failed`) and fix the cause. For pending CI: wait for it (`gh pr checks <num> --watch`). For a description finding: edit the description outside the markers, with no commit.
+3. Run the tests that cover the change. They pass.
+4. Commit only this item's change, with a message that says what it fixes. Push.
+5. Tick the item in the PR description.
+6. When the item came from a bot thread: post a bot reply and resolve the thread.
+
+The loop is done when every item on the list is ticked.
+
+Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list, and keep new suggestions for the final output. Stop when a round finds no problem.
+
+## 7. Decide
+
+When a blocking item was skipped, leave the PR in draft and end with:
 
 ```
 # NOT READY
 - [<check or state>] <one sentence per problem>
 ```
 
-List every problem, findings first, then state problems. Only these go into the PR's TODO list, when the user asks for that.
+List every problem left, findings first, then state problems.
 
-When there is no problem, run `gh pr ready <num> -R <owner>/<repo>` and end with:
+When there is no problem left:
+
+1. Remove the ticked items from the TODO list. Remove an empty `### Blocking` or `### Suggestions` heading. When no item is left, remove the whole list with its markers. The public description shows the change, not the fixes on the way.
+2. Run `gh pr ready <num> -R <owner>/<repo>` and end with:
 
 ```
 # READY
 PR #<num> is out of draft: <url>
-Suggestions: <one line each, most useful first, at most 5, or: none>
+Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
+New suggestions: <one line each, from rounds after the first, or: none>
 ```
 
-The suggestions are for the user to pick from. Add none of them to the PR.
+## Bot replies
 
-`gh pr ready` is the only change this skill makes on GitHub. It posts no comments and changes no code.
+A bot reply says in one sentence what happened. A teammate who never saw the code understands it.
+
+- Fixed: `Fixed in <short sha>: an empty cart now returns 0.`
+- Dismissed: `Not changing this: the caller already filters out null ids (OrderService.kt:18).`
+
+Before you post, check the reply with a cold read: start one `Agent` (general-purpose) and give it only the bot's comment and the reply. The brief: "Say in your own words what was decided and why. Say if you had to read the reply twice." Rewrite the reply when the reader got it wrong or read it twice. In step 5, check all the replies of that step in one agent.
+
+Post the reply and resolve the thread with `gh api graphql`: `addPullRequestReviewThreadReply` with the thread's `id` and the body, then `resolveReviewThread` with the same `id`.

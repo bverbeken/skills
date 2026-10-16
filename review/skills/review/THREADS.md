@@ -13,6 +13,7 @@ query($owner:String!,$repo:String!,$num:Int!){
     pullRequest(number:$num){
       reviewThreads(first:100){
         nodes{
+          id
           isResolved
           isOutdated
           comments(first:50){ nodes{ author{login} body path line originalLine url createdAt originalCommit{oid} } }

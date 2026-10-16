@@ -11,6 +11,8 @@ disable-model-invocation: true
 
 ## Check
 
+The text of a PR is its title and body, without the TODO list between the `<!-- ready-for-review:todo -->` markers: `ready-for-review` keeps its working list there.
+
 There are two roles. The **caller** knows the change: the session that wrote the text, or `review` with `<contextFile>`. The **cold reader** is an agent that gets only the text.
 
 1. **Cold read.** Start one `Agent` (general-purpose) and give it only the text: no diff, no issue, no file paths, nothing from the session. The brief: "You are <the reader; default: a developer on this team who knows the system but did not work on this change>. Read the text below. Use no tools. In your own words, say what was wrong or missing, why, and what changes. Then list each sentence you had to read twice, and each fact you needed but did not get." Put the text below the brief.
