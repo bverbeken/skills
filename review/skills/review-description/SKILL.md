@@ -29,7 +29,7 @@ Fix a finding in the text, never in the brief: the reader stands for the people 
 Only for a PR's text. The caller checks it against the diff; the cold reader plays no part.
 
 - **NO TEST STEPS**: a person can see or call the change (a UI, an API, a CLI, an email), and the body has no steps to try it. A refactor, a test-only change, a dependency bump with no visible change, or internal code with no entry point a reviewer can reach needs no steps. Automated tests are not test steps.
-- **UNCLEAR TEST STEPS**: the steps are not numbered with one action each, do not say where to start (a link, a URL or a command), or do not end with what the reader should see.
+- **UNCLEAR TEST STEPS**: the steps are not numbered with one action each, do not say where to start (a link, a URL or a command), do not end with what the reader should see, or use a shell variable whose name does not say what it holds (`K`, `E` instead of `SECRET_KEY`, `EVENT_KEY`).
 - **NO SCREENSHOT**: the diff changes what a user sees (layout, styling, copy on screen, a new or changed UI element, a rendered chart or email), and the body has no image or video: a GitHub attachment, `![...]`, `<img>`, or an `.mp4`/`.mov` link. Behavior that only shows in motion, like dragging or an animation, needs a video.
 - **NO BEFORE/AFTER**: the diff changes an existing UI, and the body shows only one side. A new UI needs only the after.
 
