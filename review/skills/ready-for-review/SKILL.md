@@ -1,6 +1,6 @@
 ---
 name: ready-for-review
-description: "Get one of your own draft PRs ready for review: run a full own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and take the PR out of draft once it is clean."
+description: "Take one of your own PRs out of draft: run a full own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and mark the PR ready once it is clean. Use whenever the user asks to take a PR out of draft or mark it ready for review, in any wording (\"PR out of draft\", \"make it ready\", \"undraft it\")."
 argument-hint: "[PR number | PR link | empty]"
 ---
 
