@@ -125,10 +125,13 @@ CI: <status from gh pr checks, or: no PR yet>
 Threads: <the line from THREADS.md step 2, or: none>
 
 **Blocking** (verified)
-- [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>. [D<n>]
+- B<n> [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>. [D<n>]
 
 **Threads**
-- [<starter>] `<location>` <VERDICT> (blocking) — <one sentence>. [D<n>]
+- B<n> [<starter>] `<location>` <VERDICT> (blocking) — <one sentence>. [D<n>]
+
+**Not blocking (your call)**
+- B<n> [<check or starter>] <TYPE> `<location>` — <finding> — <the user's reason, or: no reason given>. [D<n>]
 
 **Suggestions**
 - [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>. [D<n>]
@@ -159,6 +162,7 @@ _Why:_ <one sentence, from the code>
 <one line: why>
 ```
 
+- Number the blocking items `B1`, `B2`, … in report order, across **Blocking** and the `(blocking)` lines of **Threads**. Only blocking items get a `B<n>`. **Not blocking (your call)** is filled by `review` step 4 when the user says an item doesn't block; such an item keeps its number.
 - **Threads** lists every thread in the triage and recheck groups of `THREADS.md`, with its verdict. Add `(blocking)` when its finding is blocking.
 - **Drafts** are only written by `review`, never by a check run on its own. Number them in the order they appear in the report, and put the `[D<n>]` tag on the line they belong to.
   - A reply for each thread with a draft reply from `THREADS.md` step 3. Quote the comment you answer verbatim: the newest one when the thread has answers, after one line that sums up the earlier exchange. Trim a quote longer than 12 lines and end it with `> …(trimmed)`.
@@ -167,7 +171,7 @@ _Why:_ <one sentence, from the code>
 - Sort blocking findings first, then suggestions, each grouped by check.
 - One sentence per finding, plus the optional `Fix:` sentence. The details stay in `evidence`.
 - Leave out empty sections, but always print the "Checks" line, with 0 for a check that found nothing.
-- `GO` means merge it. `NO GO` means at least one confirmed blocking finding, from a check or from a thread. There is nothing in between.
+- `GO` means merge it. `NO GO` means at least one confirmed blocking finding, from a check or from a thread, that the user did not move to **Not blocking (your call)**. There is nothing in between.
 - The verdict line only says why: the worst blocking finding for NO GO, or that none survived for GO. It gives no advice.
 - No praise, no summary beyond the verdict line.
 - A check run on its own lists only its own count on the "Checks" line, and ends with `# GO (<check> only)` or `# NO GO (<check> only)`.

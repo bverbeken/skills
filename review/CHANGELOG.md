@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-19
+
+- `review`: after a NO GO, asks which blocking items don't block, with a checkbox and a reason box per item (an inline form where the session has one). The ones you pick move to **Not blocking (your call)** and the verdict is worked out again. Blocking items are numbered `B1`, `B2`, … in the report. Your call holds when `review` runs again in the same conversation.
+
 ## 2026-10-16
 
 - `review-description`: checks a PR for screenshots and test steps. A visible UI change needs a screenshot, with a before and an after when it changes an existing UI. A change a person can see or call needs numbered test steps with a place to start and a result to see. On your own PR these findings block, so the PR goes public with them.

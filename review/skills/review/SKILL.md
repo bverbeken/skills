@@ -33,3 +33,19 @@ Wait until all agents have returned. Run step 2 of `review-description` on the c
 When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
 
 Then run step 6 of `STEPS.md` for the report.
+
+## 4. Let the user triage the blocking items
+
+Skip this when the verdict is GO, or when another skill runs `review` (for example `ready-for-review`).
+
+Otherwise, ask the user which blocking items don't block. The items are every line under **Blocking** and every `(blocking)` line under **Threads**, by their `B<n>` tag. Ask in the richest way the session offers:
+
+- **An inline widget tool** (for example `show_widget`, with its elicitation form): one group per item. The group's question is `B<n> · <TYPE> · <location>`, with the finding below it in muted text. In the group: a toggle, "Doesn't block", unselected at the start, and a text area for that item, "Why not?". An item with a reason but no toggle counts as picked.
+- **`AskUserQuestion`**: one multi-select question per four items, at most four questions. Option label: `B<n> <TYPE>`. Description: the location and the finding. Above 16 items, use the plain question below. Then ask in one line why each picked item doesn't block, one `B<n>: <reason>` per line.
+- **Neither**: one line, "Reply with `B<n>: <why it doesn't block>`, one per line, or press enter to keep them all."
+
+When the user picks none, or skips, stop: the report stands.
+
+Otherwise, move each picked item to **Not blocking (your call)**, with the user's reason when they gave one. It no longer counts toward the verdict. Its draft stays: a colleague's PR still gets the comment. Then print the **Blocking**, **Threads** and **Not blocking (your call)** sections again, and the verdict, worked out again by the rule in step 6 of `STEPS.md`.
+
+Keep the user's call for the rest of the conversation. When `review` runs again and a blocking finding is the same problem at the same place as one the user moved, put it straight under **Not blocking (your call)** and don't ask about it again.
