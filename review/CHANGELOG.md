@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-24
+
+- `review-dependencies`: a new check. For each dependency a change adds, in any manifest, CI file or script, it says why this one, whether it is maintained, whether it can be trusted, whether its license is allowed, and which alternatives exist. The report lists each new dependency on one line. A sign of a supply chain attack, a known vulnerability the code can reach, or a license that is not allowed in the product blocks, also in own mode. A version bump is not a new dependency.
+
 ## 2026-10-16
 
 - `review-description`: checks a PR for screenshots and test steps. A visible UI change needs a screenshot, with a before and an after when it changes an existing UI. A change a person can see or call needs numbered test steps with a place to start and a result to see. On your own PR these findings block, so the PR goes public with them.

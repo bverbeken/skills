@@ -1,6 +1,6 @@
 ---
 name: review
-description: "Review <PR number, GitHub or Linear link, issue ID, or branch> at any stage, before or after comments came in: ten checks in parallel (tests, spec, bugs, performance, style, comments, refactoring, architecture, consumers, description), the open review threads checked against the code, draft replies, and a GO / NO GO verdict. Use when the user says \"review <something>\", pastes a PR link to review, asks if a change is ready to merge, says a reviewer replied, asks to handle the comments on a PR, or another skill wants its work reviewed."
+description: "Review <PR number, GitHub or Linear link, issue ID, or branch> at any stage, before or after comments came in: eleven checks in parallel (tests, spec, bugs, performance, style, comments, refactoring, architecture, consumers, dependencies, description), the open review threads checked against the code, draft replies, and a GO / NO GO verdict. Use when the user says \"review <something>\", pastes a PR link to review, asks if a change is ready to merge, says a reviewer replied, asks to handle the comments on a PR, or another skill wants its work reviewed."
 argument-hint: "[PR number | PR link | issue | branch | empty] [--only check,check]"
 ---
 
@@ -14,9 +14,9 @@ When the target is a PR, read `THREADS.md` in this skill's folder and run its st
 
 ## 2. Run the checks in parallel
 
-The checks are the skills next to this one: `review-tests`, `review-spec`, `review-bugs`, `review-performance`, `review-style`, `review-comments`, `review-refactoring`, `review-architecture`, `review-consumers`, `review-description`. Their files are at `<this skill's folder>/../review-<check>/SKILL.md`.
+The checks are the skills next to this one: `review-tests`, `review-spec`, `review-bugs`, `review-performance`, `review-style`, `review-comments`, `review-refactoring`, `review-architecture`, `review-consumers`, `review-dependencies`, `review-description`. Their files are at `<this skill's folder>/../review-<check>/SKILL.md`.
 
-Run all ten, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always look at the full diff, also when the PR was reviewed before.
+Run all eleven, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always look at the full diff, also when the PR was reviewed before.
 
 `review-description` runs only when the target is a PR, and in a different way: instead of a check agent, start its cold reader (step 1 of its check) with the PR's title and body as the text.
 
@@ -24,7 +24,7 @@ Start one `Agent` (general-purpose) per check, all in one message, so they run a
 
 - The path of its check file, and the path of `STEPS.md`.
 - `<contextFile>`.
-- This brief: "Read the check file and run its check on the code in `<reviewDir>`. Steps 1 to 3 are done: everything they produce is in `<contextFile>`. Return your findings in the form of step 4 of `STEPS.md`, or `none`. Do not verify, do not write a report."
+- This brief: "Read the check file and run its check on the code in `<reviewDir>`. Steps 1 to 3 are done: everything they produce is in `<contextFile>`. Return what the check file asks for: your findings in the form of step 4 of `STEPS.md`, or `none`. Do not verify, do not write a report."
 
 ## 3. Verify and report
 
@@ -32,4 +32,4 @@ Wait until all agents have returned. Run step 2 of `review-description` on the c
 
 When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
 
-Then run step 6 of `STEPS.md` for the report.
+Then run step 6 of `STEPS.md` for the report. `review-dependencies` also returns one line per new dependency: they go in the report's "New dependencies" section.

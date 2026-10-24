@@ -15,7 +15,7 @@
     {
       "name": "review",
       "source": "./review",
-      "description": "A full code review at any stage of a PR: nine checks in parallel, the existing review threads checked against the code, draft replies, and a GO / NO GO verdict."
+      "description": "A full code review at any stage of a PR: eleven checks in parallel, the existing review threads checked against the code, draft replies, and a GO / NO GO verdict."
     }
   ]
 }
