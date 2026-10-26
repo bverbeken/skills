@@ -27,6 +27,7 @@ Each check can also run on its own, for example `/review-tests 142`.
 | Open thread, someone else has the last word | Checked against the code: FIXED, FIX, DISMISS, DISCUSS or CLARIFY, with a draft reply | Your threads and answered bot threads: RESOLVED, NOT RESOLVED (with the example that still fails) or NEW PROBLEM, with a draft reply |
 | Resolved thread | Checked again: you want your PR spotless before it goes out of draft | Settled: never raised again |
 | You have the last word | Listed as waiting | Listed as waiting |
+| The build has the last word (a reply under your login that starts with `🤖 `) | Listed as waiting; checked again once you answer | |
 
 A finding that is already in a thread is not reported twice. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
 
