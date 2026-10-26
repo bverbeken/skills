@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-26
 
+- `tdd`: a seam named in the issue's `## Decisions` counts as confirmed. It asks about other seams through `prepare`. With `--afk`, it picks them itself and `implement` lists them in the PR description.
 - `implement --afk`: builds with nobody watching. It asks nothing and takes its own recommendation. It skips `prepare` and its own review: after the build it opens a draft PR and calls `ready-for-review --afk`. A decision that only the user can make goes in the issue's open question section, and the build stops.
 - `implement`: assigns the issue only when the issue tracker docs say issues have an assignee.
 - New: `implement`, `tdd`, `prepare`, `grilling`, `codebase-design` and `draft-pr`.
