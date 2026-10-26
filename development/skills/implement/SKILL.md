@@ -1,27 +1,27 @@
 ---
 name: implement
-description: "Implement a piece of work based on a spec or set of tickets."
+description: "Implement a piece of work based on a spec or set of issues."
 disable-model-invocation: true
 ---
 
-Implement the work described by the user in the spec or tickets.
+Implement the work described by the user in the spec or issues.
 
-If the user passes a ticket reference, fetch it from the issue tracker and state its title before starting. If the reference is ambiguous, ask.
+If the user passes an issue reference, fetch it from the issue tracker and state its title before starting. If the reference is ambiguous, ask.
 
-Once you have the ticket, move it to the issue tracker's in-progress status and assign it to the user. The issue tracker docs name that status.
+Once you have the issue, move it to the issue tracker's in-progress status. The issue tracker docs name that status. Assign it to the user only when the docs say issues have an assignee.
 
 ## Clarify
 
-Call the Skill tool with "prepare" and the ticket reference or spec, plus `--keep-status`. This step is done when prepare says nothing is open, or the user approved its decisions.
+Call the Skill tool with "prepare" and the issue reference or spec, plus `--keep-status`. This step is done when prepare says nothing is open, or the user approved its decisions.
 
-When a new open decision comes up later, during the build or the review, stop and call "prepare" again with the ticket reference or spec, `--keep-status` and that decision. Build on the answer, never on a guess.
+When a new open decision comes up later, during the build or the review, stop and call "prepare" again with the issue reference or spec, `--keep-status` and that decision. Build on the answer, never on a guess.
 
 ## Worktree
 
 Build the work in its own git worktree, so the user's checkout stays untouched.
 
-1. Pick the repo the work belongs in. In a multi-repo workspace, take it from the ticket (its labels, the code it names). If it could be more than one repo, ask.
-2. Pick the branch: the ticket's git branch name from the issue tracker, or a short kebab-case name for a spec without a ticket.
+1. Pick the repo the work belongs in. In a multi-repo workspace, take it from the issue (its labels, the code it names). If it could be more than one repo, ask.
+2. Pick the branch: the issue's git branch name from the issue tracker, or a short kebab-case name for a spec without an issue.
 3. Run `git fetch origin`, then create the worktree at `<repo>/../<repo>.worktrees/<branch>`:
    - New branch: `git worktree add --no-track -b <branch> <path> origin/<default branch>`. `--no-track` keeps the new branch from tracking the default branch.
    - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree.
