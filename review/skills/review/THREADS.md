@@ -42,11 +42,12 @@ If there are no threads, stop here: `review` runs as for a new PR.
 
 Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
-**Own mode**
+**Own mode**: the first row that matches wins.
 
 | Thread | Group |
 |---|---|
 | Open, and the build has the last word | **waiting** |
+| Open, and you have the last word after the build | **triage** |
 | Open, and someone else has the last word | **triage** |
 | Open, and only you commented in it (a note from you or your tools) | **triage** |
 | Open, and you have the last word after someone else | **waiting** |
