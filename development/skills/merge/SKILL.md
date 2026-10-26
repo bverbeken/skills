@@ -58,7 +58,7 @@ Run the tests on the merged code in a temporary worktree:
 3. Run the full test suite.
 4. Remove the temporary worktree.
 
-When the tests fail, keep the merge and revert nothing. Record the failing tests as a **stop** does, but go on with step 6 instead of ending.
+When the tests fail, keep the merge and revert nothing. Go on with step 5: the code is on `<base>`, so the issue is done. Repairing `<base>` is new work.
 
 ## 5. Close the issue
 
@@ -71,7 +71,7 @@ When the docs name a result section, add it, for example:
 Add the merge skill (https://github.com/acme/app/pull/4). Last commit on main: a1b2c3d.
 ```
 
-That is the PR title, the PR link, and the short SHA of the PR's last commit on `<base>`: `gh pr view <num> --json mergeCommit`. The rebase merge gave it a new SHA. When the repo has no tests, add "No tests in this repo."
+That is the PR title, the PR link, and the short SHA of the PR's last commit on `<base>`: `gh pr view <num> --json mergeCommit`. The rebase merge gave it a new SHA. When the repo has no tests, add "No tests in this repo." When the tests failed on the merged code, add "Tests fail on <base> after the merge:" and the failing tests, and say at the end that `<base>` needs a fix.
 
 ## 6. Clean up
 
