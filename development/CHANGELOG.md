@@ -4,7 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-26
 
-- `implement --afk`: stops with an open question when the build would change or bend a line in the issue's `## Decisions`. The question names the line, the fact found, the question and a recommendation.
+- `implement`: a build that would change or bend a line in the issue's `## Decisions` asks you through `prepare`. With `--afk`, it stops with an open question. The question names the line, the fact found, the question and a recommendation.
 - `implement`: only builds. It no longer moves the issue to the in-progress status, asks through `prepare` before the build, reviews, or opens the PR: `foreman` does those steps. It fixes the review findings it gets, and `foreman` can call it.
 - New: `foreman` does the next step for an issue, based on its status. It holds the order of the steps; the other skills each do one step. Without an issue, it picks the one closest to done. It refuses when the issue tracker docs don't map all 8 factory statuses.
 - `merge`: refuses when the issue tracker docs map no `APPROVED`, also when an earlier run already merged the PR.
