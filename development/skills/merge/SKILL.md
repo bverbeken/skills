@@ -18,7 +18,7 @@ Find the issue's PR as the issue tracker docs say. When the docs say nothing abo
 
 Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,state,isDraft,baseRefName,headRefName,headRefOid`. `<base>` is `baseRefName` and `<branch>` is `headRefName`.
 
-Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. `<worktree>` is the worktree that has `<branch>` checked out (`git worktree list --porcelain`). When there is none, it is `<repo>/../<repo>.worktrees/<branch>`, where `implement` puts it.
+Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. Run every later command in the main checkout or one of its worktrees, so `gh` finds the PR without `-R`. `<worktree>` is the worktree that has `<branch>` checked out (`git worktree list --porcelain`). When there is none, it is `<repo>/../<repo>.worktrees/<branch>`, where `implement` puts it.
 
 Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo without tests skips every test step below.
 
