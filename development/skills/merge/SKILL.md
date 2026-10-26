@@ -36,7 +36,7 @@ When the PR is already merged, an earlier run broke off after the merge: go on w
 
 Run `gh pr merge <num> --rebase --match-head-commit <headRefOid>`, so only the approved head gets merged. When GitHub accepts it, go to step 4.
 
-When GitHub refuses it, read `gh pr view <num> --json mergeStateStatus`. When it is not `BEHIND` or `DIRTY`, a rebase can't help: **refuse** with GitHub's message. Otherwise rebase once, in the worktree. When the worktree is gone, create it from the PR head: `git worktree add -B <branch> <path> origin/<branch>`. Before the rebase, **refuse** when the worktree has uncommitted changes, or when its `HEAD` is not the PR's `headRefOid`. Only the code the user approved gets rebased.
+When GitHub refuses it, read `gh pr view <num> --json mergeStateStatus`. When it is not `BEHIND` or `DIRTY`, a rebase can't help: **refuse** with GitHub's message. Otherwise rebase once, in the worktree. When the worktree is gone, run `git fetch origin` and create it: `git worktree add <path> <branch>` when the local branch exists, otherwise `git worktree add --no-track -b <branch> <path> origin/<branch>`. Before the rebase, **refuse** when the worktree has uncommitted changes, or when its `HEAD` is not the PR's `headRefOid`. Only the code the user approved gets rebased.
 
 1. `git fetch origin`, then `git rebase origin/<base>`. On a conflict: `git rebase --abort`, and **stop** with the files that conflict. Merge never fixes a conflict itself: a fix is new code the user did not review.
 2. Run the tests on the branch. When they fail: reset the branch to `origin/<branch>`, and **stop** with the failing tests.
