@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-26
 
+- `draft-pr`: opens a new PR when the branch only has a closed or merged one.
 - `draft-pr`: takes an optional list of seams that `tdd` picked itself, and writes them in a `## Seams I chose` section.
 - `draft-pr`: goes back to the skill that called it, so `implement --afk` continues after the PR is open.
 - `prepare` and `grilling`: you confirm the decisions once, when `prepare` shows the text it will write. `grilling` skips its closing question when the skill that called it asks for the confirmation itself.
