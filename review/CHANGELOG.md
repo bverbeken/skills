@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-26
 
+- `ready-for-review`: a human thread with a DISCUSS or CLARIFY verdict is a problem, also when it is a review body or a PR comment, so it never goes ready unanswered.
 - `ready-for-review`: answers a review body or a PR comment with a PR comment, since those have no thread to reply in.
 - `ready-for-review`: takes an issue as an argument. When it marks a PR ready, it moves that issue, or the PR's issue, to the review status that the issue tracker docs name.
 - `ready-for-review --afk`: makes a PR ready with nobody watching. It asks nothing and takes its own recommendation. It rebases on merge conflicts and pushes with `--force-with-lease`. It answers your threads, and resolves the ones that are already fixed, each reply starting with `🤖 `. Suggestions it skips, suggestions outside the PR and suggestions from its last review round go to a `## Skipped: your call` section. What only you can decide is skipped, so the PR stays in draft as NOT READY.
