@@ -61,11 +61,11 @@ When the docs name a result section, add it, for example:
 Add the merge skill (PR #4). Last commit on main: a1b2c3d.
 ```
 
-That is the PR title, the PR link, and the short SHA of the PR's last commit on `<base>`. When the repo has no tests, add "No tests in this repo."
+That is the PR title, the PR link, and the short SHA of the PR's last commit on `<base>`: `gh pr view <num> --json mergeCommit`. The rebase merge gave it a new SHA. When the repo has no tests, add "No tests in this repo."
 
 ## 6. Clean up
 
-1. Remove the worktree and delete the local branch. Keep both when the worktree has uncommitted changes (`git status --porcelain`) or commits that are not on `origin/<base>`.
+1. Remove the worktree and delete the local branch. Keep both when the worktree has uncommitted changes (`git status --porcelain`) or commits that are not pushed (`git log origin/<branch>..HEAD`). Delete the branch with `git branch -D`: the rebase merge gave its commits new SHAs, so `-d` refuses it.
 2. Delete the branch on GitHub: `git push origin --delete <branch>`.
 3. In the main checkout: when it is on `<base>` and clean, run `git pull`. Otherwise run `git fetch origin`.
 
