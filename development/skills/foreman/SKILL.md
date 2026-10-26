@@ -60,4 +60,4 @@ End with:
 
 - the issue and its status now;
 - why you stopped there;
-- the next step and who takes it. Say it plainly when it is the user's, for example "Review PR #12, then move TF5 to Approved".
+- the next step and who takes it. Say it plainly when it is the user's, for example "Review PR #12, then move ACME-123 to `APPROVED`".
