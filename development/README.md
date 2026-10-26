@@ -17,17 +17,7 @@ Skills for building software with an agent, from an issue to a draft PR. Say `/i
 
 ## Install
 
-Clone the repo and link each skill folder into `~/.claude/skills/`, together with the review skills:
-
-```bash
-git clone https://github.com/bverbeken/skills.git ~/skills
-mkdir -p ~/.claude/skills
-for skill in ~/skills/development/skills/* ~/skills/review/skills/*; do
-  ln -s "$skill" ~/.claude/skills/
-done
-```
-
-A `git pull` then updates the skills. [`CHANGELOG.md`](CHANGELOG.md) lists what changed.
+Link the skill folders into `~/.claude/skills/`, together with the review skills. The steps are in the [README of this repo](../README.md#install). [`CHANGELOG.md`](CHANGELOG.md) lists what changed.
 
 ## Set up your project
 
