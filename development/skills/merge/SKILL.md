@@ -8,7 +8,9 @@ Merge the PR of the issue in `$ARGUMENTS`, then close the issue and clean up. Me
 
 To **refuse**: print why, change nothing, and end.
 
-To **stop**: write what went wrong in the issue's open question section and move the issue to the status for a stopped build, both as the issue tracker docs name them. Then end. When the docs name no such section or status, print the problem, leave the status alone, and end.
+UPPERCASE statuses, such as `APPROVED`, are factory statuses. The issue tracker docs map each one to a status of the tracker. When the docs map no status for a move, leave the issue where it is and say so at the end.
+
+To **stop**: write what went wrong in the issue's open question section, as the issue tracker docs name it, and move the issue to `NEXT_UP`. Then end. When the docs name no such section, print the problem, leave the status alone, and end.
 
 ## 1. Find the issue and its PR
 
@@ -24,11 +26,12 @@ Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo w
 
 ## 2. Check
 
-When the PR is already merged, an earlier run broke off after the merge. Skip the checks below. Go on with step 4 when the issue is still in the approved status, or with step 6 when it moved on.
+When the PR is already merged, an earlier run broke off after the merge. Skip the checks below. Go on with step 4 when the issue is still in `APPROVED`, or with step 6 when it moved on.
 
 Otherwise, **refuse** when any of these is true:
 
-- The issue is not in the status the issue tracker docs name for an approved PR. That status is the user's approval: a GitHub approval is not needed.
+- The issue tracker docs map no status to `APPROVED`. Without it, merge can't tell whether the user approved the PR.
+- The issue is not in `APPROVED`. That status is the user's approval: a GitHub approval is not needed.
 - The PR is closed without a merge, or it is a draft.
 - A CI check failed or is still pending (`gh pr checks <num>`). No CI at all is fine.
 
@@ -58,7 +61,7 @@ When the tests fail, keep the merge and revert nothing. Record the failing tests
 
 ## 5. Close the issue
 
-Move the issue to the done status that the issue tracker docs name, and do what the docs say comes with it, such as moving issues it blocked.
+Move the issue to `DONE`, and do what the docs say comes with it, such as moving issues it blocked.
 
 When the docs name a result section, add it, for example:
 

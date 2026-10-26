@@ -9,7 +9,9 @@ Implement the work described by the user in the spec or issues.
 
 If the user passes an issue reference, fetch it from the issue tracker and state its title before starting. If the reference is ambiguous, ask.
 
-Once you have the issue, move it to the issue tracker's in-progress status. The issue tracker docs name that status. Assign it to the user only when the docs say issues have an assignee.
+UPPERCASE statuses, such as `BUSY`, are factory statuses. The issue tracker docs map each one to a status of the tracker. When the docs map no status for a move, leave the issue where it is and say so at the end.
+
+Once you have the issue, move it to `BUSY`. Assign it to the user only when the docs say issues have an assignee.
 
 ## --afk
 
@@ -19,7 +21,7 @@ With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, t
 - A new open decision during the build: take your own recommendation, or **stop** when the decision is really the user's.
 - Review and Draft PR: skip them, and go to Ready PR.
 
-To **stop**: write the question in the issue's open question section, or leave the one that is there, and move the issue to the status for a stopped build, both as the issue tracker docs name them. Then end. When there is no issue, or the docs name no such section or status, print the question, leave the status alone, and end.
+To **stop**: write the question in the issue's open question section, or leave the one that is there, as the issue tracker docs name it, and move the issue to `NEXT_UP`. Then end. When there is no issue, or the docs name no such section, print the question, leave the status alone, and end.
 
 ## Clarify
 

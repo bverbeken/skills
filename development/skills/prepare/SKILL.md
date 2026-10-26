@@ -43,9 +43,9 @@ Leave the status alone and say so in each of these cases:
 
 - There is no issue, only a spec.
 - `--keep-status` was passed.
-- The issue tracker docs name no status for an issue that is ready to be built, such as `Ready`.
-- The issue is already at that status or past it, for example in review or merged.
+- The issue tracker docs map no status to `READY`. UPPERCASE statuses are factory statuses: the docs map each one to a status of the tracker.
+- The issue is already in `READY` or past it, for example in `REVIEW` or `DONE`.
 
-Otherwise, move the issue to that status.
+Otherwise, move the issue to `READY`.
 
 When there is an issue, tell the user what changed in it. When another skill called this one, go back to it and continue its next step.
