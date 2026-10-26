@@ -67,9 +67,8 @@ When the review still says NO GO after the second run, stop and show the user th
 Only with `--afk`:
 
 1. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`.
-2. Call the Skill tool with "draft-pr" from the worktree. It opens the draft PR, or prints the existing one.
-3. When `tdd` picked seams itself, add a `## Seams I chose` section to the PR description, one line per seam with what it catches.
-4. Call the Skill tool with "ready-for-review", the PR number, the issue reference and `--afk`.
-5. On NOT READY, **stop** with the problems it lists as the question.
+2. Call the Skill tool with "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any. It opens the draft PR, or prints the existing one.
+3. Call the Skill tool with "ready-for-review", the PR number, the issue reference and `--afk`.
+4. On NOT READY, **stop** with the problems it lists as the question.
 
 End with the PR link and the worktree path.
