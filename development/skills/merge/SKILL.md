@@ -4,7 +4,7 @@ description: "Merge the PR of an approved issue with a rebase merge, close the i
 argument-hint: "<issue> [--afk]"
 ---
 
-Merge the PR of the issue in `$ARGUMENTS`, then close the issue and clean up. Merge never asks the user anything. A problem before the merge ends in a **refuse**; a problem during or after it ends in a **stop**. `--afk` changes nothing; accept it so a calling skill can pass it to every worker.
+Merge the PR of the issue in `$ARGUMENTS`, then close the issue and clean up. Merge never asks the user anything. A problem found before anything changed makes it **refuse**; a problem after it changed something makes it **stop**. `--afk` changes nothing; accept it so a calling skill can pass it to every worker.
 
 To **refuse**: print why, change nothing, and end.
 
@@ -43,7 +43,7 @@ When GitHub refuses it, read `gh pr view <num> --json mergeStateStatus`. When it
 3. `git push --force-with-lease=<branch>:<headRefOid>`. When the repo has CI, wait until `gh pr view <num> --json headRefOid,statusCheckRollup` shows the new head commit with its checks started, then run `gh pr checks <num> --watch`. When it fails, **stop** with the failing checks.
 4. Run `gh pr merge <num> --rebase` again. When GitHub refuses it again, **stop** with its message.
 
-## 4. Test main
+## 4. Test the merged code
 
 When the repo has no tests, go to step 5.
 
