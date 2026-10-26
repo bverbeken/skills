@@ -25,7 +25,7 @@ If the list is empty, say so in one line and go to step 5.
 
 ## 3. Ask
 
-Call the Skill tool with "grilling" and grill the user on the list. Settle every decision before you write anything. The ok in step 4 is the user's confirmation, so grilling asks no closing question.
+Call the Skill tool with "grilling" and grill the user on the list. Settle every decision before you write anything. Tell grilling that you ask for the confirmation yourself: the ok in step 4 is the user's confirmation.
 
 ## 4. Write
 

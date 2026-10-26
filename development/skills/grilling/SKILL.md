@@ -43,4 +43,4 @@ When the plan reads or groups data over a time range, its tree always has these 
 - **Now:** the range ends at the current moment. What does the bucket that is still filling show?
 - **Largest request:** what is the longest range one request may ask for, and what does that one read cost? Decide this separately from how long the data is kept.
 
-The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding. When another skill called you, that skill asks for the confirmation: hand back to it.
+The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding. When the skill that called you says it asks for the confirmation itself, skip this question and hand back to it.
