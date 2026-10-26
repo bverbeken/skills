@@ -10,9 +10,9 @@ Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean
 
 With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do this instead:
 
-- The fix needs a choice: take your own recommendation.
+- The fix needs a choice: take your own recommendation. When the choice is really the user's, as the spec or the issue leaves it to them, skip the item.
 - The fix changes code outside the PR's files, or needs a new issue: fix a blocking item. Delete a suggestion from the list, and add it to a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
-- Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push.
+- Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push. When a conflict needs a choice that is really the user's, skip it.
 - Unpushed commits: push them.
 - An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open. A thread where the build has the last word (see `../review/THREADS.md`) is no problem.
 - Anything else, and every item that is still not fixed after you tried: skip it.
