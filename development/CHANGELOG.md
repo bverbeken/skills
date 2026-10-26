@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-26
 
+- `merge`: when the tests fail after the merge, the issue still moves to `DONE`, with the failing tests in its result. Before, it went back to the status for a stopped build.
 - `implement`, `prepare` and `merge` name statuses with fixed UPPERCASE factory statuses, such as `BUSY`, which the issue tracker docs map to the tracker's own statuses. A stopped build moves the issue to `TO_CLARIFY`. A move to a status the docs don't map is skipped and reported at the end. `merge` refuses when the docs map no status to `APPROVED`.
 - New: `merge` merges the PR of an approved issue with a rebase merge. When GitHub refuses, it rebases once onto the base branch; a conflict or a failure stops it with an open question. It tests the merged code, closes the issue with a result, and removes the worktree and the branch.
 - `implement`: links the PR to the issue, as the issue tracker docs say.
