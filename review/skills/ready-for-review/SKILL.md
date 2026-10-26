@@ -88,6 +88,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
 1. Decide if the fix is clear. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
+   - The fix would change or bend a line in the issue's `## Decisions` section.
    - The fix needs something only the user can make, such as a screenshot or a video.
    - The thread's verdict is DISCUSS or CLARIFY.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
@@ -111,7 +112,7 @@ When a blocking item was skipped, leave the PR in draft and end with:
 
 ```
 # NOT READY
-- [<check or state>] <one sentence per problem>
+- [<check or state>] <one sentence per problem; for a change to a decision: the decision line, the fact found, the question, and your recommendation>
 ```
 
 List every problem left, findings first, then state problems.

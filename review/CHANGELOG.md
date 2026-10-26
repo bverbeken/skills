@@ -4,7 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-26
 
-- `ready-for-review --afk`: skips a fix that would change or bend a line in the issue's `## Decisions`. A skipped blocking item leads to NOT READY, which names the line, the fact found, the question and a recommendation.
+- `ready-for-review`: asks you before a fix that would change or bend a line in the issue's `## Decisions`. With `--afk`, it skips that fix. A skipped blocking item leads to NOT READY, which names the line, the fact found, the question and a recommendation.
 - `ready-for-review`: moves the issue to the factory status `REVIEW`, as the issue tracker docs map it. When the docs map no status to `REVIEW`, it says so at the end.
 - `review`: a `🤖 ` PR comment that names the URL of a review body or a PR comment joins that thread.
 - `review`: takes an issue next to a PR, for a public repo where the PR does not name it. `ready-for-review` passes its issue on.
