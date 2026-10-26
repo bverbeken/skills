@@ -10,6 +10,8 @@ UPPERCASE statuses, such as `READY`, are factory statuses. The issue tracker doc
 
 Without `--afk`, do one step and end. With `--afk`, nobody watches: ask nothing, pass `--afk` on to every worker, and keep going until the issue waits on the user.
 
+To **stop** with a problem: without `--afk`, show the user the problem and end. The issue stays in its status: say so, and say which status to move it to. With `--afk`, write the problem in the issue's open question section, as the issue tracker docs name it, move the issue to `TO_CLARIFY`, and end.
+
 ## 1. Check the mapping
 
 Read the issue tracker docs. When they don't map all 8 factory statuses (`BACKLOG`, `BLOCKED`, `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW`, `APPROVED`, `DONE`), refuse: name the statuses that are missing, change nothing, and end.
@@ -21,7 +23,7 @@ With an issue reference, fetch the issue and state its title. If the reference i
 Without one, pick the issue closest to done:
 
 1. `APPROVED`
-2. `REVIEW` with new threads (see step 3)
+2. `REVIEW` with a thread where the build does not have the last word (see step 3)
 3. `READY`
 4. `TO_CLARIFY`, only without `--afk`
 
@@ -33,7 +35,7 @@ Within one status, follow the board order the tracker docs give, or else take th
 |---|---|
 | `TO_CLARIFY` | Without `--afk`: call "prepare" with the issue. With `--afk`: no step, the decisions are the user's. |
 | `READY` | Build, below. |
-| `REVIEW` | When the PR has open review threads without a reply from the build (a reply that starts with `🤖 `): put the PR back in draft (`gh pr ready --undo <num>`), then call "ready-for-review" with the PR number and the issue. Otherwise: no step, the PR waits on the user's review. |
+| `REVIEW` | When the PR has an open review thread where the build does not have the last word (the build's replies start with `🤖 `): put the PR back in draft (`gh pr ready --undo <num>`), then call "ready-for-review" with the PR number and the issue. On NOT READY, **stop** with its problems. Otherwise: no step, the PR waits on the user's review. |
 | `APPROVED` | Call "merge" with the issue. |
 | `BACKLOG` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `DONE`. |
@@ -44,19 +46,19 @@ When there is no step, change nothing. When a worker stops, it writes its own qu
 
 ### Build
 
-1. Move the issue to `BUSY`.
+1. Move the issue to `BUSY`. Assign it to the user only when the issue tracker docs say issues have an assignee.
 2. Call "implement" with the issue. When it stops, end.
 3. Call "review" with no arguments, from the worktree that `implement` gives. On NO GO, call "implement" with the issue and the blocking findings, so it fixes each in its own commit, then call "review" once more. Run "review" at most twice.
-4. When the second run still says NO GO: without `--afk`, show the user the blocking findings and end. With `--afk`, write them in the issue's open question section and move the issue to `TO_CLARIFY`, then end.
+4. When the second run still says NO GO, **stop** with the blocking findings.
 5. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`. Call "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any.
 6. Link the PR to the issue as the issue tracker docs say.
-7. Call "ready-for-review" with the PR number and the issue. On NOT READY with `--afk`, write its problems in the open question section and move the issue to `TO_CLARIFY`.
+7. Call "ready-for-review" with the PR number and the issue. On NOT READY, **stop** with its problems.
 
 ## 4. Go on or end
 
 Without `--afk`, end after the step. With `--afk`, read the issue's status again. When it has a step, go back to step 3. Otherwise end.
 
-End with:
+Every end of this skill, also a refusal or a stop, ends with:
 
 - the issue and its status now;
 - why you stopped there;
