@@ -15,6 +15,7 @@ Clone the repo and link the skill folders you want into `~/.claude/skills/`. A `
 
 ```bash
 git clone https://github.com/bverbeken/skills.git ~/skills
+mkdir -p ~/.claude/skills
 ln -s ~/skills/conference-notes ~/.claude/skills/
 for skill in ~/skills/development/skills/* ~/skills/review/skills/*; do
   ln -s "$skill" ~/.claude/skills/
