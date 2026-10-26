@@ -1,6 +1,6 @@
 # development
 
-Skills for building software with an agent, from an issue to a draft PR. Say `/implement ACME-123` and Claude asks you every open decision, builds the change test-first in its own git worktree, reviews it, and opens a draft PR. Say `/implement ACME-123 --afk` and Claude asks nothing: it builds from the decisions in the issue and ends with a PR that is ready for review.
+Skills for building software with an agent, from an issue to a merged PR. Say `/implement ACME-123` and Claude asks you every open decision, builds the change test-first in its own git worktree, reviews it, and opens a draft PR. Say `/implement ACME-123 --afk` and Claude asks nothing: it builds from the decisions in the issue and ends with a PR that is ready for review.
 
 ## The skills
 
