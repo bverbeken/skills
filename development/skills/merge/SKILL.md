@@ -64,7 +64,7 @@ When the docs name a result section, add it, for example:
 
 ```
 ## Result (2026-10-26)
-Add the merge skill (PR #4). Last commit on main: a1b2c3d.
+Add the merge skill (https://github.com/acme/app/pull/4). Last commit on main: a1b2c3d.
 ```
 
 That is the PR title, the PR link, and the short SHA of the PR's last commit on `<base>`: `gh pr view <num> --json mergeCommit`. The rebase merge gave it a new SHA. When the repo has no tests, add "No tests in this repo."
