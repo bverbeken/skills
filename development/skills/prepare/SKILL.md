@@ -39,11 +39,14 @@ Show the user the full section, and the open question section you will remove, a
 
 ## 5. Move
 
+UPPERCASE statuses, such as `READY`, are factory statuses. The issue tracker docs map each one to a status of the tracker.
+
 Leave the status alone and say so in each of these cases:
 
 - There is no issue, only a spec.
 - `--keep-status` was passed.
-- The issue tracker docs map no status to `READY`. UPPERCASE statuses are factory statuses: the docs map each one to a status of the tracker.
+- The issue tracker docs map no status to `READY`.
+- The issue is in `BLOCKED`, or in a status the docs don't map, such as a canceled status.
 - The issue is already in `READY` or past it, for example in `REVIEW` or `DONE`.
 
 Otherwise, move the issue to `READY`.
