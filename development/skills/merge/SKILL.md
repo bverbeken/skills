@@ -71,8 +71,8 @@ That is the PR title, the PR link, and the short SHA of the PR's last commit on 
 
 ## 6. Clean up
 
-1. Remove the worktree and delete the local branch. Keep both when the worktree has uncommitted changes (`git status --porcelain`) or commits that are not pushed (`git log origin/<branch>..HEAD`). Delete the branch with `git branch -D`: the rebase merge gave its commits new SHAs, so `-d` refuses it.
-2. Delete the branch on GitHub: `git push origin --delete <branch>`.
+1. Remove the worktree and delete the local branch. Keep both when the worktree has uncommitted changes (`git status --porcelain`) or commits that are not on the PR (`git log <headRefOid>..<branch>`, with the last `headRefOid`). Delete the branch with `git branch -D`: the rebase merge gave its commits new SHAs, so `-d` refuses it.
+2. Delete the branch on GitHub: `git push origin --delete <branch>`. When GitHub already deleted it, skip this.
 3. In the main checkout: when it is on `<base>` and clean, run `git pull`. Otherwise run `git fetch origin`.
 
 When you kept the worktree, say why and give its path.
