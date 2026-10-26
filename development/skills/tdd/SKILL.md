@@ -21,7 +21,7 @@ A **seam** is the public boundary you test at: the interface where you observe b
 
 **Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them. No test is written at an unconfirmed seam. You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
 
-A seam that the issue's `## Decisions` section names is confirmed. For every other seam, call the Skill tool with "prepare", the issue reference or spec, `--keep-status`, and the question: "What's the public interface, and which seams should we test?" Give each proposed seam a one-line note on what it catches and what it misses.
+A seam that the issue's `## Decisions` section names is confirmed. For every other seam, ask: "What's the public interface, and which seams should we test?" With an issue or spec, ask it through the Skill tool with "prepare", the issue reference or spec, `--keep-status` and the question. Without one, ask the user directly. Give each proposed seam a one-line note on what it catches and what it misses.
 
 With `--afk`, pick those seams yourself and give the caller the list, one line per seam with what it catches.
 
