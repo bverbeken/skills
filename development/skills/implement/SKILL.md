@@ -19,7 +19,7 @@ Pass `--afk` on to `tdd` and `ready-for-review`.
 
 ## Clarify
 
-With `--afk`, skip this step: the issue's `## Decisions` section holds the decisions.
+With `--afk`, skip this step: the issue's `## Decisions` section holds the decisions. When the issue still has an open question section, its answer never reached the decisions: end without building, and say the user answers it with prepare.
 
 Call the Skill tool with "prepare" and the issue reference or spec, plus `--keep-status`. This step is done when prepare says nothing is open, or the user approved its decisions.
 
