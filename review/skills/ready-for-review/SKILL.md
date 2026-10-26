@@ -115,7 +115,9 @@ List every problem left, findings first, then state problems.
 When there is no problem left:
 
 1. Remove the ticked items from the TODO list. Remove an empty `### Blocking` or `### Suggestions` heading. When no item is left, remove the whole list with its markers. The public description shows the change, not the fixes on the way.
-2. Run `gh pr ready <num> -R <owner>/<repo>` and end with:
+2. Run `gh pr ready <num> -R <owner>/<repo>`.
+3. When the PR belongs to an issue, move the issue to the review status that the issue tracker docs name. Find the issue in the branch name, the PR title or its body. With no issue or no such status, leave the tracker alone.
+4. End with:
 
 ```
 # READY
