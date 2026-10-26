@@ -12,6 +12,7 @@ Skills for building software with an agent, from an issue to a draft PR. Say `/i
 | `tdd` | The red → green loop: what a good test is, where tests go, and one commit per green cycle. |
 | `codebase-design` | Shared words for designing deep modules: module, interface, depth, seam, adapter. |
 | `draft-pr` | Pushes the branch and opens a draft PR, with a description written from the commits and the diff. |
+| `merge` | Merges the PR of an approved issue with a rebase merge, tests the merged code, closes the issue with a result, and removes the worktree and the branch. |
 
 `implement` and `tdd` call `review` and `ready-for-review`, from the [review](../review/) skills in this repo. Install those too.
 
@@ -30,12 +31,12 @@ The issue tracker is described in `docs/agents/issue-tracker.md`.
 The rules for pull requests are in `docs/agents/pull-requests.md`.
 ```
 
-- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which status means "in progress", "ready", "in review" and "a stopped build", and where a stopped build writes its open question. `implement`, `prepare`, `review` and `ready-for-review` read it.
+- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which status means "in progress", "ready", "in review", "approved", "done" and "a stopped build", where a stopped build writes its open question, and where an issue's PR link lives. `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
 
 ## Credits
 
-`implement`, `tdd`, `grilling` and `codebase-design` come from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT, © Matt Pocock), commit `49dd158` (2026-10-09). Each has Matt's license in its folder. `prepare` and `draft-pr` are mine.
+`implement`, `tdd`, `grilling` and `codebase-design` come from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT, © Matt Pocock), commit `49dd158` (2026-10-09). Each has Matt's license in its folder. `prepare`, `draft-pr` and `merge` are mine.
 
 | Skill | Upstream path | Changes |
 |---|---|---|
