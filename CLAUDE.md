@@ -1,1 +1,1 @@
-When a change under `review/` or `development/` changes what a skill does, add a line to that folder's `CHANGELOG.md` in the same commit. Wording-only changes need no line.
+When a change under `review/` or `development/` changes what a skill does, add a line to that folder's `CHANGELOG.md` in the same PR. Any commit of the PR can hold the line. Wording-only changes need no line.
