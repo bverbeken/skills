@@ -6,10 +6,6 @@ effort: low
 
 You are creating a **draft pull request** for the current branch. This command takes no arguments — derive everything from the branch, its commits, and the diff. Do not pause for approval; create the PR directly, then report the URL.
 
-# 0. Read the project's pull request rules
-
-When the project's `CLAUDE.md` or `AGENTS.md` names a pull request doc, usually `docs/agents/pull-requests.md`, read it before anything else. Its rules add to the rules in this skill, and win where the two differ. When the project names none, follow this skill alone.
-
 # 1. Verify you are in the right repo and on a feature branch
 
 Confirm where you are before doing anything. Run in parallel:
@@ -20,6 +16,8 @@ Confirm where you are before doing anything. Run in parallel:
 Then:
 - If `gh repo view` fails, the current directory is not a GitHub repo. Stop and tell the user.
 - If the current branch **is** the default branch (master/main), stop — there is nothing to open a PR from. Tell the user to switch to a feature branch.
+
+Then read the project's pull request rules. When a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it names a pull request doc, usually `docs/agents/pull-requests.md`, read it. The path is relative to the folder of the file that names it. Its rules add to this skill's rules for the description, and win where the two differ. The git rules of this skill always hold: draft only, no reviewers, never force-push. When no file names a pull request doc, follow this skill alone.
 
 Then push the branch, if the remote does not have all its commits yet:
 - `git fetch origin <branch>`, then `git rev-list --count origin/<branch>..HEAD`. If the remote branch does not exist, or the count is above 0, run `git push -u origin <branch>`, with the branch name spelled out, so it never pushes to the base branch.
@@ -34,9 +32,9 @@ Print one line as a sanity check, then continue without waiting:
 
 # 2. Gather the changes
 
-Read what actually changed so the description is accurate, not a guess:
-- `git log <base>..HEAD --oneline` — the commits on this branch.
-- `git diff <base>...HEAD` — the full diff. For large diffs, read the stat (`--stat`) plus the substantive hunks; you need to understand *what* changed and *why*, not transcribe it.
+Read what actually changed so the description is accurate, not a guess. Run `git fetch origin <base>` first, so the local base can't be behind:
+- `git log origin/<base>..HEAD --oneline` — the commits on this branch.
+- `git diff origin/<base>...HEAD` — the full diff. For large diffs, read the stat (`--stat`) plus the substantive hunks; you need to understand *what* changed and *why*, not transcribe it.
 
 # 3. Quick self-review (analyze now, report later)
 
