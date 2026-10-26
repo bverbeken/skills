@@ -35,7 +35,7 @@ Within one status, follow the board order the tracker docs give, or else take th
 |---|---|
 | `TO_CLARIFY` | Without `--afk`: call "prepare" with the issue. With `--afk`: no step, the decisions are the user's. |
 | `READY` | Build, below. |
-| `REVIEW` | When the PR has a **new thread**: an open review thread that a human started, where neither the build (its replies start with `🤖 `) nor the user has the last word. Then work in the issue's repo, in the worktree that has the PR's branch checked out, or else in the repo's main checkout, as `merge` finds them. Put the PR back in draft (`gh pr ready --undo <num>`), then call "ready-for-review" with the PR link and the issue. On NOT READY, **stop** with its problems. Otherwise: no step, the PR waits on the user's review. |
+| `REVIEW` | When the PR has a **new thread**: an open review thread that a human started, where neither the build (its replies start with `🤖 `) nor the user has the last word. Then work in the issue's repo, in the worktree that has the PR's branch checked out, or else in the repo's main checkout, as `merge` finds them, and **ready the PR**, below. Otherwise: no step, the PR waits on the user's review. |
 | `APPROVED` | Call "merge" with the issue. |
 | `BACKLOG` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `DONE`. |
@@ -52,7 +52,11 @@ When there is no step, change nothing. When `implement` or `merge` stops, it wri
 4. When the second run still says NO GO, **stop** with the blocking findings.
 5. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`. Call "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any.
 6. Link the PR to the issue as the issue tracker docs say.
-7. Call "ready-for-review" with the PR number and the issue. On NOT READY, **stop** with its problems.
+7. **Ready the PR**, below.
+
+### Ready the PR
+
+When the PR is out of draft, put it back in draft: `gh pr ready --undo <num>`. Call "ready-for-review" with the PR link and the issue. On NOT READY, **stop** with its problems.
 
 ## 4. Go on or end
 
