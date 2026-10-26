@@ -5,6 +5,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 ## 2026-10-26
 
 - New: `merge` merges the PR of an approved issue with a rebase merge. When GitHub refuses, it rebases once onto the base branch; a conflict or a failure stops it with an open question. It tests the merged code, closes the issue with a result, and removes the worktree and the branch.
+- `implement`: links the PR to the issue, as the issue tracker docs say.
 - `draft-pr`: opens a new PR when the branch only has a closed or merged one.
 - `draft-pr`: takes an optional list of seams that `tdd` picked itself, and writes them in a `## Seams I chose` section.
 - `draft-pr`: goes back to the skill that called it, so `implement --afk` continues after the PR is open.

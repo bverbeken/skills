@@ -58,7 +58,7 @@ Judge each review finding by what the code will do in production, not by what th
 
 ## Draft PR
 
-When the review says GO and no question to the user is open, call the Skill tool with "draft-pr" from the worktree, without asking. Give the user the PR link and the worktree path.
+When the review says GO and no question to the user is open, call the Skill tool with "draft-pr" from the worktree, without asking. Link the PR to the issue as the issue tracker docs say, when they say how. Give the user the PR link and the worktree path.
 
 When the review still says NO GO after the second run, stop and show the user the blocking findings instead.
 
@@ -67,7 +67,7 @@ When the review still says NO GO after the second run, stop and show the user th
 Only with `--afk`:
 
 1. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`.
-2. Call the Skill tool with "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any. It opens the draft PR, or prints the existing one.
+2. Call the Skill tool with "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any. It opens the draft PR, or prints the existing one. Link the PR to the issue, as in Draft PR.
 3. Call the Skill tool with "ready-for-review", the PR number, the issue reference and `--afk`.
 4. On NOT READY, **stop** with the problems it lists as the question.
 
