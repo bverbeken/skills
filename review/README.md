@@ -30,7 +30,7 @@ Each check can also run on its own, for example `/review-tests 142`.
 
 A finding that is already in a thread is not reported twice. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
 
-**Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs the full `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you when a fix needs your choice. Copilot threads get a short reply and are resolved, both the fixed and the dismissed ones. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready. It refuses PRs that are not yours.
+**Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs the full `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you when a fix needs your choice. With `--afk` it asks nothing: it takes its own recommendation, answers your threads with replies that start with `🤖 `, and leaves the PR in draft when something only you can decide is left. Copilot threads get a short reply and are resolved, both the fixed and the dismissed ones. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to the review status. It refuses PRs that are not yours.
 
 ## What it does
 
