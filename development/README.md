@@ -42,7 +42,7 @@ The skills name statuses with fixed UPPERCASE names:
 |---|---|
 | `BACKLOG` | worth doing, not planned yet |
 | `BLOCKED` | planned, but a blocker is not `DONE` yet |
-| `NEXT_UP` | to prepare: open decisions, or an open question from a stopped build |
+| `TO_CLARIFY` | to prepare: open decisions, or an open question from a stopped build |
 | `READY` | prepared, you give the go: it can be built |
 | `BUSY` | being built |
 | `REVIEW` | the PR is ready for your review |

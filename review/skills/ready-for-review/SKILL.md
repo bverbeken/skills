@@ -127,6 +127,7 @@ When there is no problem left:
 PR #<num> is out of draft: <url>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 New suggestions: <one line each, from rounds after the first, or: none>
+Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
 ```
 
 ## Bot replies
