@@ -14,9 +14,13 @@ To **stop**: write what went wrong in the issue's open question section and move
 
 Fetch the issue from the issue tracker and state its title. If the reference is ambiguous, **refuse**.
 
-Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the open PR of the issue's branch: `gh pr list --head <branch> --state open`. When there is no PR, **refuse**.
+Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the newest PR of the issue's branch: `gh pr list -R <owner>/<repo> --head <branch> --state all`. When there is no PR, **refuse**.
 
-Work in the PR's repo, the main checkout. Its worktree is at `<repo>/../<repo>.worktrees/<branch>`.
+Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,state,isDraft,baseRefName,headRefName,headRefOid`. `<base>` is `baseRefName` and `<branch>` is `headRefName`.
+
+Work in the repo's main checkout. Find it as step 2 of `../review/STEPS.md` does (next to this skill's folder). The branch's worktree is at `<repo>/../<repo>.worktrees/<branch>`.
+
+Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo without tests skips every test step below.
 
 ## 2. Check
 
@@ -39,7 +43,7 @@ When GitHub refuses it, rebase once, in the worktree. When the worktree is gone,
 
 ## 4. Test main
 
-Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. When the repo has no tests, go to step 5.
+When the repo has no tests, go to step 5.
 
 Run the tests on the merged code in a temporary worktree:
 
