@@ -36,10 +36,11 @@ The skills use the files that your project's `CLAUDE.md` or `AGENTS.md` points t
 ## Agent skills
 
 The issue tracker is described in `docs/agents/issue-tracker.md`.
+The rules for pull requests are in `docs/agents/pull-requests.md`.
 ```
 
 - `docs/agents/issue-tracker.md`: where issues live, how to read and change them, and which status means "in progress" and "ready". `implement`, `prepare` and `review` read it.
-- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` looks for it in the repo and in the folders above it, so one file can serve a folder of repos.
+- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
 
 ## Credits
 
