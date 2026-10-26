@@ -46,7 +46,7 @@ Leave the status alone and say so in each of these cases:
 - There is no issue, only a spec.
 - `--keep-status` was passed.
 - The issue tracker docs map no status to `READY`.
-- The issue is in `BLOCKED`, or in a status the docs don't map, such as a canceled status.
+- The issue is in `BLOCKED`, or closed without being done, for example canceled.
 - The issue is already in `READY` or past it, for example in `REVIEW` or `DONE`.
 
 Otherwise, move the issue to `READY`.
