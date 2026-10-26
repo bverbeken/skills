@@ -26,7 +26,7 @@ Then push the branch, if the remote does not have all its commits yet:
 - If the push fails (for example, the remote has commits you don't have), stop and tell the user. Never force-push.
 
 Then check for an existing PR:
-- If a PR already exists for this branch (`gh pr view --json url,state,isDraft`), do not create a duplicate. Print its URL and stop, or go back to the skill that called this one.
+- If an open PR already exists for this branch (`gh pr view --json url,state,isDraft` shows `OPEN`), do not create a duplicate. A closed or merged PR for the branch does not count: create a new one. Print its URL and stop, or go back to the skill that called this one.
 
 Print one line as a sanity check, then continue without waiting:
 `Drafting PR in <owner/repo>: <branch> → <base>`
