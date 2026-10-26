@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-26
 
+- `ready-for-review --afk`: makes a PR ready with nobody watching. It asks nothing and takes its own recommendation. It rebases on merge conflicts and pushes with `--force-with-lease`. It answers your threads, each reply starting with `🤖 `. Suggestions outside the PR go to a `## Skipped: your call` section. What only you can decide is skipped, so the PR stays in draft as NOT READY.
 - `review-dependencies`: a dependency without a license, or with a custom one, gets a LICENSE finding instead of a question to you. It blocks when the dependency runs in the product.
 - `review`: a PR comment that starts with `🤖 ` is the build's, not yours. On your own PR, a thread where the build has the last word waits for you. When you answer, it goes back to triage.
 - No longer a Claude Code plugin. Install the skills by linking their folders into `~/.claude/skills/`, see the README. The skill names lose their `review:` prefix: `/review 142` instead of `/review:review 142`.
