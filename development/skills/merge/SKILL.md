@@ -54,7 +54,7 @@ Run the tests on the merged code in a temporary worktree:
 3. Run the full test suite.
 4. Remove the temporary worktree.
 
-When the tests fail, keep the merge and revert nothing. Write the failing tests in the open question section, move the issue to the status for a stopped build, and go on with step 6.
+When the tests fail, keep the merge and revert nothing. Record the failing tests as a **stop** does, but go on with step 6 instead of ending.
 
 ## 5. Close the issue
 
