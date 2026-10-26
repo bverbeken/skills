@@ -26,11 +26,12 @@ Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo w
 
 ## 2. Check
 
+When the issue tracker docs map no status to `APPROVED`, **refuse**: merge can't tell whether the user approved the PR.
+
 When the PR is already merged, an earlier run broke off after the merge. Skip the checks below. Go on with step 4 when the issue is still in `APPROVED`, or with step 6 when it moved on.
 
 Otherwise, **refuse** when any of these is true:
 
-- The issue tracker docs map no status to `APPROVED`. Without it, merge can't tell whether the user approved the PR.
 - The issue is not in `APPROVED`. That status is the user's approval: a GitHub approval is not needed.
 - The PR is closed without a merge, or it is a draft.
 - A CI check failed or is still pending (`gh pr checks <num>`). No CI at all is fine.
