@@ -11,6 +11,7 @@ Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean
 With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do this instead:
 
 - The fix needs a choice: take your own recommendation. When the choice is really the user's, as the spec or the issue leaves it to them, skip the item.
+- The fix would change or bend a line in the issue's `## Decisions` section: skip the item. That line is the user's call. For a skipped blocking item, the NOT READY line names the decision line, the fact you found, the question, and your own recommendation.
 - The fix changes code outside the PR's files, or needs a new issue: fix a blocking item, skip a suggestion.
 - Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push. When a conflict needs a choice that is really the user's, skip it.
 - Unpushed commits: push them.
