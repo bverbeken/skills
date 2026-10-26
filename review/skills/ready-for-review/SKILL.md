@@ -14,7 +14,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - The fix changes code outside the PR's files, or needs a new issue: fix a blocking item. Delete a suggestion from the list, and add it to a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
 - Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push. When a conflict needs a choice that is really the user's, skip it.
 - Unpushed commits: push them.
-- An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open. A thread where the build has the last word (see `../review/THREADS.md`) is no problem.
+- An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open.
 - Anything else, and every item that is still not fixed after you tried: skip it.
 
 A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
@@ -46,7 +46,7 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5.
+- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5. With `--afk`, leave out the threads where the build has the last word.
 - New commits: the head commit changed since step 1. The review checked older code.
 
 ## 4. Write the TODO list
