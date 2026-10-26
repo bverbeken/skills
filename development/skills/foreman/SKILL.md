@@ -39,16 +39,16 @@ Within one status, follow the board order the tracker docs give, or else take th
 | `APPROVED` | Call "merge" with the issue. |
 | `BACKLOG` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `DONE`. |
-| `BUSY` | No step: a build may still be running, or it broke off. Move the issue back to `READY` to build it again. |
+| `BUSY` | No step: a build may still be running, or it broke off. To build it again, the user moves it back to `READY`. |
 | `DONE` | No step: the issue is merged. |
 
-When there is no step, change nothing. When a worker stops, it writes its own question and moves the issue: end.
+When there is no step, change nothing. When `implement` or `merge` stops, it writes its own question and moves the issue: end. When another worker ends without its normal result, for example `draft-pr` can't push, **stop** with its message.
 
 ### Build
 
 1. Move the issue to `BUSY`. Assign it to the user only when the issue tracker docs say issues have an assignee.
 2. Call "implement" with the issue. When it stops, end.
-3. Call "review" with the branch that `implement` gives and the issue, from its worktree. On NO GO, call "implement" with the issue and the blocking findings, so it fixes each in its own commit, then call "review" once more. Run "review" at most twice.
+3. Call "review" with the branch that `implement` gives and the issue, from its worktree. On NO GO, call "implement" with the issue and the blocking findings, so it fixes each in its own commit. When it stops, end. Otherwise call "review" once more. Run "review" at most twice.
 4. When the second run still says NO GO, **stop** with the blocking findings.
 5. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`. Call "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any.
 6. Link the PR to the issue as the issue tracker docs say.
