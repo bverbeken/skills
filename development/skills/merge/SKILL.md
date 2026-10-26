@@ -14,7 +14,7 @@ To **stop**: write what went wrong in the issue's open question section and move
 
 Fetch the issue from the issue tracker and state its title. If the reference is ambiguous, **refuse**.
 
-Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the newest PR of the issue's branch: `gh pr list -R <owner>/<repo> --head <branch> --state all`. When there is no PR, **refuse**.
+Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the issue's repo and branch name from the issue tracker, as `implement` does, and the newest PR of that branch: `gh pr list -R <owner>/<repo> --head <branch name> --state all`. When there is no PR, **refuse**.
 
 Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,state,isDraft,baseRefName,headRefName,headRefOid`. `<base>` is `baseRefName` and `<branch>` is `headRefName`.
 
