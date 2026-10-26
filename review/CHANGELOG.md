@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-26
 
+- `ready-for-review`: moves the issue to the factory status `REVIEW`, as the issue tracker docs map it. When the docs map no status to `REVIEW`, it says so at the end.
 - `review`: a `🤖 ` PR comment that names the URL of a review body or a PR comment joins that thread.
 - `review`: takes an issue next to a PR, for a public repo where the PR does not name it. `ready-for-review` passes its issue on.
 - `ready-for-review`: a human thread with a DISCUSS or CLARIFY verdict is a problem, also when it is a review body or a PR comment, so it never goes ready unanswered.
