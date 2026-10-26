@@ -38,7 +38,7 @@ Then answer these five questions. Use the registry (`npm view <pkg> --json`, Mav
    - Allowed everywhere: MIT, BSD, ISC, Apache-2.0, and other permissive licenses.
    - Allowed in the product only as an unmodified library: MPL-2.0, LGPL, EPL.
    - Allowed only in the build, CI or tests: GPL, AGPL, SSPL, BUSL, and other copyleft or source-available licenses.
-   - No license, or a custom one: ask the user.
+   - No license, or a custom one: not allowed until the user says where it may run.
 5. **Alternatives.** Name up to three other options for the same job, including the standard library, own code, or the same tool installed another way (a GitHub Action, a release binary). Compare them on fit, maintenance, trust and license, in one line each. Name an alternative as better only when it wins on a point that matters here.
 
 Do the research for several dependencies in parallel: start one `Agent` per dependency when there are more than two.
