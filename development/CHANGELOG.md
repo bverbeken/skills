@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-26
 
+- `draft-pr`: goes back to the skill that called it, so `implement --afk` continues after the PR is open.
 - `prepare` and `grilling`: you confirm the decisions once, when `prepare` shows the text it will write. `grilling` skips its closing question when the skill that called it asks for the confirmation itself.
 - `draft-pr`: no longer runs its own quick review, which repeated the checks of `review`. The cold read of the description finds `review-description` again: its path pointed to a folder that no longer exists.
 - `tdd`: a seam named in the issue's `## Decisions` counts as confirmed. It asks about other seams through `prepare`. With `--afk`, it picks them itself and `implement` lists them in the PR description.
