@@ -8,7 +8,7 @@ Do the next step for the issue in `$ARGUMENTS`. The order of the steps lives onl
 
 UPPERCASE statuses, such as `READY`, are factory statuses. The issue tracker docs map each one to a status of the tracker.
 
-Without `--afk`, do one step and end. With `--afk`, nobody watches: ask nothing, pass `--afk` on to `prepare`, `implement`, `ready-for-review` and `merge`, and keep going until the issue waits on the user.
+Without `--afk`, do one step and end. With `--afk`, nobody watches: ask nothing, pass `--afk` on to `implement`, `ready-for-review` and `merge`, and keep going until the issue waits on the user.
 
 To **stop** with a problem: without `--afk`, show the user the problem and end. The issue stays in its status: say so, and say which status to move it to. With `--afk`, write the problem in the issue's open question section, as the issue tracker docs name it, move the issue to `TO_CLARIFY`, and end. When the docs name no such section, print the problem, leave the status alone, and end.
 
