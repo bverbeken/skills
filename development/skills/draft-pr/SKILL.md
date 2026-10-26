@@ -1,10 +1,11 @@
 ---
 name: draft-pr
 description: "Push the current branch and create a draft pull request for it, with a full description written from the commits and diff."
+argument-hint: "[seams that tdd picked]"
 effort: low
 ---
 
-You are creating a **draft pull request** for the current branch. This command takes no arguments — derive everything from the branch, its commits, and the diff. Do not pause for approval; create the PR directly, then report the URL.
+You are creating a **draft pull request** for the current branch. Derive everything from the branch, its commits, and the diff. The only argument is an optional list of seams that `tdd` picked itself, one line per seam with what it catches. Do not pause for approval; create the PR directly, then report the URL.
 
 # 1. Verify you are in the right repo and on a feature branch
 
@@ -64,6 +65,8 @@ The default body is the intro alone. Most PRs have 0 or 1 section. Add a section
    ```
 
 4. **`## Follow-ups`** *(optional)* — only named issues from the project's issue tracker, one line each: `ACME-123 (retry failed webhooks)`. Only issues you saw in the commits, the branch name, this session or the tracker itself. Never guess an issue ID or take one from an example: if you can't confirm the ID and its title, leave the section out.
+
+5. **`## Seams I chose`** — only when the arguments hold a list of seams: that list, one line per seam.
 
 Hard rules for the body:
 - **Never explain the code.** No class names, method names, file paths, or descriptions of the diff ("the rest of the diff is tests", "the rule is now named and reused"). How the *system* behaves is not code: state it when the reader needs it to follow the why.
