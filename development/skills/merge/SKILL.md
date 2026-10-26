@@ -49,7 +49,7 @@ When the repo has no tests, go to step 5.
 
 Run the tests on the merged code in a temporary worktree:
 
-1. `git fetch origin`, then `git worktree add --detach <repo>/../<repo>.worktrees/merged-<branch> origin/<base>`.
+1. `git fetch origin`. Remove a leftover from an earlier run: `git worktree remove --force <repo>/../<repo>.worktrees/merged-<branch>`. Then `git worktree add --detach <repo>/../<repo>.worktrees/merged-<branch> origin/<base>`.
 2. Copy the ignored setup files and install what the tests need, as `implement` does for its worktree.
 3. Run the full test suite.
 4. Remove the temporary worktree.
