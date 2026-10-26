@@ -1,6 +1,6 @@
 ---
 name: implement
-description: "Implement a piece of work based on a spec or set of issues."
+description: "Implement a piece of work based on a spec or set of issues. Use when the user says \"implement <issue>\", or when another skill builds an issue or spec."
 argument-hint: "<issue or spec> [review findings] [--afk]"
 ---
 
