@@ -30,11 +30,11 @@ Work in the PR's repo, the main checkout. Its worktree is at `<repo>/../<repo>.w
 
 Run `gh pr merge <num> --rebase`. When GitHub accepts it, go to step 4.
 
-When GitHub refuses it, rebase once, in the worktree. Create the worktree as `implement` does when it is gone.
+When GitHub refuses it, rebase once, in the worktree. When the worktree is gone, create it from the PR head: `git worktree add -B <branch> <path> origin/<branch>`. Before the rebase, **refuse** when the worktree has uncommitted changes, or when its `HEAD` is not the PR's `headRefOid`. Only the code the user approved gets rebased.
 
 1. `git fetch origin`, then `git rebase origin/<base>`. On a conflict: `git rebase --abort`, and **stop** with the files that conflict. Merge never fixes a conflict itself: a fix is new code the user did not review.
 2. Run the tests on the branch. When they fail: reset the branch to `origin/<branch>`, and **stop** with the failing tests.
-3. `git push --force-with-lease`. When the repo has CI, wait for it: `gh pr checks <num> --watch`. When it fails, **stop** with the failing checks.
+3. `git push --force-with-lease=<branch>:<headRefOid>`. When the repo has CI, wait for it: `gh pr checks <num> --watch`. When it fails, **stop** with the failing checks.
 4. Run `gh pr merge <num> --rebase` again. When GitHub refuses it again, **stop** with its message.
 
 ## 4. Test main
