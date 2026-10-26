@@ -38,13 +38,13 @@ Read what actually changed so the description is accurate, not a guess:
 - `git log <base>..HEAD --oneline` — the commits on this branch.
 - `git diff <base>...HEAD` — the full diff. For large diffs, read the stat (`--stat`) plus the substantive hunks; you need to understand *what* changed and *why*, not transcribe it.
 
-# 3. Quick self-review (analyse now, report later)
+# 3. Quick self-review (analyze now, report later)
 
-Before writing the description, do a fast review pass over the diff from step 2. **Do not pause and do not block PR creation** — just collect findings and hold them; you'll report them as a separate message after the PR exists (step 6). This is a sanity check for the user, not a gate.
+Before writing the description, do a fast review pass over the diff from step 2. **Do not pause and do not block PR creation** — just collect findings and hold them; you'll report them as a separate message after the PR exists (step 6). The findings never stop the PR from being created.
 
 Check each of these against the diff:
 
-1. **Tested enough?** — Does the change have matching test coverage? Flag new/changed logic (functions, branches, edge cases) that has no accompanying test. Don't demand tests for trivial or non-testable changes (config, copy, styling); use judgement.
+1. **Tested enough?** — Does the change have matching test coverage? Flag new/changed logic (functions, branches, edge cases) that has no accompanying test. Don't demand tests for trivial or non-testable changes (config, copy, styling); use judgment.
 2. **MISSING LEVEL** — Read the repo's written testing rules: `CLAUDE.md` and `AGENTS.md` in the repo and in the folders above it, and the files they import. Flag a change for which a rule asks for a test at a certain level, when the diff has none at that level. Quote the rule.
 3. **DEBUG LEFTOVER / TODO** — Flag `console.log`, `debugger`, `print`, a focused test (`.only`, `fdescribe`, `fit`), commented-out code, and stray `TODO`/`FIXME` introduced in the diff.
 4. **Obvious bugs / regressions** — A quick scan for logic errors, off-by-one, null/undefined hazards, and backwards-compatibility breaks in the changed code. Only call out things you're reasonably confident about — no speculative nitpicks.
