@@ -1,0 +1,72 @@
+---
+name: merge
+description: "Merge the PR of an approved issue with a rebase merge, close the issue with a result, and remove its worktree and branch. Use when the user says \"merge <issue>\" or \"merge the PR of <issue>\", or when another skill merges an approved issue."
+argument-hint: "<issue> [--afk]"
+---
+
+Merge the PR of the issue in `$ARGUMENTS`, then close the issue and clean up. Merge never asks the user anything: every problem ends in a **stop**. `--afk` changes nothing; accept it so a calling skill can pass it to every worker.
+
+To **stop**: write what went wrong in the issue's open question section and move the issue to the status for a stopped build, both as the issue tracker docs name them. Then end. When the docs name no such section or status, print the problem, leave the status alone, and end.
+
+## 1. Find the issue and its PR
+
+Fetch the issue from the issue tracker and state its title. If the reference is ambiguous, stop and say why.
+
+Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the open PR of the issue's branch: `gh pr list --head <branch> --state open`. When there is no PR, stop and say why, changing nothing.
+
+Work in the PR's repo, the main checkout. Its worktree is at `<repo>/../<repo>.worktrees/<branch>`.
+
+## 2. Check
+
+Stop and say why, changing nothing, when any of these is true:
+
+- The issue is not in the status the issue tracker docs name for an approved PR. That status is the user's approval: a GitHub approval is not needed.
+- The PR is not open, or it is a draft.
+- A CI check failed or is still pending (`gh pr checks <num>`). No CI at all is fine.
+
+## 3. Merge
+
+Run `gh pr merge <num> --rebase`. When GitHub accepts it, go to step 4.
+
+When GitHub refuses it, rebase once, in the worktree. Create the worktree as `implement` does when it is gone.
+
+1. `git fetch origin`, then `git rebase origin/<base>`. On a conflict: `git rebase --abort`, and **stop** with the files that conflict. Merge never fixes a conflict itself: a fix is new code the user did not review.
+2. Run the tests on the branch. When they fail: reset the branch to `origin/<branch>`, and **stop** with the failing tests.
+3. `git push --force-with-lease`. When the repo has CI, wait for it: `gh pr checks <num> --watch`. When it fails, **stop** with the failing checks.
+4. Run `gh pr merge <num> --rebase` again. When GitHub refuses it again, **stop** with its message.
+
+## 4. Test main
+
+Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. When the repo has no tests, go to step 5.
+
+Run the tests on the merged code in a temporary worktree:
+
+1. `git fetch origin`, then `git worktree add --detach <repo>/../<repo>.worktrees/merged-<branch> origin/<base>`.
+2. Copy the ignored setup files and install what the tests need, as `implement` does for its worktree.
+3. Run the full test suite.
+4. Remove the temporary worktree.
+
+When the tests fail, keep the merge and revert nothing. Write the failing tests in the open question section, move the issue to the status for a stopped build, and go on with step 6.
+
+## 5. Close the issue
+
+Move the issue to the done status that the issue tracker docs name, and do what the docs say comes with it, such as moving issues it blocked.
+
+When the docs name a result section, add it, for example:
+
+```
+## Result (2026-10-26)
+Add the merge skill (PR #4). Last commit on main: a1b2c3d.
+```
+
+That is the PR title, the PR link, and the short SHA of the PR's last commit on `<base>`. When the repo has no tests, add "No tests in this repo."
+
+## 6. Clean up
+
+1. Remove the worktree and delete the local branch. Keep both when the worktree has uncommitted changes (`git status --porcelain`) or commits that are not on `origin/<base>`.
+2. Delete the branch on GitHub: `git push origin --delete <branch>`.
+3. In the main checkout: when it is on `<base>` and clean, run `git pull`. Otherwise run `git fetch origin`.
+
+When you kept the worktree, say why and give its path.
+
+End with the PR link, the status the issue is in now, and, after a stop, the problem.
