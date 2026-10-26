@@ -10,7 +10,7 @@ To **refuse**: print why, change nothing, and end.
 
 UPPERCASE statuses, such as `APPROVED`, are factory statuses. The issue tracker docs map each one to a status of the tracker. When the docs map no status for a move, leave the issue where it is and say so at the end.
 
-To **stop**: write what went wrong in the issue's open question section, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. Then end. When the docs name no such section, print the problem, leave the status alone, and end.
+To **stop**: write what went wrong in the issue's open question section, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. When the docs map no `TO_CLARIFY`, the issue stays in its status: say that it needs a manual move. Then end. When the docs name no such section, print the problem, leave the status alone, and end.
 
 ## 1. Find the issue and its PR
 

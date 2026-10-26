@@ -21,7 +21,7 @@ With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, t
 - A new open decision during the build: take your own recommendation, or **stop** when the decision is really the user's.
 - Review and Draft PR: skip them, and go to Ready PR.
 
-To **stop**: write the question in the issue's open question section, or leave the one that is there, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. Then end. When there is no issue, or the docs name no such section, print the question, leave the status alone, and end.
+To **stop**: write the question in the issue's open question section, or leave the one that is there, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. When the docs map no `TO_CLARIFY`, the issue stays in its status: say that it needs a manual move. Then end. When there is no issue, or the docs name no such section, print the question, leave the status alone, and end.
 
 ## Clarify
 
