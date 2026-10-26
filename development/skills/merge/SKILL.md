@@ -34,7 +34,7 @@ When GitHub refuses it, rebase once, in the worktree. When the worktree is gone,
 
 1. `git fetch origin`, then `git rebase origin/<base>`. On a conflict: `git rebase --abort`, and **stop** with the files that conflict. Merge never fixes a conflict itself: a fix is new code the user did not review.
 2. Run the tests on the branch. When they fail: reset the branch to `origin/<branch>`, and **stop** with the failing tests.
-3. `git push --force-with-lease=<branch>:<headRefOid>`. When the repo has CI, wait for it: `gh pr checks <num> --watch`. When it fails, **stop** with the failing checks.
+3. `git push --force-with-lease=<branch>:<headRefOid>`. When the repo has CI, wait until `gh pr view <num> --json headRefOid,statusCheckRollup` shows the new head commit with its checks started, then run `gh pr checks <num> --watch`. When it fails, **stop** with the failing checks.
 4. Run `gh pr merge <num> --rebase` again. When GitHub refuses it again, **stop** with its message.
 
 ## 4. Test main
