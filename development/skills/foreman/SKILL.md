@@ -10,7 +10,7 @@ UPPERCASE statuses, such as `READY`, are factory statuses. The issue tracker doc
 
 Without `--afk`, do one step and end. With `--afk`, nobody watches: ask nothing, pass `--afk` on to every worker, and keep going until the issue waits on the user.
 
-To **stop** with a problem: without `--afk`, show the user the problem and end. The issue stays in its status: say so, and say which status to move it to. With `--afk`, write the problem in the issue's open question section, as the issue tracker docs name it, move the issue to `TO_CLARIFY`, and end.
+To **stop** with a problem: without `--afk`, show the user the problem and end. The issue stays in its status: say so, and say which status to move it to. With `--afk`, write the problem in the issue's open question section, as the issue tracker docs name it, move the issue to `TO_CLARIFY`, and end. When the docs name no such section, print the problem, leave the status alone, and end.
 
 ## 1. Check the mapping
 
@@ -48,7 +48,7 @@ When there is no step, change nothing. When a worker stops, it writes its own qu
 
 1. Move the issue to `BUSY`. Assign it to the user only when the issue tracker docs say issues have an assignee.
 2. Call "implement" with the issue. When it stops, end.
-3. Call "review" with no arguments, from the worktree that `implement` gives. On NO GO, call "implement" with the issue and the blocking findings, so it fixes each in its own commit, then call "review" once more. Run "review" at most twice.
+3. Call "review" with the issue, from the worktree that `implement` gives. On NO GO, call "implement" with the issue and the blocking findings, so it fixes each in its own commit, then call "review" once more. Run "review" at most twice.
 4. When the second run still says NO GO, **stop** with the blocking findings.
 5. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`. Call "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any.
 6. Link the PR to the issue as the issue tracker docs say.

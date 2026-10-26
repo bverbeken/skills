@@ -23,7 +23,7 @@ To **stop**: write the question in the issue's open question section, or leave t
 
 ## Open decisions
 
-Build from the issue's `## Decisions` section. When an open decision comes up during the build, stop and call the Skill tool with "prepare", the issue reference or spec, `--keep-status` and that decision. Build on the answer, never on a guess.
+Build from the issue's `## Decisions` section. When an open decision comes up during the build, stop and call the Skill tool with "prepare", the issue reference or spec, `--keep-status` and that decision. A review finding that says the spec or the design is wrong is a new open decision too. Build on the answer, never on a guess.
 
 ## Worktree
 
