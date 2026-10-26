@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-26
 
+- `review`: a PR comment that starts with `🤖 ` is the build's, not yours. On your own PR, a thread where the build has the last word waits for you. When you answer, it goes back to triage.
 - No longer a Claude Code plugin. Install the skills by linking their folders into `~/.claude/skills/`, see the README. The skill names lose their `review:` prefix: `/review 142` instead of `/review:review 142`.
 
 ## 2026-10-24

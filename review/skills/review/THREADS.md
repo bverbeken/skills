@@ -1,6 +1,6 @@
 # Threads
 
-How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code) carry the user's login, so they count as the user's.
+How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code) carry the user's login, so they count as the user's. One exception: a comment that starts with `🤖 ` is the **build**'s. `ready-for-review --afk` posted it, and it counts as neither yours nor someone else's.
 
 ## 1. Fetch
 
@@ -46,6 +46,7 @@ Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
 | Thread | Group |
 |---|---|
+| Open, and the build has the last word | **waiting** |
 | Open, and someone else has the last word | **triage** |
 | Open, and only you commented in it (a note from you or your tools) | **triage** |
 | Open, and you have the last word after someone else | **waiting** |
