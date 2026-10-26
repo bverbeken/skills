@@ -13,17 +13,19 @@ Once you have the issue, move it to the issue tracker's in-progress status. The 
 
 ## --afk
 
-With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, take your own recommendation and go on. Stop only on a decision that is really the user's. Then write it in the issue's open question section, move the issue to the status for a stopped build, both as the issue tracker docs name them, and end. Without an issue, print the question and end.
+With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, take your own recommendation and go on. Pass `--afk` on to `tdd` and `ready-for-review`. The steps change like this:
 
-Pass `--afk` on to `tdd` and `ready-for-review`.
+- Clarify: skip it. The issue's `## Decisions` section holds the decisions. When the issue still has an open question section, its answer never reached the decisions: **stop** without building.
+- A new open decision during the build: take your own recommendation, or **stop** when the decision is really the user's.
+- Review and Draft PR: skip them, and go to Ready PR.
+
+To **stop**: write the question in the issue's open question section, or leave the one that is there, and move the issue to the status for a stopped build, both as the issue tracker docs name them. Then end. When there is no issue, or the docs name no such section or status, print the question, leave the status alone, and end.
 
 ## Clarify
 
-With `--afk`, skip this step: the issue's `## Decisions` section holds the decisions. When the issue still has an open question section, its answer never reached the decisions: leave the section as it is, move the issue to the status for a stopped build, and end without building. The user answers it with prepare.
-
 Call the Skill tool with "prepare" and the issue reference or spec, plus `--keep-status`. This step is done when prepare says nothing is open, or the user approved its decisions.
 
-When a new open decision comes up later, during the build or the review, stop and call "prepare" again with the issue reference or spec, `--keep-status` and that decision. Build on the answer, never on a guess. With `--afk`, follow the `--afk` rule instead.
+When a new open decision comes up later, during the build or the review, stop and call "prepare" again with the issue reference or spec, `--keep-status` and that decision. Build on the answer, never on a guess.
 
 ## Worktree
 
@@ -50,8 +52,6 @@ Commit to the worktree's branch as you go, in small commits: one per green tdd c
 
 ## Review
 
-With `--afk`, skip this step and the next one, and go to "Ready PR".
-
 Once done, call the Skill tool with "review" and no arguments, from the worktree, to review its branch. On NO GO, fix each blocking finding in its own commit, then run "review" once more. Leave the suggestions for the user.
 
 Judge each review finding by what the code will do in production, not by what the spec says. When a finding says the spec or the design itself is wrong, that is a new open decision: call "prepare" for it, as in Clarify.
@@ -70,6 +70,6 @@ Only with `--afk`:
 2. Call the Skill tool with "draft-pr" from the worktree. It opens the draft PR, or prints the existing one.
 3. When `tdd` picked seams itself, add a `## Seams I chose` section to the PR description, one line per seam with what it catches.
 4. Call the Skill tool with "ready-for-review", the PR number, the issue reference and `--afk`.
-5. On NOT READY, the problems it lists are the open question: follow the `--afk` rule.
+5. On NOT READY, **stop** with the problems it lists as the question.
 
 End with the PR link and the worktree path.
