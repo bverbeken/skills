@@ -1,6 +1,6 @@
 # Threads
 
-How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code) carry the user's login, so they count as the user's. One exception: a comment that starts with `🤖 ` is the **build**'s. `ready-for-review --afk` posted it, and it counts as neither yours nor someone else's.
+How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code) carry the user's login, so they count as the user's. One exception: a comment from the user's login that starts with `🤖 ` is the **build**'s. `ready-for-review --afk` posted it, and it counts as neither yours nor someone else's.
 
 ## 1. Fetch
 
