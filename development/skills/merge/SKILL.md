@@ -27,8 +27,10 @@ Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo w
 **Refuse** when any of these is true:
 
 - The issue is not in the status the issue tracker docs name for an approved PR. That status is the user's approval: a GitHub approval is not needed.
-- The PR is not open, or it is a draft.
+- The PR is closed without a merge, or it is a draft.
 - A CI check failed or is still pending (`gh pr checks <num>`). No CI at all is fine.
+
+When the PR is already merged, an earlier run broke off after the merge: go on with step 4.
 
 ## 3. Merge
 
