@@ -40,6 +40,6 @@ The rules for pull requests are in `docs/agents/pull-requests.md`.
 | Skill | Upstream path | Changes |
 |---|---|---|
 | codebase-design | skills/engineering/codebase-design | none |
-| grilling | skills/productivity/grilling | asks one question at a time (most decisions depending on it first), not a full round |
+| grilling | skills/productivity/grilling | asks one question at a time (most decisions depending on it first), not a full round; skips its closing question when another skill called it |
 | implement | skills/engineering/implement | calls `review` instead of `code-review`, and fixes its blocking findings; commits as it goes, one small commit per step, instead of once at the end; asks its questions through `prepare` |
 | tdd | skills/engineering/tdd | refers to `review` instead of `code-review`; adds the rule "commit on green" (one commit per cycle) |
