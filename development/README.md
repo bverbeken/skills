@@ -6,6 +6,7 @@ Skills for building software with an agent, from an issue to a merged PR. Say `/
 
 | Skill | What it does |
 |---|---|
+| `foreman` | Does the next step for an issue, based on its status: `prepare` for an issue to clarify, a build up to a PR that is ready for review, `ready-for-review` for new review threads, `merge` for an approved issue. With `--afk`, it asks nothing and keeps going until the issue waits on you. |
 | `implement` | Builds an issue or a spec: asks its questions through `prepare`, builds with `tdd` in a separate worktree, runs `review`, and ends with `draft-pr`. With `--afk`, it ends with `draft-pr` and `ready-for-review --afk` instead. |
 | `prepare` | Lists the decisions an issue leaves open, asks you about them with `grilling`, and writes your answers in the issue under `## Decisions`. |
 | `grilling` | Asks you one question at a time, with a recommended answer, until every decision is settled. |
