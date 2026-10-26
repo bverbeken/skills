@@ -1,10 +1,23 @@
 ---
 name: ready-for-review
 description: "Take one of your own PRs out of draft: run a full own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and mark the PR ready once it is clean. Use whenever the user asks to take a PR out of draft or mark it ready for review, in any wording (\"PR out of draft\", \"make it ready\", \"undraft it\")."
-argument-hint: "[PR number | PR link | empty]"
+argument-hint: "[PR number | PR link | empty] [--afk]"
 ---
 
 Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: the full `review` finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
+
+## --afk
+
+With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do this instead:
+
+- The fix needs a choice: take your own recommendation.
+- The fix changes code outside the PR's files, or needs a new issue: fix a blocking item. Delete a suggestion from the list, and add it to a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
+- Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push.
+- Unpushed commits: push them.
+- An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open. A thread where the build has the last word (see `../review/THREADS.md`) is no problem.
+- Anything else, and every item that is still not fixed after you tried: skip it.
+
+A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
 
 ## 1. Check the PR
 
