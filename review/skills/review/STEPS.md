@@ -18,6 +18,8 @@ Resolve it to: the repo, the code to review (a ref), the base to diff against, t
 
 For a PR, get its data once: `gh pr view <num> -R <owner>/<repo> --json title,body,author,state,isDraft,baseRefName,headRefName,additions,deletions,changedFiles,commits` and `gh pr checks <num> -R <owner>/<repo>`.
 
+When the arguments also name an issue, that is the issue, for example for a PR in a public repo that keeps issue numbers out of sight.
+
 If the argument fits no row, or a ref does not resolve, stop and say what failed.
 
 Then set the **mode**. It is **own** when there is no PR, or the PR's author is the user (`gh api user -q .login`). It is **colleague** otherwise. Own mode has its own list of what blocks: see step 4.
