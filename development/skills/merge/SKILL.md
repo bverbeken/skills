@@ -24,13 +24,13 @@ Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo w
 
 ## 2. Check
 
-**Refuse** when any of these is true:
+When the PR is already merged, an earlier run broke off after the merge. Skip the checks below. Go on with step 4 when the issue is still in the approved status, or with step 6 when it moved on.
+
+Otherwise, **refuse** when any of these is true:
 
 - The issue is not in the status the issue tracker docs name for an approved PR. That status is the user's approval: a GitHub approval is not needed.
 - The PR is closed without a merge, or it is a draft.
 - A CI check failed or is still pending (`gh pr checks <num>`). No CI at all is fine.
-
-When the PR is already merged, an earlier run broke off after the merge: go on with step 4.
 
 ## 3. Merge
 
