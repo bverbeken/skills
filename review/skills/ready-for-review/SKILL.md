@@ -1,7 +1,7 @@
 ---
 name: ready-for-review
 description: "Take one of your own PRs out of draft: run a full own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and mark the PR ready once it is clean. Use whenever the user asks to take a PR out of draft or mark it ready for review, in any wording (\"PR out of draft\", \"make it ready\", \"undraft it\")."
-argument-hint: "[PR number | PR link | empty] [--afk]"
+argument-hint: "[PR number | PR link | empty] [issue] [--afk]"
 ---
 
 Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: the full `review` finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
@@ -116,7 +116,7 @@ When there is no problem left:
 
 1. Remove the ticked items from the TODO list. Remove an empty `### Blocking` or `### Suggestions` heading. When no item is left, remove the whole list with its markers. The public description shows the change, not the fixes on the way.
 2. Run `gh pr ready <num> -R <owner>/<repo>`.
-3. When the PR belongs to an issue, move the issue to the review status that the issue tracker docs name. Find the issue in the branch name, the PR title or its body. With no issue or no such status, leave the tracker alone.
+3. When the PR belongs to an issue, move the issue to the review status that the issue tracker docs name. Take the issue from the arguments, or else find it in the branch name, the PR title or its body. In a public repo, issue numbers stay out of the branch and the PR, so only the arguments name the issue. With no issue or no such status, leave the tracker alone.
 4. End with:
 
 ```
