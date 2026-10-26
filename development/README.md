@@ -30,7 +30,7 @@ The issue tracker is described in `docs/agents/issue-tracker.md`.
 The rules for pull requests are in `docs/agents/pull-requests.md`.
 ```
 
-- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which status means "in progress", "ready" and "in review", and where a stopped build writes its open question. `implement`, `prepare`, `review` and `ready-for-review` read it.
+- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which status means "in progress", "ready", "in review" and "a stopped build", and where a stopped build writes its open question. `implement`, `prepare`, `review` and `ready-for-review` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
 
 ## Credits
