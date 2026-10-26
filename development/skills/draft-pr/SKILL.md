@@ -6,6 +6,10 @@ effort: low
 
 You are creating a **draft pull request** for the current branch. This command takes no arguments — derive everything from the branch, its commits, and the diff. Do not pause for approval; create the PR directly, then report the URL.
 
+# 0. Read the project's pull request rules
+
+When the project's `CLAUDE.md` or `AGENTS.md` names a pull request doc, usually `docs/agents/pull-requests.md`, read it before anything else. Its rules add to the rules in this skill, and win where the two differ. When the project names none, follow this skill alone.
+
 # 1. Verify you are in the right repo and on a feature branch
 
 Confirm where you are before doing anything. Run in parallel:
@@ -27,10 +31,6 @@ Then check for an existing PR:
 
 Print one line as a sanity check, then continue without waiting:
 `Drafting PR in <owner/repo>: <branch> → <base>`
-
-# 1b. Read the project's pull request rules
-
-Look for `docs/agents/pull-requests.md` in the repo root, then in each folder above it. Read the first one you find. Its rules add to the rules in this skill, and win where the two differ. Without that file, follow this skill alone.
 
 # 2. Gather the changes
 
