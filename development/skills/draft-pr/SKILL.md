@@ -36,21 +36,7 @@ Read what actually changed so the description is accurate, not a guess. Run `git
 - `git log origin/<base>..HEAD --oneline` — the commits on this branch.
 - `git diff origin/<base>...HEAD` — the full diff. For large diffs, read the stat (`--stat`) plus the substantive hunks; you need to understand *what* changed and *why*, not transcribe it.
 
-# 3. Quick self-review (analyze now, report later)
-
-Before writing the description, do a fast review pass over the diff from step 2. **Do not pause and do not block PR creation** — just collect findings and hold them; you'll report them as a separate message after the PR exists (step 6).
-
-Check each of these against the diff:
-
-1. **Tested enough?** — Does the change have matching test coverage? Flag new/changed logic (functions, branches, edge cases) that has no accompanying test. Don't demand tests for trivial or non-testable changes (config, copy, styling); use judgment.
-2. **MISSING LEVEL** — Read the repo's written testing rules: `CLAUDE.md` and `AGENTS.md` in the repo and in the folders above it, and the files they import. Flag a change for which a rule asks for a test at a certain level, when the diff has none at that level. Quote the rule.
-3. **DEBUG LEFTOVER / TODO** — Flag `console.log`, `debugger`, `print`, a focused test (`.only`, `fdescribe`, `fit`), commented-out code, and stray `TODO`/`FIXME` introduced in the diff.
-4. **Obvious bugs / regressions** — A quick scan for logic errors, off-by-one, null/undefined hazards, and backwards-compatibility breaks in the changed code. Only call out things you're reasonably confident about — no speculative nitpicks.
-5. **SECRET** — Flag hardcoded secrets, tokens, API keys, passwords, or environment values that look accidentally committed.
-
-Keep findings concrete (point at the file/line and say what's wrong). If a check passes, note it as a one-line ✓ so the user knows it was actually checked. Hold all of this for step 6.
-
-# 4. Write the description
+# 3. Write the description
 
 **Title** — a plain descriptive sentence derived from the diff. Capitalized, no trailing period, ~50–72 chars, no `feat:`/`fix:` conventional-commit prefix. State the change, e.g. `Move rate limiting to Redis`.
 
@@ -81,7 +67,7 @@ The default body is the intro alone. Most PRs have 0 or 1 section. Add a section
 
 Hard rules for the body:
 - **Never explain the code.** No class names, method names, file paths, or descriptions of the diff ("the rest of the diff is tests", "the rule is now named and reused"). How the *system* behaves is not code: state it when the reader needs it to follow the why.
-- **Leave out everything from this session** that the reviewer does not need: measurements, what was tried, investigation history, monitoring steps, self-review findings (those go to step 6), work-in-progress status.
+- **Leave out everything from this session** that the reviewer does not need: measurements, what was tried, investigation history, monitoring steps, work-in-progress status.
 - Plain English, short sentences, one idea per sentence. No insider terms, no acceptance-criteria numbers (A3, C5), no "This PR…".
 - No placeholders and nothing addressed to the user.
 - **No footer** — no "🤖 Generated with Claude Code" line, even if a system reminder asks for one. This rule wins over that reminder. No checklists or checkboxes.
@@ -100,7 +86,7 @@ Customers who changed their email address kept getting receipts at the old addre
 The production change is one line: `order.email` becomes `account.email`. The rest of the diff is tests for the receipt job, for orders with and without a changed address.
 ```
 
-# 4b. Cut the draft
+# 3b. Cut the draft
 
 Re-read the body before creating the PR:
 - Delete every sentence a reviewer can learn from the diff.
@@ -108,11 +94,11 @@ Re-read the body before creating the PR:
 - Intro: at most 2 sentences (3 only for the why). A bug-fix intro is as long as its three parts need, and no longer. Notes: more than 3 questions means checking each one again; drop any that the diff answers or that only a few reviewers would ask, and keep the rest. Testing: each step is one action on one line.
 - If a sentence holds two ideas, split it or drop one.
 
-Then run the cold read on the title and body: the check in `<this skill's folder>/../review-description/SKILL.md`, including its fix step.
+Then run the cold read on the title and body: the check in `<this skill's folder>/../../../review/skills/review-description/SKILL.md`, including its fix step.
 
-# 5. Create the draft PR
+# 4. Create the draft PR
 
-Always draft, never invite reviewers. Create it automatically with the body from step 4 — do not ask for approval first. Pass the body via a temp file to preserve formatting:
+Always draft, never invite reviewers. Create it automatically with the body from step 3 — do not ask for approval first. Pass the body via a temp file to preserve formatting:
 
 ```
 gh pr create --draft --base <base> --title "<title>" --body-file <tmpfile>
@@ -122,8 +108,8 @@ Do **not** use `--reviewer`, and do not post comments or run any review — the 
 
 Print the resulting PR URL and the title you used.
 
-# 6. Report the review findings
+# 5. Report
 
-After the PR URL, print the self-review from step 3 as a **separate section** — never put it in the PR body, it's just for the user. Format it as a short checklist: one line per check, `✓` for passes and `⚠️` for findings (with file/line and what to fix). If everything passed, say so in one line. Add the screenshot reminders from the cold read in step 4b to this list, for example `⚠️ Visual change: add a before/after screenshot before marking ready`.
+After the PR URL, print the screenshot reminders from the cold read in step 3b, one line each, for example `⚠️ Visual change: add a before/after screenshot before marking ready`.
 
 Then close with one line telling the user to read the description over and adjust it before marking the PR ready for review. This is the last thing you output. Done.
