@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-26
+
+- No longer a Claude Code plugin. Install the skills by linking their folders into `~/.claude/skills/`, see the README. The skill names lose their `review:` prefix: `/review 142` instead of `/review:review 142`.
+
 ## 2026-10-24
 
 - `review-dependencies`: a new check. For each dependency a change adds, in any manifest, CI file or script, it says why this one, whether it is maintained, whether it can be trusted, whether its license is allowed, and which alternatives exist. The report lists each new dependency on one line. A sign of a supply chain attack, a known vulnerability the code can reach, or a license that is not allowed in the product blocks, also in own mode. A version bump is not a new dependency.
