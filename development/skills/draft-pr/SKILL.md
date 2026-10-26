@@ -97,7 +97,7 @@ Re-read the body before creating the PR:
 - Intro: at most 2 sentences (3 only for the why). A bug-fix intro is as long as its three parts need, and no longer. Notes: more than 3 questions means checking each one again; drop any that the diff answers or that only a few reviewers would ask, and keep the rest. Testing: each step is one action on one line.
 - If a sentence holds two ideas, split it or drop one.
 
-Then run the cold read on the title and body: the check in `<this skill's folder>/../../../review/skills/review-description/SKILL.md`, including its fix step.
+Then run the cold read on the title and body: the check in `<this skill's folder>/../review-description/SKILL.md`, including its fix step.
 
 # 4. Create the draft PR
 
