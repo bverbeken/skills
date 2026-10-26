@@ -1,33 +1,29 @@
 ---
 name: implement
 description: "Implement a piece of work based on a spec or set of issues."
-disable-model-invocation: true
-argument-hint: "<issue or spec> [--afk]"
+argument-hint: "<issue or spec> [review findings] [--afk]"
 ---
 
-Implement the work described by the user in the spec or issues.
+Implement the work described by the user in the spec or issues. Write the code and nothing else: `foreman` holds the steps before and after this one.
 
 If the user passes an issue reference, fetch it from the issue tracker and state its title before starting. If the reference is ambiguous, ask.
 
-UPPERCASE statuses, such as `BUSY`, are factory statuses. The issue tracker docs map each one to a status of the tracker. When the docs map no status for a move, leave the issue where it is and say so at the end.
+When the arguments hold review findings, the build is done already: fix each finding in its own commit, in the existing worktree, and end as below.
 
-Once you have the issue, move it to `BUSY`. Assign it to the user only when the docs say issues have an assignee.
+UPPERCASE statuses, such as `TO_CLARIFY`, are factory statuses. The issue tracker docs map each one to a status of the tracker.
 
 ## --afk
 
-With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, take your own recommendation and go on. Pass `--afk` on to `tdd` and `ready-for-review`. The steps change like this:
+With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, take your own recommendation and go on. Pass `--afk` on to `tdd`.
 
-- Clarify: skip it. The issue's `## Decisions` section holds the decisions. When the issue still has an open question section, its answer never reached the decisions: **stop** without building.
+- When the issue still has an open question section, its answer never reached the decisions: **stop** without building.
 - A new open decision during the build: take your own recommendation, or **stop** when the decision is really the user's.
-- Review and Draft PR: skip them, and go to Ready PR.
 
-To **stop**: write the question in the issue's open question section, or leave the one that is there, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. When the docs map no `TO_CLARIFY`, the issue stays in its status: say that it needs a manual move. Then end. When there is no issue, or the docs name no such section, print the question, leave the status alone, and end.
+To **stop**: write the question in the issue's open question section, or leave the one that is there, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. When the docs map no `TO_CLARIFY`, the issue stays in its status: say that it needs a manual move. Then end, and say that the build stopped. When there is no issue, or the docs name no such section, print the question, leave the status alone, and end.
 
-## Clarify
+## Open decisions
 
-Call the Skill tool with "prepare" and the issue reference or spec, plus `--keep-status`. This step is done when prepare says nothing is open, or the user approved its decisions.
-
-When a new open decision comes up later, during the build or the review, stop and call "prepare" again with the issue reference or spec, `--keep-status` and that decision. Build on the answer, never on a guess.
+Build from the issue's `## Decisions` section. When an open decision comes up during the build, stop and call the Skill tool with "prepare", the issue reference or spec, `--keep-status` and that decision. Build on the answer, never on a guess.
 
 ## Worktree
 
@@ -42,7 +38,7 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
 4. Copy the ignored local setup files from the main checkout into the worktree, for example `.java-version` or `.env`. List them with `git -C <repo> ls-files --others --ignored --exclude-standard --directory`, and skip build output and dependency folders.
 5. Install what the build needs in the worktree (for example `yarn install`), before the first test run.
 
-The worktree is done when `git -C <path> status` shows the branch, clean. Run every later command from the worktree path. Leave the worktree in place at the end and give the user its path.
+The worktree is done when `git -C <path> status` shows the branch, clean. Run every later command from the worktree path. Leave the worktree in place at the end.
 
 ## Build
 
@@ -50,27 +46,6 @@ Call the Skill tool with "tdd" where possible, at pre-agreed seams.
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 
-Commit to the worktree's branch as you go, in small commits: one per green tdd cycle, and one for each other step (a prefactor, wiring, a fix from the review). Each commit holds one step, so the history reads as the order the work was built in.
+Commit to the worktree's branch as you go, in small commits: one per green tdd cycle, and one for each other step (a prefactor, wiring, a fix for a review finding). Each commit holds one step, so the history reads as the order the work was built in.
 
-## Review
-
-Once done, call the Skill tool with "review" and no arguments, from the worktree, to review its branch. On NO GO, fix each blocking finding in its own commit, then run "review" once more. Leave the suggestions for the user.
-
-Judge each review finding by what the code will do in production, not by what the spec says. When a finding says the spec or the design itself is wrong, that is a new open decision: call "prepare" for it, as in Clarify.
-
-## Draft PR
-
-When the review says GO and no question to the user is open, call the Skill tool with "draft-pr" from the worktree, without asking. Link the PR to the issue as the issue tracker docs say, when they say how. Give the user the PR link and the worktree path.
-
-When the review still says NO GO after the second run, stop and show the user the blocking findings instead.
-
-## Ready PR
-
-Only with `--afk`:
-
-1. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`.
-2. Call the Skill tool with "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any. It opens the draft PR, or prints the existing one. Link the PR to the issue, as in Draft PR.
-3. Call the Skill tool with "ready-for-review", the PR number, the issue reference and `--afk`.
-4. On NOT READY, **stop** with the problems it lists as the question.
-
-End with the PR link and the worktree path.
+End with the worktree path, the branch, and the seams that `tdd` picked itself, if any. When another skill called this one, go back to it and continue its next step.
