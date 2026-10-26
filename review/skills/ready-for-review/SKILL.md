@@ -15,6 +15,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push. When a conflict needs a choice that is really the user's, skip it.
 - Unpushed commits: push them.
 - An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open.
+- An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
 - Anything else, and every item that is still not fixed after you tried: skip it. Add a skipped suggestion to `## Skipped: your call`, with your recommendation.
 
 A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
