@@ -18,6 +18,7 @@ With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, t
 
 - When the issue still has an open question section, its answer never reached the decisions: **stop** without building.
 - A new open decision during the build: take your own recommendation, or **stop** when the decision is really the user's.
+- A change to a line in the issue's `## Decisions` section is always the user's, also when the build would only bend it, for example when a fact found during the build makes the decision impossible as written. **Stop** with a question that names the decision line, the fact you found, the question, and your own recommendation.
 
 To **stop**: write the question in the issue's open question section, or leave the one that is there, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. When the docs map no `TO_CLARIFY`, the issue stays in its status: say that it needs a manual move. Then end, and say that the build stopped. When there is no issue, or the docs name no such section, print the question, leave the status alone, and end.
 
