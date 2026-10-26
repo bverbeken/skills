@@ -56,7 +56,7 @@ When there is no step, change nothing. When a worker stops, it writes its own qu
 
 ## 4. Go on or end
 
-Without `--afk`, end after the step. With `--afk`, read the issue's status again. When it has a step, go back to step 3, but run the `REVIEW` step at most once per run. Otherwise end.
+Without `--afk`, end after the step. With `--afk`, read the issue's status again. When it has a step, go back to step 3 when the status changed and its step has not run yet in this run. Otherwise end: a step that left the status as it was, such as a refusal, does not run twice.
 
 Every end of this skill, also a refusal or a stop, ends with:
 
