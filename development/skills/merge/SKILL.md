@@ -18,7 +18,7 @@ Find the issue's PR as the issue tracker docs say. When the docs say nothing abo
 
 Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,state,isDraft,baseRefName,headRefName,headRefOid`. `<base>` is `baseRefName` and `<branch>` is `headRefName`.
 
-Work in the repo's main checkout. Find it as step 2 of `../review/STEPS.md` does (next to this skill's folder). The branch's worktree is at `<repo>/../<repo>.worktrees/<branch>`.
+Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. The branch's worktree is at `<repo>/../<repo>.worktrees/<branch>`.
 
 Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo without tests skips every test step below.
 
