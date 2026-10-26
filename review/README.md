@@ -81,17 +81,7 @@ Saying "review 142" or "is this PR ready to merge?" also works.
 
 ## Install
 
-All thirteen skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`. Clone the repo and link each skill folder into `~/.claude/skills/`:
-
-```bash
-git clone https://github.com/bverbeken/skills.git ~/skills
-mkdir -p ~/.claude/skills
-for skill in ~/skills/review/skills/*; do
-  ln -s "$skill" ~/.claude/skills/
-done
-```
-
-A `git pull` then updates the skills. [`CHANGELOG.md`](CHANGELOG.md) lists what changed.
+All thirteen skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`. Link the skill folders into `~/.claude/skills/`. The steps are in the [README of this repo](../README.md#install). [`CHANGELOG.md`](CHANGELOG.md) lists what changed.
 
 ## Requirements
 

@@ -11,18 +11,21 @@ Claude Code skills I use.
 
 ## Install
 
-Clone the repo and link the skill folders you want into `~/.claude/skills/`. A `git pull` then updates them.
+Clone the repo and link the skill folders you want into `~/.claude/skills/`:
 
 ```bash
 git clone https://github.com/bverbeken/skills.git ~/skills
 mkdir -p ~/.claude/skills
-ln -s ~/skills/conference-notes ~/.claude/skills/
-for skill in ~/skills/development/skills/* ~/skills/review/skills/*; do
-  ln -s "$skill" ~/.claude/skills/
+for skill in ~/skills/conference-notes ~/skills/development/skills/* ~/skills/review/skills/*; do
+  ln -sfn "$skill" ~/.claude/skills/
 done
 ```
 
 Link all of `review/skills/` together: the review skills need each other. The development skills need the review skills.
+
+To update, run `git pull` in `~/skills`, then the loop again: it links skills that are new and leaves the others as they are.
+
+You used the `review` plugin or copied the skills before? Run `/plugin uninstall review@bverbeken-skills`, or delete the copied skill folders from `~/.claude/skills/`, before you link.
 
 `second-brain` is a Claude Code plugin:
 
