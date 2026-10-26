@@ -31,8 +31,31 @@ The issue tracker is described in `docs/agents/issue-tracker.md`.
 The rules for pull requests are in `docs/agents/pull-requests.md`.
 ```
 
-- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which status means "in progress", "ready", "in review", "approved", "done" and "a stopped build", where a stopped build writes its open question, and where an issue's PR link lives. `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
+- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [factory status](#factory-statuses) maps to, where a stopped build writes its open question, and where an issue's PR link lives. `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
+
+## Factory statuses
+
+The skills name statuses with fixed UPPERCASE names:
+
+| Factory status | Meaning |
+|---|---|
+| `BACKLOG` | worth doing, not planned yet |
+| `BLOCKED` | planned, but a blocker is not `DONE` yet |
+| `NEXT_UP` | to prepare: open decisions, or an open question from a stopped build |
+| `READY` | prepared, you give the go: it can be built |
+| `BUSY` | being built |
+| `REVIEW` | the PR is ready for your review |
+| `APPROVED` | you approve the PR: it can be merged |
+| `DONE` | merged |
+
+Your tracker docs map each one to a status of your own, in any format. For example, a table with a column for the factory status:
+
+| Factory | Status | Meaning |
+|---|---|---|
+| `BUSY` | `In Progress` | being built |
+
+A tracker can leave a status out. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing: `merge` doesn't merge when your tracker has no `APPROVED`.
 
 ## Credits
 
