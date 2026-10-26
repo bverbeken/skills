@@ -81,23 +81,16 @@ Saying "review 142" or "is this PR ready to merge?" also works.
 
 ## Install
 
-All thirteen skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`.
-
-**By copying** (no updates, you copy again to get changes; [`CHANGELOG.md`](CHANGELOG.md) lists what changed):
+All thirteen skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`. Clone the repo and link each skill folder into `~/.claude/skills/`:
 
 ```bash
-git clone https://github.com/bverbeken/skills.git
-cp -r skills/review/skills/* ~/.claude/skills/
+git clone https://github.com/bverbeken/skills.git ~/skills
+for skill in ~/skills/review/skills/*; do
+  ln -s "$skill" ~/.claude/skills/
+done
 ```
 
-**As a plugin** (updates with `/plugin marketplace update bverbeken-skills`):
-
-```
-/plugin marketplace add bverbeken/skills
-/plugin install review@bverbeken-skills
-```
-
-As a plugin, the skill names get a prefix: `/review:review 142`, `/review:review-tests 142`. Saying "review 142" works either way.
+A `git pull` then updates the skills. [`CHANGELOG.md`](CHANGELOG.md) lists what changed.
 
 ## Requirements
 

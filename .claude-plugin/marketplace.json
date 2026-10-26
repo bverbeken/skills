@@ -11,11 +11,6 @@
       "name": "second-brain",
       "source": "./second-brain",
       "description": "Skills for working with a notes vault (Obsidian or plain Markdown) without hard-coding paths."
-    },
-    {
-      "name": "review",
-      "source": "./review",
-      "description": "A full code review at any stage of a PR: eleven checks in parallel, the existing review threads checked against the code, draft replies, and a GO / NO GO verdict."
     }
   ]
 }
