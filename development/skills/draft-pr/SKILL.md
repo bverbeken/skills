@@ -25,7 +25,7 @@ Then push the branch, if the remote does not have all its commits yet:
 - If the push fails (for example, the remote has commits you don't have), stop and tell the user. Never force-push.
 
 Then check for an existing PR:
-- If a PR already exists for this branch (`gh pr view --json url,state,isDraft`), do not create a duplicate. Print its URL and stop.
+- If a PR already exists for this branch (`gh pr view --json url,state,isDraft`), do not create a duplicate. Print its URL and stop, or go back to the skill that called this one.
 
 Print one line as a sanity check, then continue without waiting:
 `Drafting PR in <owner/repo>: <branch> → <base>`
@@ -112,4 +112,4 @@ Print the resulting PR URL and the title you used.
 
 After the PR URL, print the screenshot reminders from the cold read in step 3b, one line each, for example `⚠️ Visual change: add a before/after screenshot before marking ready`.
 
-Then close with one line telling the user to read the description over and adjust it before marking the PR ready for review. This is the last thing you output. Done.
+Then close with one line telling the user to read the description over and adjust it before marking the PR ready for review. This is the last thing you output. When another skill called this one, go back to it and continue its next step.
