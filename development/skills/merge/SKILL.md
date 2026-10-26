@@ -4,21 +4,23 @@ description: "Merge the PR of an approved issue with a rebase merge, close the i
 argument-hint: "<issue> [--afk]"
 ---
 
-Merge the PR of the issue in `$ARGUMENTS`, then close the issue and clean up. Merge never asks the user anything: every problem ends in a **stop**. `--afk` changes nothing; accept it so a calling skill can pass it to every worker.
+Merge the PR of the issue in `$ARGUMENTS`, then close the issue and clean up. Merge never asks the user anything. A problem before the merge ends in a **refuse**; a problem during or after it ends in a **stop**. `--afk` changes nothing; accept it so a calling skill can pass it to every worker.
+
+To **refuse**: print why, change nothing, and end.
 
 To **stop**: write what went wrong in the issue's open question section and move the issue to the status for a stopped build, both as the issue tracker docs name them. Then end. When the docs name no such section or status, print the problem, leave the status alone, and end.
 
 ## 1. Find the issue and its PR
 
-Fetch the issue from the issue tracker and state its title. If the reference is ambiguous, stop and say why.
+Fetch the issue from the issue tracker and state its title. If the reference is ambiguous, **refuse**.
 
-Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the open PR of the issue's branch: `gh pr list --head <branch> --state open`. When there is no PR, stop and say why, changing nothing.
+Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the open PR of the issue's branch: `gh pr list --head <branch> --state open`. When there is no PR, **refuse**.
 
 Work in the PR's repo, the main checkout. Its worktree is at `<repo>/../<repo>.worktrees/<branch>`.
 
 ## 2. Check
 
-Stop and say why, changing nothing, when any of these is true:
+**Refuse** when any of these is true:
 
 - The issue is not in the status the issue tracker docs name for an approved PR. That status is the user's approval: a GitHub approval is not needed.
 - The PR is not open, or it is a draft.
