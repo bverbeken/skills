@@ -40,7 +40,7 @@ Read what actually changed so the description is accurate, not a guess:
 
 # 3. Quick self-review (analyze now, report later)
 
-Before writing the description, do a fast review pass over the diff from step 2. **Do not pause and do not block PR creation** — just collect findings and hold them; you'll report them as a separate message after the PR exists (step 6). The findings never stop the PR from being created.
+Before writing the description, do a fast review pass over the diff from step 2. **Do not pause and do not block PR creation** — just collect findings and hold them; you'll report them as a separate message after the PR exists (step 6).
 
 Check each of these against the diff:
 
