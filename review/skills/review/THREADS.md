@@ -32,7 +32,7 @@ Turn the result into **threads**:
 
 - Each review thread is a thread.
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
-- PR comments: a comment that answers a review body joins that thread. Treat a PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
+- PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
 
 The **starter** is the author of a thread's first comment. A **bot** is a login that ends in `[bot]` or matches `copilot` (case-insensitive). Everyone else is a human.
 
