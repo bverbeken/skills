@@ -95,7 +95,7 @@ All thirteen skills must sit next to each other: the checks read the shared step
 
 ## Set up your project
 
-Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing.
+Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads the review status there, and moves the issue to it when the PR is ready.
 
 Example:
 
