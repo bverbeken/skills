@@ -50,11 +50,10 @@ When there is no step, change nothing. When `implement` or `merge` stops, it wri
 
 1. Move the issue to `BUSY`. Assign it to the user only when the issue tracker docs say issues have an assignee.
 2. Call "implement" with the issue. When it stops, end.
-3. Call "review" with the branch that `implement` gives and the issue, from its worktree. On NO GO, call "implement" with the issue and the blocking findings, so it fixes each in its own commit. When it stops, end. Otherwise call "review" once more. Run "review" at most twice.
-4. When the second run still says NO GO, **stop** with the blocking findings.
-5. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`. Call "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any.
-6. Link the PR to the issue as the issue tracker docs say.
-7. **Ready the PR**, below.
+3. Call "review" with the branch that `implement` gives and the issue, from its worktree. On NO GO, call "implement" with the issue and the blocking findings, so it fixes each in its own commit. When it stops, end. Run "review" once: `ready-for-review` reviews the fixes.
+4. When the branch already has a PR that is out of draft, put it back in draft: `gh pr ready --undo <num>`. Call "draft-pr" from the worktree, with the seams that `tdd` picked itself, if any.
+5. Link the PR to the issue as the issue tracker docs say.
+6. **Ready the PR**, below.
 
 ### Ready the PR
 
