@@ -32,7 +32,7 @@ Start one `Agent` (general-purpose) per check, all in one message, so they run a
 
 ## 3. Verify and report
 
-Wait until all agents have returned. Run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know. When the target is a PR, also run its PR material check. When the PR has threads, run step 4 of `THREADS.md` to remove duplicate findings. Merge the findings that two bug angles report about the same problem in the same code into one. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
+Wait until all agents have returned. Run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know. When the target is a PR, also run its PR material check. When the PR has threads, run step 4 of `THREADS.md` to remove duplicate findings. Merge the findings that two bug angles report about the same problem in the same code into one, with the highest level of the two. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
 
 When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
 
