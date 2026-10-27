@@ -53,6 +53,13 @@ After the review, collect every remaining state problem:
 - Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5. With `--afk`, leave out the threads where the build has the last word.
 - New commits: the head commit changed since step 1. The review checked older code.
 
+A **round** is one pass through steps 2 and 3. Go to step 7 right away, before you write or fix anything, when one of these is true:
+
+- This is the 5th round with blocking items: finding problems or state problems.
+- A blocking finding came back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count. Untick its item in the TODO list.
+
+The blocking items of that round stay open.
+
 ## 4. Write the TODO list
 
 When there is no problem and no suggestion, go to step 7.
@@ -105,10 +112,6 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 The loop is done when every item on the list is ticked.
 
 Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list, and keep new suggestions for the final output. Stop when a round finds no problem. With `--afk`, also stop when a round finds only problems you skipped before, and go to step 7. With `--afk`, nobody reads the final output: add the new suggestions of a later round to the list and fix them too, and put the suggestions of the last round in `## Skipped: your call`.
-
-The first review of step 2 is round 1. When the review of round 5 still finds blocking items, fix nothing more and go to step 7: those items stay open.
-
-Also go to step 7 when a blocking finding comes back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count. Fix nothing more: the finding that came back stays open, with the other blocking items of that round.
 
 ## 7. Decide
 
