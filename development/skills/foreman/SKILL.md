@@ -16,7 +16,7 @@ To **stop** with a problem: without `--afk`, show the user the problem and end. 
 
 Read the issue tracker docs. When they don't map all 8 factory statuses (`BACKLOG`, `BLOCKED`, `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW`, `APPROVED`, `DONE`), refuse: name the statuses that are missing, change nothing, and end.
 
-When `$ARGUMENTS` is `status`, show the [status](#status) instead of steps 2 to 4.
+When the first word of `$ARGUMENTS` is `status`, show the [status](#status) instead of steps 2 to 4. `--afk` changes nothing there.
 
 ## 2. Pick the issue
 
