@@ -1,26 +1,25 @@
 ---
 name: review-bugs
-description: "Hunt for bugs in a change with Claude Code's built-in code-review. One of the checks of `review`; run it alone for bugs only."
+description: "Hunt for bugs in a change from six angles in parallel: changed lines, removed rules, callers, language pitfalls, wrappers and secrets. One of the checks of `review`; run it alone for bugs only."
 argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---
 
-**Run alone:** read `../review/STEPS.md` (next to this skill's folder). Run its steps 1 to 3, then the check below, then steps 5 and 6 for this check only.
-**Run by `review`:** run only the check below and return the findings.
+The bug check has no check of its own. It is these angle skills, next to this one:
 
-## Check
+- `review-bugs-lines`: every changed line and the function around it.
+- `review-bugs-removed`: every deleted line, and where the new code still enforces its rule.
+- `review-bugs-callers`: the callers of every changed function.
+- `review-bugs-language`: the pitfalls of the diff's language.
+- `review-bugs-wrappers`: wrappers and proxies.
+- `review-bugs-secrets`: secrets in added lines.
 
-Run the built-in `code-review` skill from `<reviewDir>` (`cd <reviewDir>` first):
+Their files are at `<this skill's folder>/../<angle>/SKILL.md`. `review` starts the angles itself, next to its other checks.
 
-- Call the Skill tool with `code-review` and the arguments `high <PR number>`. Without a PR, use `high <branch name>`.
-- When the review runs in place and there are uncommitted changes, call it a second time with only `high`. That reviews the uncommitted diff.
+## Run alone
 
-Keep its bug findings: wrong behavior, crashes, security holes, data loss, race conditions, broken error handling. Keep its test findings too, as `check: tests`. Drop its reuse, simplification and efficiency findings. The `review-refactoring` and `review-performance` checks cover those.
+Read `../review/STEPS.md` (next to this skill's folder) and run its steps 1 to 3.
 
-Turn each kept finding into the form of step 4 of `STEPS.md`. Set `verified: yes` for findings it marks CONFIRMED. Leave it out for PLAUSIBLE ones.
+Start one `Agent` (general-purpose) per angle, all in one message, so they run at the same time. Give each the same as `review` step 2 gives a check agent: the path of its angle file, the path of `STEPS.md`, `<contextFile>` and the brief.
 
-Then read every line the diff adds, in code, config and tests, for a **SECRET**: an API key, a token, a password, a private key, or a connection string with a password in it. A value that is obviously fake, like `test-key` or `password123` in a test, is not a secret.
-
-## Blocking
-
-A SECRET always blocks. A bug blocks when it matches the definition of blocking in `STEPS.md`. Otherwise it is a suggestion.
+Wait until all agents have returned. Merge the findings that two angles report about the same problem in the same code into one. Then run steps 5 and 6 of `STEPS.md` for this check only.
