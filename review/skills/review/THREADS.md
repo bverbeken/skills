@@ -102,7 +102,7 @@ Give one verdict:
 - NOT RESOLVED: the problem still happens. Return the finding, with the example that still fails. Reply: the example, and what is still needed.
 - NEW PROBLEM: the fix causes another problem. Return the finding. Reply: the problem and its example."
 
-In colleague mode, also run the bug angles that `review-bugs` (`../review-bugs/SKILL.md`) lists on the commits that answer **recheck** threads, one more agent per angle. `review` starts them itself, because a thread agent can't start agents. Give each what "Check agents" in step 4 of `STEPS.md` says, and add to the brief: "Your diff is `git -C <reviewDir> diff <oldest thread commit> HEAD`, not the diff in `<contextFile>`." Merge their findings as "Bug angles" in step 4 of `STEPS.md` says. Their bugs are NEW PROBLEM findings.
+In colleague mode, also run the bug angles that `review-bugs` (`../review-bugs/SKILL.md`) lists on the commits that answer **recheck** threads, one more agent per angle. `review` starts them itself, because a thread agent can't start agents. Give each what "Check agents" in step 4 of `STEPS.md` says, and add to the brief: "Your diff is `git -C <reviewDir> diff <oldest thread commit> HEAD`, not the diff in `<contextFile>`." Merge their findings with those of the main bug angles, as "Bug angles" in step 4 of `STEPS.md` says. A bug that the main angles also found stays one `bugs` finding. The other bugs are NEW PROBLEM findings.
 
 ## 4. Remove duplicate findings
 
