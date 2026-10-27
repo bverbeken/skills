@@ -18,6 +18,8 @@ The checks are the skills next to this one: `review-tests`, `review-spec`, `revi
 
 Run all eleven, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always look at the full diff, also when the PR was reviewed before.
 
+Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, comments and description. The diff is text-only when every file in `git -C <reviewDir> diff --name-only <merge-base>` ends in `.md` and none is in a skill folder: a folder that holds a `SKILL.md`, in `<reviewDir>` or on the base, or a folder below it. A change to a skill gets all checks. Example: a diff of `CLAUDE.md` and `docs/setup.md` is text-only; a diff of `review/skills/review/STEPS.md` is not.
+
 `review-description` runs only when the target is a PR, and in a different way: instead of a check agent, start its cold reader (step 1 of its check) with the PR's title and body as the text.
 
 Start one `Agent` (general-purpose) per check, all in one message, so they run at the same time. In the same message, start the thread agents of `THREADS.md` step 3. Give each check agent:
