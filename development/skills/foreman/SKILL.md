@@ -1,7 +1,7 @@
 ---
 name: foreman
-description: "Do the next step for an issue, based on its status: prepare it, build it up to a PR that is ready for review, handle new review threads, or merge it. Use when the user says \"foreman\", \"do the next thing\", \"next step for <issue>\", or \"foreman, do the next thing on <issue>\"."
-argument-hint: "[issue] [--afk]"
+description: "Do the next step for an issue, based on its status: prepare it, build it up to a PR that is ready for review, handle new review threads, or merge it. Or show the issues in the pipeline and mark the ones that wait on the user. Use when the user says \"foreman\", \"do the next thing\", \"next step for <issue>\", \"foreman, do the next thing on <issue>\", or \"foreman status\"."
+argument-hint: "[issue | status] [--afk]"
 ---
 
 Do the next step for the issue in `$ARGUMENTS`. The order of the steps lives only in this skill. Each worker skill does one step: call it with the Skill tool.
@@ -15,6 +15,8 @@ To **stop** with a problem: without `--afk`, show the user the problem and end. 
 ## 1. Check the mapping
 
 Read the issue tracker docs. When they don't map all 8 factory statuses (`BACKLOG`, `BLOCKED`, `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW`, `APPROVED`, `DONE`), refuse: name the statuses that are missing, change nothing, and end.
+
+When `$ARGUMENTS` is `status`, show the [status](#status) instead of steps 2 to 4.
 
 ## 2. Pick the issue
 
@@ -62,8 +64,38 @@ When the PR is out of draft, put it back in draft: `gh pr ready --undo <num>`. C
 
 Without `--afk`, end after the step. With `--afk`, read the issue's status again. When it has a step, go back to step 3 when the status changed and its step has not run yet in this run. Otherwise end: a step that left the status as it was, such as a refusal, does not run twice.
 
-Every end of this skill, also a refusal or a stop, ends with:
+Every end of this skill, also a refusal or a stop, ends with the lines below. Only the [status](#status) ends in its own way.
 
 - the issue and its status now;
 - why you stopped there;
 - the next step and who takes it. Say it plainly when it is the user's, for example "Review PR #12, then move ACME-123 to `APPROVED`".
+
+## Status
+
+`/foreman status` shows the issues in the pipeline. It changes nothing: it moves no issue, calls no skill and changes no PR.
+
+List every issue in `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW` and `APPROVED`, grouped by status in that order. Leave out the other statuses. Within one status, follow the board order the tracker docs give, or else put the oldest issue first.
+
+Give each issue one line: its id, its title, its PR link when it has one, and what moves it on. Mark the issues that wait on the user with `▶`.
+
+| Status | Waits on | What moves it on |
+|---|---|---|
+| `TO_CLARIFY` | the user | answer the open decisions, or the open question when the issue has one |
+| `READY` | `foreman` | run `/foreman <issue>` |
+| `BUSY` | `foreman` | building, or broke off: move it back to `READY` to build it again |
+| `REVIEW` with a new thread (step 3) | `foreman` | run `/foreman <issue>` |
+| `REVIEW` without a new thread | the user | review PR #<n> |
+| `APPROVED` | `foreman` | run `/foreman <issue>` |
+
+End with one line that names the user's first action: the one on the first marked line. When no issue waits on the user, say so.
+
+```
+TO_CLARIFY
+  ▶ ACME-22 Export to CSV: answer the open question
+READY
+    ACME-18 Faster search: run /foreman ACME-18
+REVIEW
+  ▶ ACME-17 Dark mode: review PR #10
+
+Next for you: answer the open question of ACME-22.
+```
