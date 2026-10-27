@@ -2,6 +2,10 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-27
+
+- New: `foreman status` lists the issues in `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW` and `APPROVED`, with what moves each one on. It marks the issues that wait on you and ends with your first action. It changes nothing.
+
 ## 2026-10-26
 
 - `implement`: a build that would change or bend a line in the issue's `## Decisions` asks you through `prepare`. With `--afk`, it stops with an open question. The question names the line, the fact found, the question and a recommendation.
