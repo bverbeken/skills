@@ -107,6 +107,14 @@ Leave out nits: pure polish that changes nothing for the reader or for the behav
 
 Judge by what the code will do in production. Check claims in the PR description against the diff.
 
+### Check agents
+
+Give each check agent:
+
+- The path of its check file, and the path of `STEPS.md`.
+- `<contextFile>`.
+- This brief: "Read the check file and run its check on the code in `<reviewDir>`. Steps 1 to 3 are done: everything they produce is in `<contextFile>`. Return what the check file asks for: your findings in the form of step 4 of `STEPS.md`, or `none`. Do not verify, do not write a report."
+
 ### Bug angles
 
 When the bug angles have returned, merge the findings that are about the same problem into one, before anything else uses them. One problem can show at two places. Example: lines reports that `findSeat` now returns `null` at `seats.ts:12`, and callers reports the call site it breaks at `book.ts:40`. The merged finding keeps both locations and the highest level of the two.

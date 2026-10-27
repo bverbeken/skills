@@ -24,11 +24,7 @@ Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, co
 
 `review-description` runs only when the target is a PR, and in a different way: instead of a check agent, start its cold reader (step 1 of its check) with the PR's title and body as the text.
 
-Start one `Agent` (general-purpose) per check, all in one message, so they run at the same time. In the same message, start the thread agents of `THREADS.md` step 3. Give each check agent:
-
-- The path of its check file, and the path of `STEPS.md`.
-- `<contextFile>`.
-- This brief: "Read the check file and run its check on the code in `<reviewDir>`. Steps 1 to 3 are done: everything they produce is in `<contextFile>`. Return what the check file asks for: your findings in the form of step 4 of `STEPS.md`, or `none`. Do not verify, do not write a report."
+Start one `Agent` (general-purpose) per check, all in one message, so they run at the same time. In the same message, start the thread agents of `THREADS.md` step 3. Give each check agent what "Check agents" in step 4 of `STEPS.md` says.
 
 ## 3. Verify and report
 
