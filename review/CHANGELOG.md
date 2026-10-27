@@ -5,6 +5,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 ## 2026-10-27
 
 - `review`: a diff that holds only Markdown text, outside a skill folder, gets only the spec, bugs, style, comments and description checks. The "Checks" line names the checks that did not run. `--only` still runs the checks it names.
+- `ready-for-review`: gets the same short set of checks on a text-only PR.
 
 ## 2026-10-26
 
