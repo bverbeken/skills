@@ -84,7 +84,7 @@ Give each issue one line: its id, its title, its PR link when it has one, and wh
 | `READY` | `foreman` | run `/foreman <issue>` |
 | `BUSY` | `foreman` | building, or broke off: move it back to `READY` to build it again |
 | `REVIEW` with a new thread (step 3) | `foreman` | run `/foreman <issue>` |
-| `REVIEW` without a new thread | the user | review PR #<n> |
+| `REVIEW` without a new thread | the user | review PR #<n>, or, without a PR link: no PR linked |
 | `APPROVED` | `foreman` | run `/foreman <issue>` |
 
 End with one line that names the user's first action: the one on the first marked line. When no issue waits on the user, say so.
