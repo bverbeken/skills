@@ -22,6 +22,8 @@ Report only a pitfall the diff adds. Use the name of the pitfall in caps as the 
 
 Keep a finding only when you can name the input or state that triggers it and the wrong result. Example: "`for (var i …) setTimeout(() => send(i))` → every callback sends the last `i`."
 
+When you see a bug that this angle does not look for, report it too, with the input that triggers it. Another angle may miss it.
+
 Report each finding in the form of step 4 of `STEPS.md`, with `check: bugs`.
 
 ## Blocking

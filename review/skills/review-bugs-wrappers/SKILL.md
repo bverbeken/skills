@@ -19,6 +19,8 @@ For each wrapper, look for:
 
 Keep a finding only when you can name the call and the wrong result. Example: "`CachedVenues.reload()` is not forwarded → `admin.ts:12` calls it → the cache keeps the old venue."
 
+When you see a bug that this angle does not look for, report it too, with the input that triggers it. Another angle may miss it.
+
 Report each finding in the form of step 4 of `STEPS.md`, with `check: bugs`.
 
 ## Blocking
