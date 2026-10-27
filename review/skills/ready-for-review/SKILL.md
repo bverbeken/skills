@@ -108,6 +108,8 @@ Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to 
 
 The first review of step 2 is round 1. When the review of round 5 still finds blocking items, fix nothing more and go to step 7: those items stay open.
 
+Also go to step 7 when a blocking finding comes back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count. Fix nothing more: the finding that came back stays open, with the other blocking items of that round.
+
 ## 7. Decide
 
 When a blocking item was skipped, or the loop stopped with blocking items open, leave the PR in draft and end with:
