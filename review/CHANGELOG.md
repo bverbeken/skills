@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-27
+
+- `review`: a diff that holds only Markdown text, outside a skill folder, gets only the spec, bugs, style, comments and description checks. The "Checks" line names the checks that did not run. `--only` still runs the checks it names.
+
 ## 2026-10-26
 
 - `ready-for-review`: asks you before a fix that would change or bend a line in the issue's `## Decisions`. With `--afk`, it skips that fix. A skipped blocking item leads to NOT READY, which names the line, the fact found, the question and a recommendation.
