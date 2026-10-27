@@ -4,7 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-27
 
-- `ready-for-review`: stops when the review of round 5 still finds blocking items, or when a blocking finding it fixed comes back. It leaves the PR in draft and lists the open blocking items under NOT READY.
+- `ready-for-review`: stops after 5 rounds with blocking items, state problems included, or when a blocking finding it fixed comes back. It checks both right after each review, before it fixes anything. It leaves the PR in draft and lists the open blocking items under NOT READY.
 - `review-bugs`: no longer runs Claude Code's built-in `/code-review`. It is six angle skills that `review` starts in parallel, next to the other checks: `review-bugs-lines`, `review-bugs-removed`, `review-bugs-callers`, `review-bugs-language`, `review-bugs-wrappers` and `review-bugs-secrets`. `--only bugs` runs all six, and the "Checks" line keeps one `bugs` count. The recheck of threads no longer runs a separate bug check: its NEW PROBLEM verdict covers a bug that a fix causes. Test findings are left to `review-tests`. After `git pull`, run the link loop of the README again to link the six new skills.
 - `review`: verification keeps a blocking finding unless the code proves it wrong. A `REJECTED` answer quotes the code that prevents the failure.
 - `review`: a diff that holds only Markdown text, outside a skill folder, gets only the spec, bugs, style, comments and description checks. The "Checks" line names the checks that did not run. `--only` still runs the checks it names.
