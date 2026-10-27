@@ -20,6 +20,8 @@ A full code review in one command, at any stage of a PR. Say `review 142` or pas
 
 Each check can also run on its own, for example `/review-tests 142`.
 
+A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets only spec, bugs, style, comments and description. A change to a skill's files gets all checks. `--only bugs,tests` runs the named checks on any diff.
+
 **Comments already on the PR.** Run `review` again whenever comments come in. It sorts the existing threads and handles each group:
 
 | | Your PR | A colleague's PR |
