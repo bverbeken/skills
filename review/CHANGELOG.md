@@ -4,6 +4,8 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-27
 
+- `review-bugs`: no longer runs Claude Code's built-in `/code-review`. It is six angle skills that `review` starts in parallel, next to the other checks: `review-bugs-lines`, `review-bugs-removed`, `review-bugs-callers`, `review-bugs-language`, `review-bugs-wrappers` and `review-bugs-secrets`. `--only bugs` runs all six, and the "Checks" line keeps one `bugs` count. Test findings are left to `review-tests`.
+- `review`: verification keeps a blocking finding unless the code proves it wrong. A `REJECTED` answer quotes the code that prevents the failure.
 - `review`: a diff that holds only Markdown text, outside a skill folder, gets only the spec, bugs, style, comments and description checks. The "Checks" line names the checks that did not run. `--only` still runs the checks it names.
 - `ready-for-review`: gets the same short set of checks on a text-only PR.
 

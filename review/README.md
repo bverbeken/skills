@@ -8,7 +8,7 @@ A full code review in one command, at any stage of a PR. Say `review 142` or pas
 |---|---|
 | `review-tests` | Is every new code path tested? Do the tests assert behavior? |
 | `review-spec` | Does the change do what the issue, its linked conversations and the PR say? Is every difference explained? |
-| `review-bugs` | Bugs of every kind, including security. Runs Claude Code's built-in `/code-review`. |
+| `review-bugs` | Bugs of every kind, from six angles that run in parallel: every changed line, every removed rule, the callers of changed functions, the pitfalls of the language, wrappers and proxies, and secrets in added lines. Each angle is its own skill, for example `review-bugs-callers`. |
 | `review-performance` | N+1 queries, unbounded reads, missing indexes, wasted work, load on shared services. |
 | `review-style` | The repo's documented standards, and consistency with the code around it. |
 | `review-comments` | Every comment the change adds, and the test, name or extracted method that should replace it. |
@@ -84,11 +84,10 @@ Saying "review 142" or "is this PR ready to merge?" also works.
 
 ## Install
 
-All thirteen skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`. Link the skill folders into `~/.claude/skills/`. The steps are in the [README of this repo](../README.md#install). [`CHANGELOG.md`](CHANGELOG.md) lists what changed.
+All nineteen skills must sit next to each other: the checks read the shared steps in `review/STEPS.md`. Link the skill folders into `~/.claude/skills/`. The steps are in the [README of this repo](../README.md#install). [`CHANGELOG.md`](CHANGELOG.md) lists what changed.
 
 ## Requirements
 
-- A recent Claude Code. `review-bugs` runs its built-in `/code-review`.
 - `git`. The review checks out PRs and branches in separate worktrees.
 - The [GitHub CLI](https://cli.github.com/) (`gh`), logged in with access to your repos.
 - An MCP server for your issue tracker (Linear, Jira, …), unless your issues are GitHub issues. Without it, the spec is only the PR description and the commits.
