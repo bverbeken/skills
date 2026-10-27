@@ -25,6 +25,8 @@ For every line, ask: what input, state, timing or platform makes this line wrong
 
 Keep a finding only when you can name the input or state that triggers it and the wrong result. Example: "`limit` is `0` → `if (limit)` is false → the query returns every row instead of none."
 
+When you see a bug that this angle does not look for, report it too, with the input that triggers it. Another angle may miss it.
+
 Report each finding in the form of step 4 of `STEPS.md`, with `check: bugs`.
 
 ## Blocking

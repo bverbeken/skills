@@ -21,6 +21,8 @@ Also read the functions the changed code calls. When the same diff changes one o
 
 Keep a finding only when you can name the call site, the input that reaches it and the wrong result. Example: "`findSeat` now returns `null` for a missing seat → `book.ts:40` calls `findSeat(id).label` → a `TypeError` for an unknown ID instead of a 404."
 
+When you see a bug that this angle does not look for, report it too, with the input that triggers it. Another angle may miss it.
+
 Report each finding in the form of step 4 of `STEPS.md`, with `check: bugs`. The location is the call site that breaks.
 
 ## Blocking
