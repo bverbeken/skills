@@ -107,6 +107,10 @@ Leave out nits: pure polish that changes nothing for the reader or for the behav
 
 Judge by what the code will do in production. Check claims in the PR description against the diff.
 
+### Bug angles
+
+When the bug angles have returned, merge the findings that are about the same problem into one, before anything else uses them. One problem can show at two places. Example: lines reports that `findSeat` now returns `null` at `seats.ts:12`, and callers reports the call site it breaks at `book.ts:40`. The merged finding keeps both locations and the highest level of the two.
+
 ## 5. Verify blocking findings
 
 For each blocking finding without `verified: yes`, start one `Agent`, all in one message, in the foreground. Give it `<contextFile>` and the finding, and this brief: "Try to prove this finding wrong. Read the code in `<reviewDir>`, the callers and the tests. Answer `REJECTED` only when the failure it describes cannot happen, or, for a finding that is not about a failure (a broken repo rule, a missing test), when what it describes is not true of the code. How likely or how bad the failure is was already decided by the check: leave that alone. Otherwise answer `CONFIRMED`, also when the code doesn't show that the failure cannot happen, for example because it depends on a caller or input you can't see. A `REJECTED` answer quotes the code that prevents the failure, or, for a finding that is not about a failure, the code that shows it is not true, for example the test that exists. Add one sentence why."
