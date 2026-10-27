@@ -40,7 +40,7 @@ When the PR's branch is checked out locally, compare it with GitHub. Each differ
 
 ## 2. Review
 
-Run the `review` skill (`../review/SKILL.md`) on the PR, with the issue from the arguments if there is one, all checks, and print its report. The mode is **own**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub.
+Run the `review` skill (`../review/SKILL.md`) on the PR, with the issue from the arguments if there is one, without `--only`, and print its report. The mode is **own**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub.
 
 Each blocking finding in the report is a **finding problem**. So is every thread in the report's **Threads** section with a FIX, NOT RESOLVED or NEW PROBLEM verdict, and every human thread with a DISCUSS or CLARIFY verdict that you have not answered. Findings that were dropped in verification don't count.
 
