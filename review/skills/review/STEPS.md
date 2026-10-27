@@ -188,6 +188,6 @@ _Why:_ <one sentence, from the code>
 - `GO` means merge it. `NO GO` means at least one confirmed blocking finding, from a check or from a thread. There is nothing in between.
 - The verdict line only says why: the worst blocking finding for NO GO, or that none survived for GO. It gives no advice.
 - No praise, no summary beyond the verdict line.
-- A check run on its own lists only its own count on the "Checks" line, and ends with `# GO (<check> only)` or `# NO GO (<check> only)`.
+- A check run on its own lists only its own count on the "Checks" line, and ends with `# GO (<check> only)` or `# NO GO (<check> only)`. A bug angle run on its own uses its own name instead of `bugs`, for example `bugs-lines 1` and `# GO (bugs-lines only)`.
 
 Be direct. When you are not sure, say "I'm not sure" and why.
