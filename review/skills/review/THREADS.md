@@ -102,8 +102,6 @@ Give one verdict:
 - NOT RESOLVED: the problem still happens. Return the finding, with the example that still fails. Reply: the example, and what is still needed.
 - NEW PROBLEM: the fix causes another problem. Return the finding. Reply: the problem and its example."
 
-In colleague mode, also run the bug angles that `review-bugs` (`../review-bugs/SKILL.md`) lists once more, one more agent per angle, to find problems that the fixes for **recheck** threads cause. They read the same full PR diff as the main angles. `review` starts them itself, because a thread agent can't start agents. Give each what "Check agents" in step 4 of `STEPS.md` says. Merge their findings with those of the main bug angles, as "Bug angles" in step 4 of `STEPS.md` says. A bug that the main angles also found stays one `bugs` finding. The other bugs are NEW PROBLEM findings.
-
 ## 4. Remove duplicate findings
 
 When all agents have answered, compare each finding from the checks with the threads. A finding matches a thread when it is about the same problem in the same code, even if the words differ.
