@@ -22,4 +22,4 @@ Read `../review/STEPS.md` (next to this skill's folder) and run its steps 1 to 3
 
 Start one `Agent` (general-purpose) per angle, all in one message, so they run at the same time. Give each the same as `review` step 2 gives a check agent: the path of its angle file, the path of `STEPS.md`, `<contextFile>` and the brief.
 
-Wait until all agents have returned. Merge the findings that two angles report about the same problem in the same code into one. Then run steps 5 and 6 of `STEPS.md` for this check only.
+Wait until all agents have returned. Merge the findings that two angles report about the same problem in the same code into one, with the highest level of the two. Then run steps 5 and 6 of `STEPS.md` for this check only.
