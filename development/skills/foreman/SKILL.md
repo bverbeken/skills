@@ -29,7 +29,7 @@ Without one, pick the issue closest to done:
 3. `READY`
 4. `TO_CLARIFY`, only without `--afk`
 
-Within one status, follow the board order the tracker docs give, or else take the oldest issue. Say which issue you picked and why. When no issue has a step, say so, name what waits on the user, and end.
+Within one status, follow the board order the tracker docs give, or else the oldest issue first: take the first one. Say which issue you picked and why. When no issue has a step, say so, name what waits on the user, and end.
 
 ## 3. Run the step
 
