@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 ## Check
 
-Find each type the diff in `<reviewDir>` adds or changes that wraps another one: a cache, a proxy, a decorator or an adapter. When there is none, return `none`.
+Find each type the diff in `<reviewDir>` adds or changes that wraps another one: a cache, a proxy, a decorator or an adapter. When there is none, go on with the rule for other bugs below.
 
 For each wrapper, look for:
 
