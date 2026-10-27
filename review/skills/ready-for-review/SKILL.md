@@ -104,9 +104,9 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
 The loop is done when every item on the list is ticked.
 
-Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list, and keep new suggestions for the final output. Stop when a round finds no problem.
+Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list, and keep new suggestions for the final output. Stop when a round finds no problem. With `--afk`, also stop when a round finds only problems you skipped before, and go to step 7. With `--afk`, nobody reads the final output: add the new suggestions of a later round to the list and fix them too, and put the suggestions of the last round in `## Skipped: your call`.
 
-The first review of step 2 is round 1. When the review of round 5 still finds blocking items, fix nothing more and go to step 7: those items stay open. With `--afk`, also stop when a round finds only problems you skipped before, and go to step 7. With `--afk`, nobody reads the final output: add the new suggestions of a later round to the list and fix them too, and put the suggestions of the last round in `## Skipped: your call`.
+The first review of step 2 is round 1. When the review of round 5 still finds blocking items, fix nothing more and go to step 7: those items stay open.
 
 ## 7. Decide
 
