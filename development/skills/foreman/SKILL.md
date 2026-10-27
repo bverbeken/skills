@@ -82,7 +82,7 @@ Give each issue one line: its id, its title, its PR link when it has one, and wh
 |---|---|---|
 | `TO_CLARIFY` | the user | answer the open decisions, or the open question when the issue has one |
 | `READY` | `foreman` | run `/foreman <issue>` |
-| `BUSY` | `foreman` | building, or broke off: move it back to `READY` to build it again |
+| `BUSY` | `foreman` | what step 3 says for `BUSY` |
 | `REVIEW` with a new thread (step 3) | `foreman` | run `/foreman <issue>` |
 | `REVIEW` without a new thread | the user | review PR #<n>, or, without a PR link: no PR linked |
 | `APPROVED` | `foreman` | run `/foreman <issue>` |
