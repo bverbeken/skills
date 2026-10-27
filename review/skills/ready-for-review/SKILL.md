@@ -119,7 +119,7 @@ Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to 
 
 With `--afk`, first put the suggestions of the last round that you did not fix in `## Skipped: your call`.
 
-When a blocking item was skipped, or the loop stopped with blocking items open, leave the PR in draft and end with:
+When a blocking item was skipped, or the review loop stopped with blocking items open, leave the PR in draft and end with:
 
 ```
 # NOT READY
