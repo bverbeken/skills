@@ -102,7 +102,7 @@ Give one verdict:
 - NOT RESOLVED: the problem still happens. Return the finding, with the example that still fails. Reply: the example, and what is still needed.
 - NEW PROBLEM: the fix causes another problem. Return the finding. Reply: the problem and its example."
 
-In colleague mode, also run the `review-bugs` check (`../review-bugs/SKILL.md`) on the commits that answer **recheck** threads, in one more agent. Its bugs are NEW PROBLEM findings.
+In colleague mode, also run the bug angles that `review-bugs` (`../review-bugs/SKILL.md`) lists on the commits that answer **recheck** threads, one more agent per angle. Their bugs are NEW PROBLEM findings.
 
 ## 4. Remove duplicate findings
 

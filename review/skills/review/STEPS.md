@@ -1,6 +1,6 @@
 # Review steps
 
-Shared by `review` and the eleven check skills. Each skill says which steps it runs.
+Shared by `review` and its check skills. Each skill says which steps it runs.
 
 ## 1. Resolve the target
 
@@ -168,7 +168,7 @@ _Why:_ <one sentence, from the code>
 - **Drafts** are only written by `review`, never by a check run on its own. Number them in the order they appear in the report, and put the `[D<n>]` tag on the line they belong to.
   - A reply for each thread with a draft reply from `THREADS.md` step 3. Quote the comment you answer verbatim: the newest one when the thread has answers, after one line that sums up the earlier exchange. Trim a quote longer than 12 lines and end it with `> …(trimmed)`.
   - In colleague mode, also a new comment for each finding from the checks: written as the user, friendly, one to three sentences, with the example that fails. In own mode the user fixes their own findings, so there is no comment to draft.
-- Merge findings from different checks about the same problem into one line, with all their checks: `[bugs, spec]`. Count it once per check on the "Checks" line.
+- Merge findings from different checks about the same problem into one line, with all their checks: `[bugs, spec]`. Count it once per check on the "Checks" line. The bug angles are one check: a bug that two angles find counts once in `bugs`.
 - Sort blocking findings first, then suggestions, each grouped by check.
 - One sentence per finding, plus the optional `Fix:` sentence. The details stay in `evidence`.
 - Leave out empty sections, but always print the "Checks" line, with 0 for a check that found nothing.
