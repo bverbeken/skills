@@ -53,12 +53,14 @@ After the review, collect every remaining state problem:
 - Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5. With `--afk`, leave out the threads where the build has the last word.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
 
-A **round** is one pass through steps 2 and 3. Stop the loop when one of these is true:
+A **round** is one pass through steps 2 and 3. After step 3, check whether the loop ends:
 
-- This is the 5th round with blocking items: finding problems or state problems.
-- A blocking finding came back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count.
+- A round after the first finds no problem: go to step 7.
+- With `--afk`, a round finds only problems you skipped before: go to step 7.
+- This is the 5th round with blocking items, finding problems or state problems: stop the loop.
+- A blocking finding came back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count. Stop the loop.
 
-Then fix nothing more. Write the TODO list as step 4 says, with the blocking items of this round, and untick the item of a finding that came back. Then go to step 7: those items stay open.
+When the loop stops, fix nothing more. Write the TODO list as step 4 says, with the blocking items of this round, and untick the item of a finding that came back. Then go to step 7: those items stay open.
 
 ## 4. Write the TODO list
 
@@ -111,7 +113,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
 The loop is done when every item on the list is ticked.
 
-Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list, and keep new suggestions for the final output. Stop when a round finds no problem. With `--afk`, also stop when a round finds only problems you skipped before, and go to step 7. With `--afk`, nobody reads the final output: add the new suggestions of a later round to the list and fix them too, and put the suggestions of the last round in `## Skipped: your call`.
+Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list, and keep new suggestions for the final output. With `--afk`, nobody reads the final output: add the new suggestions of a later round to the list and fix them too, and put the suggestions of the last round in `## Skipped: your call`.
 
 ## 7. Decide
 
