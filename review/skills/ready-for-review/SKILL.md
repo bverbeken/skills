@@ -1,10 +1,10 @@
 ---
 name: ready-for-review
-description: "Take one of your own PRs out of draft: run a full own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and mark the PR ready once it is clean. Use whenever the user asks to take a PR out of draft or mark it ready for review, in any wording (\"PR out of draft\", \"make it ready\", \"undraft it\")."
+description: "Take one of your own PRs out of draft: run an own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and mark the PR ready once it is clean. Use whenever the user asks to take a PR out of draft or mark it ready for review, in any wording (\"PR out of draft\", \"make it ready\", \"undraft it\")."
 argument-hint: "[PR number | PR link | empty] [issue] [--afk]"
 ---
 
-Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: the full `review` finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
+Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: `review` without `--only` finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
 
 ## --afk
 
