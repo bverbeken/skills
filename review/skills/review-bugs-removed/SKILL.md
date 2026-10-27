@@ -15,7 +15,6 @@ Read every line the diff in `<reviewDir>` deletes or replaces, in code, config a
 - **REMOVED GUARD**: a check, a lock or an early return that is gone, so a case it stopped now gets through.
 - **DROPPED ERROR PATH**: an error that was thrown, returned or handled, and is now ignored or turned into a success.
 - **NARROWED VALIDATION**: input that was rejected before and is accepted now, or a format, range or length that is no longer checked.
-- **DELETED TEST**: a test removed while the case it covered still exists in the code.
 - **STILL USED**: a deleted import, variable, function, field or file that code in the new version still uses. Search the whole file and the repo for its name, not only the diff.
 
 Keep a finding only when you can name the input or state that the old code handled and the wrong result the new code gives. Example: "the deleted `if (!user.isAdmin) throw` → a normal user calls `deleteVenue` → the venue is deleted."
