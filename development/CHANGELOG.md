@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-27
 
+- `foreman`: the build runs `review` once. After `implement` fixes the blocking findings, the build goes on to `draft-pr` and `ready-for-review`. It no longer stops after a second NO GO.
 - New: `foreman status` lists the issues in `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW` and `APPROVED`, with what moves each one on. It marks the issues that wait on you and ends with your first action. It changes nothing.
 
 ## 2026-10-26
