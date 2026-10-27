@@ -172,7 +172,7 @@ _Why:_ <one sentence, from the code>
 - Sort blocking findings first, then suggestions, each grouped by check.
 - One sentence per finding, plus the optional `Fix:` sentence. The details stay in `evidence`.
 - Leave out empty sections, but always print the "Checks" line, with 0 for a check that found nothing.
-- On a text-only diff without `--only`, the "Checks" line lists only the checks that ran. The parentheses name the skipped ones and why: `(text-only diff: tests, performance, refactoring, architecture, consumers, dependencies not run)`.
+- On a text-only diff without `--only`, the "Checks" line lists only the checks that ran. The parentheses name every check that did not run, with its reason. Example for a branch without a PR: `(text-only diff: tests, performance, refactoring, architecture, consumers, dependencies not run; no PR: description not run)`.
 - `GO` means merge it. `NO GO` means at least one confirmed blocking finding, from a check or from a thread. There is nothing in between.
 - The verdict line only says why: the worst blocking finding for NO GO, or that none survived for GO. It gives no advice.
 - No praise, no summary beyond the verdict line.
