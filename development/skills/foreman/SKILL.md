@@ -74,7 +74,7 @@ Every end of this skill, also a refusal or a stop, ends with the lines below. On
 
 `/foreman status` shows the issues in the pipeline. It changes nothing: it moves no issue, calls no skill and changes no PR.
 
-List every issue in `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW` and `APPROVED`, grouped by status in that order. Leave out the other statuses. Within one status, follow the board order the tracker docs give, or else put the oldest issue first.
+List every issue in `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW` and `APPROVED`, grouped by status in that order. Leave out the other statuses. Within one status, use the order of step 2.
 
 Give each issue one line: its id, its title, its PR link when it has one, and what moves it on. Mark the issues that wait on the user with `▶`.
 
