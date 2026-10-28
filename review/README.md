@@ -113,6 +113,7 @@ Who depends on what:
 - **Issue tracker**: where issues live and how their IDs look. For GitHub issues: "Issues are GitHub issues in this repo."
 - **Licenses**: which licenses your dependencies may have, if that differs from the default in `review-dependencies`. Example: "No GPL, also not in CI."
 - **Consumers**: which repos use which code. A consumer that isn't checked out next to the others is reported as "not checked".
+- **Review settings**: a file your `CLAUDE.md` names, usually `docs/agents/review-settings.md`, with one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions.
 - **Coding standards and decisions**: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, ADRs, a glossary. The checks find these by themselves, so only name them when they live somewhere unusual.
 
 ## Credits
