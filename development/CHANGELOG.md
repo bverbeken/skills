@@ -4,7 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-28
 
-- `foreman`: a new review thread is an unresolved thread whose first and last comments both do not start with `🤖 `, whoever wrote them. A thread you open on your own PR now counts as new, also when the build posts under your login. A thread where you answered someone else last is not new: it waits on them. `foreman status` uses the same rule.
+- `foreman`: a new review thread is an unresolved thread whose first and last comments both do not start with `🤖 `, whoever wrote them. A thread you open on your own PR now counts as new, also when the build posts under your login. A thread where you answered a colleague last is not new: it waits on them. `foreman status` uses the same rule.
 - `foreman` builds a `BUSY` issue that you moved there yourself, when no build has started for it: it is assigned to you, with no linked PR and no branch for it.
 - `/foreman` without an issue shows `foreman status`. With `--afk`, it still picks the issue closest to done: `APPROVED`, `REVIEW` with a new thread, then `READY`.
 - `merge` refuses a PR that someone else opened.

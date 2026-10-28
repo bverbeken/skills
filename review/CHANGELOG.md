@@ -4,7 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-28
 
-- `ready-for-review --afk`: leaves out the open threads that are not new, with the same rule as `foreman`: the last comment starts with `🤖 `, whoever wrote it, or you answered someone else last.
+- `ready-for-review --afk`: leaves out the open threads that are not new, with the same rule as `foreman`: the last comment starts with `🤖 `, whoever wrote it, or you answered a colleague last.
 - `ready-for-review --afk`: posts a `🤖 ` reply on every thread it skips, and leaves the thread open.
 
 ## 2026-10-27
