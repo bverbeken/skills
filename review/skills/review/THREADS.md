@@ -50,6 +50,7 @@ Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 | Open, and you have the last word after the build | **triage** |
 | Open, and someone else has the last word | **triage** |
 | Open, and only you commented in it (a note from you or your tools) | **triage** |
+| Open, and you have the last word after a bot | **triage** |
 | Open, and you have the last word after someone else | **waiting** |
 | Resolved | **recheck** |
 

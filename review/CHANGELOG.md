@@ -2,6 +2,15 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-28
+
+- `ready-for-review --afk`: leaves out the open threads that are not new, with the same rule as `foreman`: a thread is new when its first and last comments both do not start with `🤖 `, whoever wrote them, unless you answered a colleague last.
+- `ready-for-review`: posts a `🤖 ` skip reply on every thread it skips, also without `--afk`, and leaves the thread open.
+- `ready-for-review`: answers every open bot thread. FIXED: a reply that names the commit, and the thread is resolved. DISCUSS or CLARIFY: a skip reply, and the thread stays open.
+- `review`: in own mode, an open thread where you answered a bot last goes to triage, so the build acts on your answer.
+- `ready-for-review`: answers the open bot threads also when the last round found no problem.
+- `ready-for-review`: when the review loop stops, it posts a skip reply on each open thread among the items left.
+
 ## 2026-10-27
 
 - `ready-for-review`: stops after 5 rounds with blocking items, state problems included, or when a blocking finding it fixed comes back. It checks both right after each review, before it fixes anything. It leaves the PR in draft and lists the open blocking items under NOT READY.
