@@ -1,6 +1,6 @@
 ---
 name: foreman
-description: "Do the next step for an issue, based on its status: prepare it, build it up to a PR that is ready for review, handle new review threads, or merge it. Or show the issues in the pipeline and mark the ones that wait on the user. Use when the user says \"foreman\", \"do the next thing\", \"next step for <issue>\", \"foreman, do the next thing on <issue>\", or \"foreman status\"."
+description: "Do the next step for an issue, based on its status: prepare it, build it up to a PR that is ready for review, handle new review threads, or merge it. Or, without an issue, show the issues in the pipeline and mark the ones that wait on the user. Use when the user says \"foreman\", \"do the next thing\", \"next step for <issue>\", \"foreman, do the next thing on <issue>\", or \"foreman status\"."
 argument-hint: "[issue | status] [--afk]"
 ---
 
@@ -16,18 +16,17 @@ To **stop** with a problem: without `--afk`, show the user the problem and end. 
 
 Read the issue tracker docs. When they don't map all 8 factory statuses (`BACKLOG`, `BLOCKED`, `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW`, `APPROVED`, `DONE`), refuse: name the statuses that are missing, change nothing, and end.
 
-When the first word of `$ARGUMENTS` is `status`, show the [status](#status) instead of steps 2 to 4. `--afk` changes nothing there.
+Show the [status](#status) instead of steps 2 to 4 when the first word of `$ARGUMENTS` is `status`, or when `$ARGUMENTS` names no issue and has no `--afk`. `--afk` changes nothing for `status`.
 
 ## 2. Pick the issue
 
 With an issue reference, fetch the issue and state its title. If the reference is ambiguous, ask, or with `--afk`, end.
 
-Without one, pick the issue closest to done:
+Without one, with `--afk`, pick the issue closest to done:
 
 1. `APPROVED`
 2. `REVIEW` with a new thread (see step 3)
 3. `READY`
-4. `TO_CLARIFY`, only without `--afk`
 
 Within one status, order the issues as the board order in the tracker docs, or else oldest first, and take the first one. Say which issue you picked and why. When no issue has a step, say so, name what waits on the user, and end.
 

@@ -5,6 +5,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 ## 2026-10-28
 
 - `foreman` builds a `BUSY` issue that you moved there yourself, when no build has started for it: it is assigned to you, with no linked PR and no branch for it.
+- `/foreman` without an issue shows `foreman status`. With `--afk`, it still picks the issue closest to done: `APPROVED`, `REVIEW` with a new thread, then `READY`.
 
 ## 2026-10-27
 
