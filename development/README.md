@@ -13,7 +13,7 @@ Skills for building software with an agent, from an issue to a merged PR. Say `/
 | `tdd` | The red → green loop: what a good test is, where tests go, and one commit per green cycle. |
 | `codebase-design` | Shared words for designing deep modules: module, interface, depth, seam, adapter. |
 | `draft-pr` | Pushes the branch and opens a draft PR, with a description written from the commits and the diff. |
-| `merge` | Merges the PR of an approved issue with a rebase merge, tests the merged code, closes the issue with a result, and removes the worktree and the branch. |
+| `merge` | Merges the PR of an approved issue with a squash merge, or the method the repo allows, tests the merged code, closes the issue with a result, and removes the worktree and the branch. |
 
 `foreman` calls `review` and `ready-for-review`, from the [review](../review/) skills in this repo. Install those too.
 
