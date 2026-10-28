@@ -153,7 +153,7 @@ Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> sta
 
 ## Skip replies
 
-A skip reply tells a thread that its decision is the user's: `🤖 <url> Skipped: your call, see the PR description.` Post it as the last paragraph of "Bot replies" says, but leave the thread open. Post one per thread, also when more than one item comes from it.
+A skip reply tells a thread that its decision is the user's: `🤖 <url> Skipped: this one is your call.` Post it as the last paragraph of "Bot replies" says, but leave the thread open. Post one per thread, also when more than one item comes from it.
 
 ## Bot replies
 
