@@ -99,7 +99,7 @@ A bot thread with a FIX verdict is already a TODO item: it gets its reply in ste
 
 ## 6. Fix the items
 
-Take the unticked items one by one, blocking first, then suggestions, in list order. For each item:
+Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails, is skipped without asking: it goes in `## Skipped: your call`. For each item:
 
 1. Decide if the fix is clear. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
