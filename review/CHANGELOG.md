@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-28
 
+- `review-description`: a missing screenshot, before/after or video blocks your own PR only when the repo's review settings hold `screenshots: required`. Otherwise it is a suggestion. Missing test steps still block your own PRs.
 - `ready-for-review --afk`: leaves out the open threads that are not new, with the same rule as `foreman`: a thread is new when its first and last comments both do not start with `🤖 `, whoever wrote them, unless you answered a colleague last.
 - `ready-for-review`: posts a `🤖 ` skip reply on every thread it skips, also without `--afk`, and leaves the thread open.
 - `ready-for-review`: answers every open bot thread. FIXED: a reply that names the commit, and the thread is resolved. DISCUSS or CLARIFY: a skip reply, and the thread stays open.
