@@ -18,7 +18,7 @@ Fetch the issue from the issue tracker and state its title. If the reference is 
 
 Find the issue's PR as the issue tracker docs say. When the docs say nothing about it, take the issue's repo and branch name from the issue tracker, as `implement` does, and the newest PR of that branch: `gh pr list -R <owner>/<repo> --head <branch name> --state all`. When there is no PR, **refuse**.
 
-Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,state,isDraft,baseRefName,headRefName,headRefOid`. `<base>` is `baseRefName` and `<branch>` is `headRefName`.
+Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,state,isDraft,author,baseRefName,headRefName,headRefOid`. `<base>` is `baseRefName` and `<branch>` is `headRefName`.
 
 Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. Run every later command in the main checkout or one of its worktrees, so `gh` finds the PR without `-R`. `<worktree>` is the worktree that has `<branch>` checked out (`git worktree list --porcelain`). When there is none, it is `<repo>/../<repo>.worktrees/<branch>`, where `implement` puts it.
 
@@ -32,6 +32,7 @@ When the PR is already merged, an earlier run broke off after the merge. Skip th
 
 Otherwise, **refuse** when any of these is true:
 
+- The PR's author is not the user (`gh api user -q .login`). Merge only merges the user's own PRs.
 - The issue is not in `APPROVED`. That status is the user's approval: a GitHub approval is not needed.
 - The PR is closed without a merge, or it is a draft.
 - A CI check failed or is still pending (`gh pr checks <num>`). No CI at all is fine.
