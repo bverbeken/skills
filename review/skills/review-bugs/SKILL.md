@@ -20,6 +20,6 @@ Their files are at `<this skill's folder>/../<angle>/SKILL.md`. `review` starts 
 
 Read `../review/STEPS.md` (next to this skill's folder) and run its steps 1 to 3.
 
-First write the list of angles, with the count: "6 agents: 6 bug angles". Then send exactly that many `Agent` (general-purpose) calls in one message, one per angle, so they run at the same time. Start them only this way: never one `Agent` per message, never as a Workflow. Give each what "Check agents" in step 4 of `STEPS.md` says, with its angle file as the check file.
+First write the list of angles above, with the count. Example: "6 agents: 6 bug angles". Then send exactly that many `Agent` (general-purpose) calls in one message, one per angle, so they run at the same time. Start them only this way: never one `Agent` per message, never as a Workflow. Give each what "Check agents" in step 4 of `STEPS.md` says, with its angle file as the check file.
 
 Wait until all agents have returned. Merge their findings, as "Bug angles" in step 4 of `STEPS.md` says. Then run steps 5 and 6 of `STEPS.md` for this check only.
