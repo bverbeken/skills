@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-29
+
+- `review`, `review-bugs` and `ready-for-review`: a review round first lists its agents with the count, then starts them all in one message, and the verification agents in one second message. Never one `Agent` per message, never a Workflow.
+
 ## 2026-10-28
 
 - `ready-for-review --afk`: leaves out the open threads that are not new, with the same rule as `foreman`: a thread is new when its first and last comments both do not start with `🤖 `, whoever wrote them, unless you answered a colleague last.
