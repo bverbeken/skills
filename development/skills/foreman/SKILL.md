@@ -36,7 +36,7 @@ Within one status, order the issues as the board order in the tracker docs, or e
 |---|---|
 | `TO_CLARIFY` | Without `--afk`: call "prepare" with the issue. With `--afk`: no step, the decisions are the user's. |
 | `READY` | Build, below. |
-| `REVIEW` | When the PR has a **new thread**: an open review thread that a human started, where neither the build (its replies start with `🤖 `) nor the user has the last word. Then find the repo's main checkout and the worktree that has the PR's branch checked out, as `merge` step 1 does, and run `git fetch origin`. When there is no such worktree, create it at `<repo>/../<repo>.worktrees/<branch>`: `git worktree add <path> <branch>` when the local branch exists, otherwise `git worktree add --no-track -b <branch> <path> origin/<branch>`. Copy the ignored setup files into it and install what the tests need, as `implement` does. When the branch is behind `origin/<branch>`, fast-forward it. Then **ready the PR** from that worktree, below. Otherwise: no step, the PR waits on the user's review. |
+| `REVIEW` | When the PR has a **new thread**: an open review thread that a human started, where neither the build (its replies start with `🤖 `) nor the user has the last word. Then find the repo's main checkout and the worktree that has the PR's branch checked out, as `merge` step 1 does, and run `git fetch origin`. When there is no such worktree, create it at `<repo>/../<repo>.worktrees/<branch>`: `git worktree add <path> <branch>` when the local branch exists, otherwise `git worktree add --no-track -b <branch> <path> origin/<branch>`. Copy the ignored setup files into it and install what the tests need, as `implement` does. When the branch is behind `origin/<branch>`, fast-forward it. Then **ready the PR** from that worktree, below. Otherwise: no step, the PR waits on a reviewer: the user requests one and moves the issue to `APPROVED` once they approve. |
 | `APPROVED` | Call "merge" with the issue. |
 | `BACKLOG` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `DONE`. |
@@ -68,7 +68,7 @@ Every end of this skill, also a refusal or a stop, ends with the lines below. On
 
 - the issue and its status now;
 - why you stopped there;
-- the next step and who takes it. Say it plainly when it is the user's, for example "Review PR #12, then move ACME-123 to `APPROVED`".
+- the next step and who takes it. Say it plainly when it is the user's, for example "Request a reviewer on PR #12, and move ACME-123 to `APPROVED` once they approve".
 
 ## Status
 
@@ -85,7 +85,7 @@ Give each issue one line: its id, its title, its PR link when it has one, and wh
 | `BUSY`, fresh (step 3) | `foreman` | run `/foreman <issue>` |
 | `BUSY`, not fresh | `foreman` | what step 3 says for `BUSY` |
 | `REVIEW` with a new thread (step 3) | `foreman` | run `/foreman <issue>` |
-| `REVIEW` without a new thread | the user | review PR #<n>, or, without a PR link: no PR linked |
+| `REVIEW` without a new thread | the user | request a reviewer on PR #<n>, and move it to `APPROVED` once they approve; or, without a PR link: no PR linked |
 | `APPROVED` | `foreman` | run `/foreman <issue>` |
 
 End with one line that names the user's first action: the one on the first marked line. When no issue waits on the user, say so.
@@ -96,7 +96,7 @@ TO_CLARIFY
 READY
     ACME-18 Faster search: run /foreman ACME-18
 REVIEW
-  ▶ ACME-17 Dark mode: review PR #10
+  ▶ ACME-17 Dark mode: request a reviewer on PR #10, and move it to `APPROVED` once they approve
 
 Next for you: answer the open question of ACME-22.
 ```
