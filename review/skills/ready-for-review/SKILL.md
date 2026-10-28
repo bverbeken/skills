@@ -19,7 +19,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
 - Anything else, and every item that is still not fixed after you tried: skip it.
 
-To skip an item, delete it from the list. When the item comes from an open thread, post a reply on it, for example `🤖 Skipped: your call, see the PR description.`, and leave the thread open. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion goes in a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
+To skip an item, delete it from the list. When the item comes from an open thread, post a **skip reply** on it. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion goes in a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
 
 A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
 
@@ -110,7 +110,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread.
    - You tried and the item is still not fixed.
 
-   Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list and note it as skipped.
+   Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list, note it as skipped, and post a **skip reply** when it comes from an open thread.
 2. Fix it. For a bug or a missing test: write the test first and see it fail, then fix the code. For failing CI: read the failing job's log (`gh run view <run-id> --log-failed`) and fix the cause. For pending CI: wait for it (`gh pr checks <num> --watch`). For a description finding: edit the description outside the markers, with no commit. For a screenshot finding: make and upload the images as `SCREENSHOTS.md` in this skill's folder says.
 3. Run the tests that cover the change. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
@@ -148,6 +148,10 @@ Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 New suggestions: <one line each, from rounds after the first, or: none>
 Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
 ```
+
+## Skip replies
+
+A skip reply tells a thread that its decision is the user's: `🤖 <url> Skipped: your call, see the PR description.` Post it as the last paragraph of "Bot replies" says, but leave the thread open. Post one per thread, also when more than one item comes from it.
 
 ## Bot replies
 

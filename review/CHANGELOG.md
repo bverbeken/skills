@@ -5,7 +5,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 ## 2026-10-28
 
 - `ready-for-review --afk`: leaves out the open threads that are not new, with the same rule as `foreman`: the last comment starts with `🤖 `, whoever wrote it, or you answered a colleague last.
-- `ready-for-review --afk`: posts a `🤖 ` reply on every thread it skips, and leaves the thread open.
+- `ready-for-review`: posts a `🤖 ` skip reply on every thread it skips, also without `--afk`, and leaves the thread open.
 - `ready-for-review`: answers every open bot thread. FIXED: a reply that names the commit, and the thread is resolved. DISCUSS or CLARIFY: a skip reply, and the thread stays open.
 
 ## 2026-10-27
