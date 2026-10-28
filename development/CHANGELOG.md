@@ -2,6 +2,10 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-28
+
+- `foreman` builds a `BUSY` issue that you moved there yourself, when no build has started for it: it is assigned to you, with no linked PR and no branch for it.
+
 ## 2026-10-27
 
 - `foreman`: the build runs `review` once. After `implement` fixes the blocking findings, the build goes on to `draft-pr` and `ready-for-review`. It no longer stops after a second NO GO.

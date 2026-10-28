@@ -41,8 +41,10 @@ Within one status, order the issues as the board order in the tracker docs, or e
 | `APPROVED` | Call "merge" with the issue. |
 | `BACKLOG` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `DONE`. |
-| `BUSY` | No step: a build may still be running, or it broke off. To build it again, the user moves it back to `READY`. |
+| `BUSY` | When the issue is **fresh**: build, below. Otherwise no step: a build may still be running, or it broke off. To build it again, the user moves it back to `READY`. |
 | `DONE` | No step: the issue is merged. |
+
+A `BUSY` issue is **fresh** when a person moved it there and no build has started: it is assigned to the user (when the issue tracker docs say issues have an assignee), no PR is linked to it in the tracker, and no branch with the issue's branch name exists, locally or on `origin`, in the repo the work belongs in. Pick that repo as `implement` does. When it could be more than one repo, ask, or with `--afk`, treat the issue as not fresh.
 
 When there is no step, change nothing. When `implement` or `merge` stops, it writes its own question and moves the issue: end. When another worker ends without its normal result, for example `draft-pr` can't push, **stop** with its message.
 
@@ -81,7 +83,8 @@ Give each issue one line: its id, its title, its PR link when it has one, and wh
 |---|---|---|
 | `TO_CLARIFY` | the user | answer the open decisions, or the open question when the issue has one |
 | `READY` | `foreman` | run `/foreman <issue>` |
-| `BUSY` | `foreman` | what step 3 says for `BUSY` |
+| `BUSY`, fresh (step 3) | `foreman` | run `/foreman <issue>` |
+| `BUSY`, not fresh | `foreman` | what step 3 says for `BUSY` |
 | `REVIEW` with a new thread (step 3) | `foreman` | run `/foreman <issue>` |
 | `REVIEW` without a new thread | the user | review PR #<n>, or, without a PR link: no PR linked |
 | `APPROVED` | `foreman` | run `/foreman <issue>` |

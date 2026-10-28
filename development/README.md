@@ -45,7 +45,7 @@ The skills name statuses with fixed UPPERCASE names:
 | `BLOCKED` | planned, but a blocker is not `DONE` yet |
 | `TO_CLARIFY` | to prepare: open decisions, or an open question from a stopped build |
 | `READY` | prepared, you give the go: it can be built |
-| `BUSY` | being built |
+| `BUSY` | being built, by you or by `foreman` |
 | `REVIEW` | the PR is ready for your review |
 | `APPROVED` | you approve the PR: it can be merged |
 | `DONE` | merged |
