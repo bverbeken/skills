@@ -60,7 +60,7 @@ A **round** is one pass through steps 2 and 3. After step 3, check whether the r
 - This is the 5th round with blocking items (finding problems or state problems): stop the review loop.
 - A blocking finding came back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count. Stop the review loop.
 
-When the review loop stops, fix nothing more. Write the TODO list as step 4 says, with the blocking items of this round, and untick the item of a finding that came back. Then go to step 7: those items stay open.
+When the review loop stops, fix nothing more. Write the TODO list as step 4 says, with the blocking items of this round, and untick the item of a finding that came back. Post a **skip reply** on each open thread among those items. Then go to step 7: those items stay open.
 
 ## 4. Write the TODO list
 
