@@ -19,7 +19,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
 - Anything else, and every item that is still not fixed after you tried: skip it.
 
-To skip an item, delete it from the list. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion goes in a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
+To skip an item, delete it from the list. When the item comes from an open thread, post a reply on it, for example `🤖 Skipped: your call, see the PR description.`, and leave the thread open. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion goes in a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
 
 A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
 
