@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-28
+
+- `ready-for-review --afk`: leaves out the open threads whose last comment starts with `🤖 `, whoever wrote it.
+
 ## 2026-10-27
 
 - `ready-for-review`: stops after 5 rounds with blocking items, state problems included, or when a blocking finding it fixed comes back. It checks both right after each review, before it fixes anything. It leaves the PR in draft and lists the open blocking items under NOT READY.

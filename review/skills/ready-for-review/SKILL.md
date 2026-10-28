@@ -50,7 +50,7 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5. With `--afk`, leave out the threads where the build has the last word.
+- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5. With `--afk`, leave out the threads whose last comment starts with `🤖 `, whoever wrote it.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
 
 A **round** is one pass through steps 2 and 3. After step 3, check whether the review loop ends:
