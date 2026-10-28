@@ -123,7 +123,9 @@ Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to 
 
 ## 7. Decide
 
-With `--afk`, first put the suggestions of the last round that you did not fix in `## Skipped: your call`.
+First run step 5 for every open bot thread that has no `🤖 ` reply yet: a round without problems comes here without step 5.
+
+With `--afk`, then put the suggestions of the last round that you did not fix in `## Skipped: your call`.
 
 When a blocking item was skipped, or the review loop stopped with blocking items open, leave the PR in draft and end with:
 
