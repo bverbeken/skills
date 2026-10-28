@@ -99,12 +99,12 @@ A bot thread with a FIX verdict is already a TODO item: it gets its reply in ste
 
 ## 6. Fix the items
 
-Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails, is skipped without asking: it goes in `## Skipped: your call`. For each item:
+Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails, is skipped without asking: delete it from the list, and put it in `## Skipped: your call`. For each item:
 
 1. Decide if the fix is clear. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
    - The fix would change or bend a line in the issue's `## Decisions` section.
-   - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user.
+   - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user, or whose upload fails.
    - The thread's verdict is DISCUSS or CLARIFY.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread.
