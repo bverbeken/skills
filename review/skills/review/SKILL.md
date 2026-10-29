@@ -34,4 +34,4 @@ Wait until all agents have returned, the item agents too. Run step 2 of `review-
 
 When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
 
-Then run step 6 of `STEPS.md` for the report. The item agents of `review-dependencies` also return one line per new dependency: they go in the report's "New dependencies" section.
+Then run step 6 of `STEPS.md` for the report. The item agents of `review-dependencies` also return one line per new dependency: they go in the report's "New dependencies" section. The `not checked` lines of `review-consumers`, from its find agent and its item agents, go on the "Checks" line.
