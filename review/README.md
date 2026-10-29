@@ -14,8 +14,8 @@ A full code review in one command, at any stage of a PR. Say `review 142` or pas
 | `review-comments` | Every comment the change adds, and the test, name or extracted method that should replace it. |
 | `review-refactoring` | Names, duplicate code, code in the wrong place, code smells. |
 | `review-architecture` | Does the change fit the codebase's design and its recorded decisions (ADRs, glossary)? |
-| `review-consumers` | Does the change break the projects that depend on it? |
-| `review-dependencies` | For each dependency the change adds: why this one, is it maintained, can we trust it (vulnerabilities, signs of a supply chain attack), is its license allowed, and what are the alternatives. Finds nothing when no dependency is added. |
+| `review-consumers` | Does the change break the projects that depend on it? Each consumer is checked by its own agent, in parallel. |
+| `review-dependencies` | For each dependency the change adds: why this one, is it maintained, can we trust it (vulnerabilities, signs of a supply chain attack), is its license allowed, and what are the alternatives. Each dependency is researched by its own agent, in parallel. Finds nothing when no dependency is added. |
 | `review-description` | Can a teammate who only reads the PR description say what was wrong, why, and what changes? An agent reads it cold, with nothing else. Runs only on a PR. |
 
 Each check can also run on its own, for example `/review-tests 142`.

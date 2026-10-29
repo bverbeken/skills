@@ -22,14 +22,16 @@ Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, co
 
 `review-bugs` runs as its angles: start one check agent per angle skill that `review-bugs` lists, with the angle's file as the check file. `--only bugs` runs all angles.
 
+`review-dependencies` and `review-consumers` each run as a find agent and item agents, as "Item agents" in step 4 of `STEPS.md` says. The find agent is a check agent with the skill's `SKILL.md` as the check file. When a find agent returns its list, start its item agents right away. A find agent that returns `none`, or only `not checked` lines, starts no item agents.
+
 `review-description` runs only when the target is a PR, and in a different way: instead of a check agent, start its cold reader (step 1 of its check) with the PR's title and body as the text.
 
-First write the list of agents for this round, with the count. Example: "19 agents: 9 checks, 6 bug angles, 1 cold reader, 3 thread agents". Then send exactly that many `Agent` calls in one message, so they run at the same time: one `Agent` (general-purpose) per check and per bug angle, the cold reader, and the thread agents of `THREADS.md` step 3. Start them only as `Agent` calls, all in that one message. Give each check agent what "Check agents" in step 4 of `STEPS.md` says.
+First write the list of agents for this round, with the count. Example: "19 agents: 7 checks, 2 find agents, 6 bug angles, 1 cold reader, 3 thread agents". Then send exactly that many `Agent` calls in one message, so they run at the same time: one `Agent` (general-purpose) per check, per find agent and per bug angle, the cold reader, and the thread agents of `THREADS.md` step 3. Start them only as `Agent` calls, all in that one message, in the background, so you can start item agents as soon as a find agent returns. Give each check agent what "Check agents" in step 4 of `STEPS.md` says.
 
 ## 3. Verify and report
 
-Wait until all agents have returned. Run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know. When the target is a PR, also run its PR material check. Merge the findings of the bug angles, as "Bug angles" in step 4 of `STEPS.md` says. When the PR has threads, then run step 4 of `THREADS.md` to remove duplicate findings. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
+Wait until all agents have returned, the item agents too. Run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know. When the target is a PR, also run its PR material check. Merge the findings of the bug angles, as "Bug angles" in step 4 of `STEPS.md` says. When the PR has threads, then run step 4 of `THREADS.md` to remove duplicate findings. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
 
 When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
 
-Then run step 6 of `STEPS.md` for the report. `review-dependencies` also returns one line per new dependency: they go in the report's "New dependencies" section.
+Then run step 6 of `STEPS.md` for the report. The item agents of `review-dependencies` also return one line per new dependency: they go in the report's "New dependencies" section. The `not checked` lines of `review-consumers`, from its find agent and its item agents, go on the "Checks" line.
