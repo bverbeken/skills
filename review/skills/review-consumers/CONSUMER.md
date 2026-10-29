@@ -6,7 +6,7 @@ Check the consumers you got, one after the other: each is a project that depends
 
 Check each consumer on its default branch, never on the branch the user has checked out:
 
-1. `gh repo view <owner>/<consumer> --json defaultBranchRef -q .defaultBranchRef.name`
+1. `gh repo view <owner>/<repo> --json defaultBranchRef -q .defaultBranchRef.name`
 2. `git -C <consumerRoot> fetch origin <defaultBranch>`
 3. `<consumerDir>` is `<consumerRoot>/../.review-worktrees/<consumer>-<defaultBranch>`. If it exists, remove it: `git -C <consumerRoot> worktree remove --force <consumerDir>`.
 4. `git -C <consumerRoot> worktree add --detach <consumerDir> FETCH_HEAD`
