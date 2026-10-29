@@ -121,7 +121,7 @@ Give each check agent:
 
 Start one item agent per item, also for a single item. Start at most 10 per skill. With more than 10 items, split the list into 10 groups of about the same size, and give each agent one group: it handles its items one after the other. Example: 23 dependencies give 3 agents with 3 items and 7 agents with 2.
 
-First write the list of item agents, with the count. Example: "3 item agents: 3 dependencies". Then send exactly that many `Agent` (general-purpose) calls in one message. Give each what "Check agents" says, with the item file as the check file, and add its items, copied from the find step's list. Replace the last two sentences of the brief with: "Return everything the check file asks for: its lines for each item, also an item without findings, and your findings in the form of step 4 of `STEPS.md`. Do not verify, do not write a report."
+First write the list of item agents, with the count. Example: "3 item agents: 3 dependencies". Then send exactly that many `Agent` (general-purpose) calls in one message. Start them only as `Agent` calls, all in that one message, in the background when `review` runs them, so the other checks and the other skill's item agents keep running. Give each what "Check agents" says, with the item file as the check file, and add its items, copied from the find step's list. Replace the last two sentences of the brief with: "Return everything the check file asks for: its lines for each item, also an item without findings, and your findings in the form of step 4 of `STEPS.md`. Do not verify, do not write a report."
 
 A find agent gets what "Check agents" says too, but its brief ends with: "Return the list the check file asks for, or `none`. Do not verify, do not write a report."
 
