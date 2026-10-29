@@ -115,7 +115,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 3. Run the tests that cover the change. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
 5. Tick the item in the PR description.
-6. When the item came from a bot thread: post a bot reply and resolve the thread.
+6. When the item came from a bot thread, also one that counts as a human thread in step 3: post a bot reply that names the commit, and resolve the thread.
 
 The loop is done when every item on the list is ticked.
 
