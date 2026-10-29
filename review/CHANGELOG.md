@@ -4,7 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-29
 
-- `ready-for-review`: once it fixes the item of a bot thread that someone answered after the build's reply, it replies with the commit and resolves the thread, also without `--afk`.
+- `ready-for-review`: once it fixes the item of a bot thread that someone answered after the build's reply, it replies with the commit and resolves the thread, also without `--afk`. When the answer leads to no change, it replies with the reason and leaves the thread open.
 - `review`: in own mode, bot comments after a `🤖 ` reply don't count for the last word. A thread where only a bot answered the build is waiting, not triage.
 - `ready-for-review`: a round that finds only threads you skipped goes to the decision, also without `--afk`. A thread whose last comment is a skip reply gets no second one.
 - `ready-for-review`: when you or a colleague answer a `🤖 ` reply on a bot thread, it handles that thread like a human thread and does what the answer asks. It answers only the bot threads that have no `🤖 ` reply yet as bot threads, so a bot thread gets no second skip reply.
