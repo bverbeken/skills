@@ -4,7 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-29
 
-- `review`, `review-bugs` and `ready-for-review`: a review round first lists its agents with the count, then starts them all in one message, and the verification agents in one second message. Never one `Agent` per message, never a Workflow.
+- `review`, `review-bugs` and `ready-for-review`: a review round first lists its agents with the count, then starts them all as `Agent` calls in one message, and the verification agents in one second message.
 
 ## 2026-10-28
 
