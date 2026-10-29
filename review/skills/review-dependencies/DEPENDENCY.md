@@ -1,4 +1,4 @@
-# One dependency
+# Research the dependencies you got
 
 Research the dependencies you got, one after the other: each is a new dependency of the change, with the line that adds it. Set the level of each finding by the "Blocking" section of `SKILL.md`, next to this file.
 
