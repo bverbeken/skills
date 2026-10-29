@@ -70,5 +70,5 @@ A status counts as mapped only when your docs map it, also when your tracker has
 |---|---|---|
 | codebase-design | skills/engineering/codebase-design | none |
 | grilling | skills/productivity/grilling | asks one question at a time (most decisions depending on it first), not a full round; skips its closing question when the calling skill confirms itself |
-| implement | skills/engineering/implement | only builds: `foreman` runs the review and the PR steps; fixes the review findings it gets; commits as it goes, one small commit per step, instead of once at the end; asks a new open decision through `prepare`; stops on a setup failure before the first test cycle; `--afk` builds without asking |
+| implement | skills/engineering/implement | only builds: `foreman` runs the review and the PR steps; fixes the review findings it gets; commits as it goes, one small commit per step, instead of once at the end; asks a new open decision through `prepare`; stops on a setup failure and never works around it; `--afk` builds without asking |
 | tdd | skills/engineering/tdd | refers to `review` instead of `code-review`; adds the rule "commit on green" (one commit per cycle); takes confirmed seams from the issue's `## Decisions` and asks about others through `prepare`, or picks them itself with `--afk` |
