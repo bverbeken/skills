@@ -89,7 +89,7 @@ Customers who changed their email address kept getting receipts at the old addre
 The production change is one line: `order.email` becomes `account.email`. The rest of the diff is tests for the receipt job, for orders with and without a changed address.
 ```
 
-# 3b. Cut the draft
+# 4. Cut the draft
 
 Re-read the body before creating the PR:
 - Delete every sentence a reviewer can learn from the diff.
@@ -97,11 +97,15 @@ Re-read the body before creating the PR:
 - Intro: at most 2 sentences (3 only for the why). A bug-fix intro is as long as its three parts need, and no longer. Notes: more than 3 questions means checking each one again; drop any that the diff answers or that only a few reviewers would ask, and keep the rest. Testing: each step is one action on one line.
 - If a sentence holds two ideas, split it or drop one.
 
-Then run the cold read on the title and body: the check in `<this skill's folder>/../review-description/SKILL.md`, including its fix step.
+# 5. Cold read
 
-# 4. Create the draft PR
+Run the cold read on the title and body: the check in `<this skill's folder>/../review-description/SKILL.md`, including its fix step. Create the PR only after this step.
 
-Always draft, never invite reviewers. Create it automatically with the body from step 3 — do not ask for approval first. Pass the body via a temp file to preserve formatting:
+The step is done when a cold reader's answer matches the change and you fixed its findings. When the second cold reader still finds problems, go on to step 6 anyway: the report lists the findings that are left. Keep count of the findings you fixed and the findings that are left. Screenshot findings stay out of that count: step 7 prints them as reminders.
+
+# 6. Create the draft PR
+
+Always draft, never invite reviewers. Create it automatically with the title and body from step 5 — do not ask for approval first. Pass the body via a temp file to preserve formatting:
 
 ```
 gh pr create --draft --base <base> --title "<title>" --body-file <tmpfile>
@@ -111,8 +115,10 @@ Do **not** use `--reviewer`, and do not post comments or run any review — the 
 
 Print the resulting PR URL and the title you used.
 
-# 5. Report
+# 7. Report
 
-After the PR URL, print the screenshot reminders from the cold read in step 3b, one line each, for example `⚠️ Visual change: add a before/after screenshot before marking ready`. When a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it names a review settings file, usually `docs/agents/review-settings.md`, read it, with the path relative to the folder of the file that names it. When there is no such file, or it does not hold `screenshots: required`, say the screenshot is optional: `⚠️ Visual change: a before/after screenshot would help (optional)`.
+After the PR URL, print one line about the cold read, also when no finding is left: `Cold read: 2 findings fixed, 0 left`. Then print each finding that is left, one per line.
+
+Then print the screenshot reminders from the cold read in step 5, one line each, for example `⚠️ Visual change: add a before/after screenshot before marking ready`. When a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it names a review settings file, usually `docs/agents/review-settings.md`, read it, with the path relative to the folder of the file that names it. When there is no such file, or it does not hold `screenshots: required`, say the screenshot is optional: `⚠️ Visual change: a before/after screenshot would help (optional)`.
 
 Then close with one line telling the user to read the description over and adjust it before marking the PR ready for review. This is the last thing you output. When another skill called this one, go back to it and continue its next step.

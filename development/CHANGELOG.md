@@ -2,6 +2,10 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-29
+
+- `draft-pr` runs the cold read as its own step, before it creates the PR. When the second cold reader still finds problems, it creates the draft PR anyway. Its report always has a cold read line, for example `Cold read: 2 findings fixed, 0 left`, and lists each finding that is left.
+
 ## 2026-10-28
 
 - `draft-pr`: its screenshot reminder says the screenshot is optional, unless the repo's review settings hold `screenshots: required`.
