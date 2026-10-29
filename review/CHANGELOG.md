@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-29
 
+- `ready-for-review`: when you answer a `🤖 ` reply on a bot thread, it handles that thread like a human thread and does what your answer asks. It answers only the bot threads that have no `🤖 ` reply yet as bot threads, so a bot thread gets no second skip reply.
 - `ready-for-review`: bot comments after a `🤖 ` reply don't count as the last comment of a thread, with the same rule as `foreman`. A thread where only a bot answered the build's reply is not new.
 - `ready-for-review`: leaves out the threads that are not new also without `--afk`. A thread you skipped stays out until someone other than a bot writes on it again.
 - `review-dependencies` and `review-consumers`: one agent per new dependency and one per consumer, also for a single one, at most 10 per check. `review` starts them as soon as the find step returns, while the other checks run. Before, the check did that work one item at a time.

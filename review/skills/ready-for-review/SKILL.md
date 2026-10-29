@@ -50,7 +50,7 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). Bot threads are handled in step 5. Leave out the threads that are not **new**. A new thread is an unresolved review thread whose first comment and last comment both do not start with `🤖 `, unless the user wrote the last comment as an answer to a colleague: another person, not the build and not a bot. To find the last comment, skip the bot comments that come after a `🤖 ` comment. A thread where only bots wrote after the build's reply is not new. A thread the user skipped stays out until someone other than a bot writes on it again.
+- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). A bot thread where the user answered a `🤖 ` reply counts as a human thread in every step: do what the answer asks. Other bot threads are handled in step 5. Leave out the threads that are not **new**. A new thread is an unresolved review thread whose first comment and last comment both do not start with `🤖 `, unless the user wrote the last comment as an answer to a colleague: another person, not the build and not a bot. To find the last comment, skip the bot comments that come after a `🤖 ` comment. A thread where only bots wrote after the build's reply is not new. A thread the user skipped stays out until someone other than a bot writes on it again.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
 
 A **round** is one pass through steps 2 and 3. After step 3, check whether the review loop ends:
@@ -89,7 +89,7 @@ Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body
 
 ## 5. Handle bot threads
 
-A **bot** is a login that ends in `[bot]` or matches `copilot` (case-insensitive). Answer every open bot thread, so none of them stays new:
+A **bot** is a login that ends in `[bot]` or matches `copilot` (case-insensitive). Answer every open bot thread that has no `🤖 ` reply yet, so none of them stays new:
 
 - DISMISS: post a **bot reply** and resolve the thread (see "Bot replies" below).
 - FIXED: post a bot reply that names the commit that fixed it, and resolve the thread.
