@@ -101,13 +101,13 @@ A bot thread with a FIX verdict is already a TODO item: it gets its reply in ste
 
 Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails in step 2, is skipped without asking: delete it from the list, and put it in `## Skipped: your call`. For each item:
 
-1. Decide if the fix is clear. An item from an answered bot thread is clear, whatever its verdict: its answer says what to do. When the answer leads to no change, post a `🤖 ` reply with the reason, leave the thread open, tick the item, and go to the next item, with and without `--afk`. For every other item, **stop and ask the user** when any of these is true, and wait for the answer:
+1. Decide if the fix is clear. On an answered bot thread, the answer says what to do. When the answer leads to no change, post a `🤖 ` reply with the reason, leave the thread open, tick the item, and go to the next item, with and without `--afk`. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
    - The fix would change or bend a line in the issue's `## Decisions` section.
    - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user. A blocking screenshot whose upload fails in step 2 also stops here.
-   - The thread's verdict is DISCUSS or CLARIFY.
+   - The thread's verdict is DISCUSS or CLARIFY, and it is not an answered bot thread.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
-   - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread.
+   - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread other than an answered bot thread.
    - You tried and the item is still not fixed.
 
    Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list, note it as skipped, and post a **skip reply** when it comes from an open thread.
