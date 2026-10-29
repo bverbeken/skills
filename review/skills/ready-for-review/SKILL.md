@@ -89,7 +89,7 @@ Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body
 
 ## 5. Handle bot threads
 
-A **bot** is a login that ends in `[bot]` or matches `copilot` (case-insensitive). Answer every open bot thread that has no `🤖 ` reply yet, so none of them stays new:
+A **bot** is an author whose `__typename` is `Bot` in `gh api graphql`, or a login that ends in `[bot]` or matches `copilot` (case-insensitive). Answer every open bot thread that has no `🤖 ` reply yet, so none of them stays new:
 
 - DISMISS: post a **bot reply** and resolve the thread (see "Bot replies" below).
 - FIXED: post a bot reply that names the commit that fixed it, and resolve the thread.
