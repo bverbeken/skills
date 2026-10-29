@@ -42,7 +42,7 @@ If there are no threads, stop here: `review` runs as for a new PR.
 
 Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
-**Own mode**: the first row that matches wins.
+**Own mode**: the first row that matches wins. Bot comments that come after a build comment don't count for the last word.
 
 | Thread | Group |
 |---|---|
