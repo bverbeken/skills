@@ -101,7 +101,7 @@ Re-read the body before creating the PR:
 
 Run the cold read on the title and body: the check in `<this skill's folder>/../review-description/SKILL.md`, including its fix step. Create the PR only after this step.
 
-The step is done when a cold reader's answer matches the change and you fixed its findings. When the second cold reader still finds problems, go on to step 6 anyway: the report lists the findings that are left. Keep count of the findings you fixed and the findings that are left.
+The step is done when a cold reader's answer matches the change and you fixed its findings. When the second cold reader still finds problems, go on to step 6 anyway: the report lists the findings that are left. Keep count of the findings you fixed and the findings that are left. Screenshot findings stay out of that count: step 7 prints them as reminders.
 
 # 6. Create the draft PR
 
