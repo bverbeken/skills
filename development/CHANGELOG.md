@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-29
 
+- `foreman` and `foreman status`: bot comments after a `🤖 ` reply don't count as the last comment of a thread. A thread where only a bot answered the build's reply is not new, so `foreman --afk` does not pick its PR again. A bot is an author whose GraphQL type is `Bot`, such as CodeRabbit, or a login that ends in `[bot]` or matches `copilot`.
 - `draft-pr` runs the cold read as its own step, before it creates the PR. When the second cold reader still finds problems, it creates the draft PR anyway. Its report always has a cold read line, for example `Cold read: 2 findings fixed, 0 left`, and lists each finding that is left.
 
 ## 2026-10-28

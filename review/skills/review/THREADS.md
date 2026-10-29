@@ -16,11 +16,11 @@ query($owner:String!,$repo:String!,$num:Int!){
           id
           isResolved
           isOutdated
-          comments(first:50){ nodes{ author{login} body path line originalLine url createdAt originalCommit{oid} } }
+          comments(first:50){ nodes{ author{__typename login} body path line originalLine url createdAt originalCommit{oid} } }
         }
       }
-      reviews(first:50){ nodes{ author{login} body state submittedAt url commit{oid} } }
-      comments(first:100){ nodes{ author{login} body createdAt url } }
+      reviews(first:50){ nodes{ author{__typename login} body state submittedAt url commit{oid} } }
+      comments(first:100){ nodes{ author{__typename login} body createdAt url } }
     }
   }
 }' -F owner=<owner> -F repo=<repo> -F num=<num>
@@ -34,7 +34,7 @@ Turn the result into **threads**:
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
 - PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
 
-The **starter** is the author of a thread's first comment. A **bot** is a login that ends in `[bot]` or matches `copilot` (case-insensitive). Everyone else is a human.
+The **starter** is the author of a thread's first comment. A **bot** is an author whose `__typename` is `Bot`, or a login that ends in `[bot]` or matches `copilot` (case-insensitive). GraphQL gives an app's login without `[bot]`: CodeRabbit is `coderabbitai`. Everyone else is a human.
 
 If there are no threads, stop here: `review` runs as for a new PR.
 
@@ -42,7 +42,7 @@ If there are no threads, stop here: `review` runs as for a new PR.
 
 Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
-**Own mode**: the first row that matches wins.
+**Own mode**: the first row that matches wins. Bot comments that come after a build comment don't count for the last word.
 
 | Thread | Group |
 |---|---|

@@ -4,6 +4,10 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-29
 
+- `review` and `ready-for-review`: an author whose GraphQL type is `Bot` counts as a bot. GraphQL gives CodeRabbit's login as `coderabbitai`, without `[bot]`, so CodeRabbit counted as a human before.
+- `review` and `ready-for-review`: bot comments after a `🤖 ` reply don't count as the last comment of a thread, with the same rule as `foreman`. A thread where only bots answered the build's reply is not new, and `review` lists it as waiting.
+- `ready-for-review`: leaves out the threads that are not new also without `--afk`. A thread you skipped stays out until someone other than a bot writes on it, and gets no second skip reply. A round that finds only such threads goes to the decision.
+- `ready-for-review`: when you or a colleague answer a `🤖 ` reply on a bot thread, it handles that thread like a human thread. When it fixes the item, it replies with the commit and resolves the thread. When the answer leads to no change, it replies with the reason and leaves the thread open.
 - `review-dependencies` and `review-consumers`: one agent per new dependency and one per consumer, also for a single one, at most 10 per check. `review` starts them as soon as the find step returns, while the other checks run. Before, the check did that work one item at a time.
 - `review-consumers`: looks up a consumer's default branch by its repo, so a consumer whose name differs from its repo is checked too.
 - `review`, `review-bugs` and `ready-for-review`: a review round first lists its agents with the count, then starts them all as `Agent` calls in one message, and the verification agents in one second message.
