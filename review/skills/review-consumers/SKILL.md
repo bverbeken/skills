@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 This check has two parts. This file finds the consumers to check. `CONSUMER.md`, next to it, checks the consumers it gets and returns their breaks. "Item agents" in step 4 of `../review/STEPS.md` (next to this skill's folder) says how the item agents start.
 
-**Run alone:** read `../review/STEPS.md`. Run its steps 1 to 3, then the check below. Then start the item agents for the consumers it returns with a local checkout, with `CONSUMER.md` as the check file. Wait until they have returned, then run steps 5 and 6 for this check only.
+**Run alone:** read `../review/STEPS.md`. Run its steps 1 to 3, then the check below. Then start the item agents for the consumers it returns with a local checkout, with `CONSUMER.md` as the check file. Wait until they have returned, then run steps 5 and 6 for this check only, with the `not checked` lines of the find step and of the item agents on the "Checks" line.
 **Run by `review`:** run only the check below and return its list.
 
 ## Check
