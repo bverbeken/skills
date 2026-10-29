@@ -1,4 +1,4 @@
-# Check the consumers you got
+# Consumer check
 
 Check the consumers you got, one after the other: each is a project that depends on the code the change touches, with its local checkout. Set the level of each finding by the "Blocking" section of `SKILL.md`, next to this file.
 
