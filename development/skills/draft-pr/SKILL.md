@@ -113,6 +113,6 @@ Print the resulting PR URL and the title you used.
 
 # 5. Report
 
-After the PR URL, print the screenshot reminders from the cold read in step 3b, one line each, for example `⚠️ Visual change: add a before/after screenshot before marking ready`.
+After the PR URL, print the screenshot reminders from the cold read in step 3b, one line each, for example `⚠️ Visual change: add a before/after screenshot before marking ready`. When a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it names a review settings file, usually `docs/agents/review-settings.md`, read it, with the path relative to the folder of the file that names it. When there is no such file, or it does not hold `screenshots: required`, say the screenshot is optional: `⚠️ Visual change: a before/after screenshot would help (optional)`.
 
 Then close with one line telling the user to read the description over and adjust it before marking the PR ready for review. This is the last thing you output. When another skill called this one, go back to it and continue its next step.

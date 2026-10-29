@@ -82,7 +82,7 @@ In **own** mode, a finding blocks when it is one of these six kinds, whatever th
 - a spec requirement that is missing without explanation;
 - a broken rule in force;
 - a name or a text that makes a reader understand the change wrong;
-- a screenshot or test steps the PR needs and lacks (`review-description`, PR material).
+- test steps the PR needs and lacks, or a screenshot, before/after or video when the repo's review settings require one (`review-description`, PR material).
 
 Everything else is a suggestion in own mode too: duplication, style taste, a test at another level, a risk that needs unlikely input, performance that costs little.
 

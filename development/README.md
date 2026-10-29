@@ -30,10 +30,12 @@ The skills use the files that your project's `CLAUDE.md` or `AGENTS.md` points t
 
 The issue tracker is described in `docs/agents/issue-tracker.md`.
 The rules for pull requests are in `docs/agents/pull-requests.md`.
+The review settings are in `docs/agents/review-settings.md`.
 ```
 
 - `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [factory status](#factory-statuses) maps to, where a stopped build writes its open question, and where an issue's PR link lives. `foreman`, `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
+- `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
 ## Factory statuses
 

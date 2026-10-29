@@ -43,6 +43,8 @@ Location: `PR description` or `issue <ID>`. Evidence: the reader's own words, or
 
 A MISREAD blocks: the reader will understand the change wrong. A GAP or HARD TO READ blocks only when the reader then guesses wrong about how the change behaves. Example: the reader can't tell how many points the graph leaves out at its end. A missing issue ID or a long list is a suggestion.
 
-In own mode, every PR material finding blocks: a PR goes public with its screenshots and test steps. In colleague mode, they are suggestions.
+In own mode, NO TEST STEPS and UNCLEAR TEST STEPS block: a PR goes public with its test steps. NO SCREENSHOT and NO BEFORE/AFTER, a missing video included, block in own mode only when the repo's review settings hold `screenshots: required`. Otherwise they are suggestions. In colleague mode, every PR material finding is a suggestion.
+
+To find the review settings: when a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it names a review settings file, usually `docs/agents/review-settings.md`, read it. The path is relative to the folder of the file that names it. The file holds one `key: value` setting per line. Without the file, or without a `screenshots` line, screenshots are `optional`.
 
 Fix a description finding with a direct edit of the PR description. It needs no commit.
