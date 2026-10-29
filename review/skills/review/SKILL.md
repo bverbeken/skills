@@ -26,7 +26,7 @@ Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, co
 
 `review-description` runs only when the target is a PR, and in a different way: instead of a check agent, start its cold reader (step 1 of its check) with the PR's title and body as the text.
 
-First write the list of agents for this round, with the count. Example: "19 agents: 7 checks, 2 find agents, 6 bug angles, 1 cold reader, 3 thread agents". Then send exactly that many `Agent` calls in one message, so they run at the same time: one `Agent` (general-purpose) per check, per find agent and per bug angle, the cold reader, and the thread agents of `THREADS.md` step 3. Start them only as `Agent` calls, all in that one message. Give each check agent what "Check agents" in step 4 of `STEPS.md` says.
+First write the list of agents for this round, with the count. Example: "19 agents: 7 checks, 2 find agents, 6 bug angles, 1 cold reader, 3 thread agents". Then send exactly that many `Agent` calls in one message, so they run at the same time: one `Agent` (general-purpose) per check, per find agent and per bug angle, the cold reader, and the thread agents of `THREADS.md` step 3. Start them only as `Agent` calls, all in that one message, in the background, so you can start item agents as soon as a find agent returns. Give each check agent what "Check agents" in step 4 of `STEPS.md` says.
 
 ## 3. Verify and report
 
