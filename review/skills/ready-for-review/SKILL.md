@@ -107,7 +107,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
    - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user. A blocking screenshot whose upload fails in step 2 also stops here.
    - The thread's verdict is DISCUSS or CLARIFY.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
-   - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread.
+   - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread. A bot thread that counts as a human thread in step 3 is not one: its answer says what to do.
    - You tried and the item is still not fixed.
 
    Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list, note it as skipped, and post a **skip reply** when it comes from an open thread.
