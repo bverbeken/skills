@@ -4,6 +4,8 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-29
 
+- `ready-for-review`: bot comments after a `🤖 ` reply don't count as the last comment of a thread, with the same rule as `foreman`. A thread where only a bot answered the build's reply is not new.
+- `ready-for-review`: leaves out the threads that are not new also without `--afk`. A thread you skipped stays out until someone other than a bot writes on it again.
 - `review-dependencies` and `review-consumers`: one agent per new dependency and one per consumer, also for a single one, at most 10 per check. `review` starts them as soon as the find step returns, while the other checks run. Before, the check did that work one item at a time.
 - `review-consumers`: looks up a consumer's default branch by its repo, so a consumer whose name differs from its repo is checked too.
 - `review`, `review-bugs` and `ready-for-review`: a review round first lists its agents with the count, then starts them all as `Agent` calls in one message, and the verification agents in one second message.
