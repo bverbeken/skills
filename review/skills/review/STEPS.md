@@ -115,6 +115,14 @@ Give each check agent:
 - `<contextFile>`.
 - This brief: "Read the check file and run its check on the code in `<reviewDir>`. Steps 1 to 3 are done: everything they produce is in `<contextFile>`. Return what the check file asks for: your findings in the form of step 4 of `STEPS.md`, or `none`. Do not verify, do not write a report."
 
+### Item agents
+
+`review-dependencies` and `review-consumers` work in two parts. First a find step lists the items: the new dependencies, or the consumers to check. Then each item gets its own **item agent**, with the skill's item file as its check file: `DEPENDENCY.md` or `CONSUMER.md`, next to its `SKILL.md`.
+
+Start one item agent per item, also for a single item. Start at most 10 per skill. With more than 10 items, split the list into 10 groups of about the same size, and give each agent one group: it handles its items one after the other. Example: 23 dependencies give 3 agents with 3 items and 7 agents with 2.
+
+First write the list of item agents, with the count. Example: "3 item agents: 3 dependencies". Then send exactly that many `Agent` (general-purpose) calls in one message. Give each what "Check agents" says, with the item file as the check file, and add its items, copied from the find step's list.
+
 ### Bug angles
 
 When the bug angles have returned, merge the findings that are about the same problem into one, before anything else uses them. One problem can show at two places. Example: lines reports that `findSeat` now returns `null` at `seats.ts:12`, and callers reports the call site it breaks at `book.ts:40`. The merged finding keeps both locations and the highest level of the two.
