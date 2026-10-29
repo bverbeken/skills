@@ -45,7 +45,7 @@ The worktree is done when `git -C <path> status` shows the branch, clean. Run ev
 
 Before the first tdd cycle, run one existing test near the code the change touches, in the fresh worktree. When the repo has no tests, skip the check. When that test fails, the cause is the machine, not the change: for example a database version the migrations need, or a missing tool. Name the cause, then:
 
-- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run the check again, and go on in the same session once it passes.
+- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run the failing test again, and go on in the same session once it passes.
 - With `--afk`: **stop** with the cause as the question.
 
 A test that fails later in the build for a reason outside the change gets the same treatment. The user fixes the machine. The build stays on the base it started from, with every test enabled, and leaves the machine as it is: never move the branch to an older commit, skip or disable a test, or install, upgrade or change a tool or database on the machine.
