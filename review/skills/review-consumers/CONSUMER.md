@@ -19,4 +19,4 @@ Search `<consumerDir>` for code that uses what the change touches, and decide wh
 
 ## 3. Return
 
-Report each break as a **BREAKS** finding with the consumer's path and line, in the form of step 4 of `STEPS.md`. Return `none` for a consumer without a break.
+Report each break as a **BREAKS** finding with the consumer's path and line, in the form of step 4 of `STEPS.md`, with `check: consumers`. Return `none` for a consumer without a break.

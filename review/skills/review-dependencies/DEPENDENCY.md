@@ -29,7 +29,7 @@ Return one **dependency line** for each dependency you got, in this form:
 - <name> <version> (<ecosystem>, <runs in>, +<n> packages) — why: <one phrase> · maintained: <last release, maintainers> · trust: <publisher, downloads, vulnerabilities> · license: <license, allowed or not> · alternatives: <names, or none better>
 ```
 
-Turn every problem into a finding in the form of step 4 of `STEPS.md`, at the line that adds the dependency:
+Turn every problem into a finding in the form of step 4 of `STEPS.md`, with `check: dependencies`, at the line that adds the dependency:
 
 - **VULNERABLE**: a known vulnerability in the version it uses, with no fix in that version.
 - **SUSPICIOUS**: a sign of a supply chain attack from question 3.
