@@ -50,7 +50,7 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). A bot thread where someone other than a bot wrote after a `🤖 ` reply counts as a human thread in every step: do what the last answer asks. Other bot threads are handled in step 5. Leave out the threads that are not **new**. A new thread is an unresolved review thread whose first comment and last comment both do not start with `🤖 `, unless the user wrote the last comment as an answer to a colleague: another person, not the build and not a bot. To find the last comment, skip the bot comments that come after a `🤖 ` comment. A thread where only bots wrote after the build's reply is not new. A thread the user skipped stays out until someone other than a bot writes on it again.
+- Unresolved review threads started by a human (`gh api graphql`, `pullRequest.reviewThreads`, `isResolved`). A bot thread where someone other than a bot wrote after a `🤖 ` reply is an **answered bot thread**. It counts as a human thread in every step: do what the last answer asks. Other bot threads are handled in step 5. Leave out the threads that are not **new**. A new thread is an unresolved review thread whose first comment and last comment both do not start with `🤖 `, unless the user wrote the last comment as an answer to a colleague: another person, not the build and not a bot. To find the last comment, skip the bot comments that come after a `🤖 ` comment. A thread where only bots wrote after the build's reply is not new. A thread the user skipped stays out until someone other than a bot writes on it again.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
 
 A **round** is one pass through steps 2 and 3. After step 3, check whether the review loop ends:
@@ -101,7 +101,7 @@ A bot thread with a FIX verdict is already a TODO item: it gets its reply in ste
 
 Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails in step 2, is skipped without asking: delete it from the list, and put it in `## Skipped: your call`. For each item:
 
-1. Decide if the fix is clear. An item from a bot thread that counts as a human thread in step 3 is clear, whatever its verdict: its answer says what to do. When the answer leads to no change, post a `🤖 ` reply with the reason, leave the thread open, tick the item, and go to the next item, with and without `--afk`. For every other item, **stop and ask the user** when any of these is true, and wait for the answer:
+1. Decide if the fix is clear. An item from an answered bot thread is clear, whatever its verdict: its answer says what to do. When the answer leads to no change, post a `🤖 ` reply with the reason, leave the thread open, tick the item, and go to the next item, with and without `--afk`. For every other item, **stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
    - The fix would change or bend a line in the issue's `## Decisions` section.
    - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user. A blocking screenshot whose upload fails in step 2 also stops here.
@@ -115,7 +115,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 3. Run the tests that cover the change. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
 5. Tick the item in the PR description.
-6. When the item came from a bot thread, also one that counts as a human thread in step 3: post a bot reply that names the commit, and resolve the thread.
+6. When the item came from a bot thread, also an answered bot thread: post a bot reply that names the commit, and resolve the thread.
 
 The loop is done when every item on the list is ticked.
 
