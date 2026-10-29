@@ -56,7 +56,7 @@ After the review, collect every remaining state problem:
 A **round** is one pass through steps 2 and 3. After step 3, check whether the review loop ends:
 
 - A round after the first finds no problem: go to step 7.
-- With `--afk`, a round finds only problems you skipped before: go to step 7.
+- A round finds only threads the user skipped, or, with `--afk`, only problems you skipped before: go to step 7.
 - This is the 5th round with blocking items (finding problems or state problems): stop the review loop.
 - A blocking finding came back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count. Stop the review loop.
 
@@ -153,7 +153,7 @@ Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> sta
 
 ## Skip replies
 
-A skip reply tells a thread that its decision is the user's: `🤖 <url> Skipped: this one is your call.` Post it as the last paragraph of "Bot replies" says, but leave the thread open. Post one per thread, also when more than one item comes from it.
+A skip reply tells a thread that its decision is the user's: `🤖 <url> Skipped: this one is your call.` Post it as the last paragraph of "Bot replies" says, but leave the thread open. Post one per thread, also when more than one item comes from it. Post none when the thread's last comment is a skip reply already, after you skip the bot comments that come after it.
 
 ## Bot replies
 
