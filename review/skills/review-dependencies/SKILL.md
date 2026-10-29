@@ -5,7 +5,7 @@ argument-hint: "[PR number | PR link | issue | branch | empty]"
 disable-model-invocation: true
 ---
 
-This check has two parts. This file finds the new dependencies. `DEPENDENCY.md`, next to it, researches one dependency and returns its dependency line and findings. "Item agents" in step 4 of `../review/STEPS.md` (next to this skill's folder) says how the item agents start.
+This check has two parts. This file finds the new dependencies. `DEPENDENCY.md`, next to it, researches the dependencies it gets and returns their dependency lines and findings. "Item agents" in step 4 of `../review/STEPS.md` (next to this skill's folder) says how the item agents start.
 
 **Run alone:** read `../review/STEPS.md`. Run its steps 1 to 3, then the check below. Then start the item agents for the dependencies it finds, with `DEPENDENCY.md` as the check file. Wait until they have returned, then run steps 5 and 6 for this check only, with their dependency lines in the "New dependencies" section.
 **Run by `review`:** run only the check below and return its list.
