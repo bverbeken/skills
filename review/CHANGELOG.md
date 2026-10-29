@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-29
+
+- `review`, `review-bugs` and `ready-for-review`: a review round first lists its agents with the count, then starts them all as `Agent` calls in one message, and the verification agents in one second message.
+
 ## 2026-10-28
 
 - `review-description`: a missing screenshot, before/after or video blocks your own PR only when the repo's review settings hold `screenshots: required`. Otherwise it is a suggestion. Missing test steps still block your own PRs.
