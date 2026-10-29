@@ -22,7 +22,7 @@ Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, co
 
 `review-bugs` runs as its angles: start one check agent per angle skill that `review-bugs` lists, with the angle's file as the check file. `--only bugs` runs all angles.
 
-`review-dependencies` and `review-consumers` each run as a find agent and item agents, as "Item agents" in step 4 of `STEPS.md` says. The find agent is a check agent with the skill's `SKILL.md` as the check file. When a find agent returns its list, start its item agents right away, in one message. The other checks do not wait for them. A find agent that returns `none`, or only `not checked` lines, starts no item agents.
+`review-dependencies` and `review-consumers` each run as a find agent and item agents, as "Item agents" in step 4 of `STEPS.md` says. The find agent is a check agent with the skill's `SKILL.md` as the check file. When a find agent returns its list, start its item agents right away. A find agent that returns `none`, or only `not checked` lines, starts no item agents.
 
 `review-description` runs only when the target is a PR, and in a different way: instead of a check agent, start its cold reader (step 1 of its check) with the PR's title and body as the text.
 
