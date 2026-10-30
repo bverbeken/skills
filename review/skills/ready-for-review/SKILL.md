@@ -42,6 +42,8 @@ When the PR's branch is checked out locally, compare it with GitHub. Each differ
 
 Run the `review` skill (`../review/SKILL.md`) on the PR, with the issue from the arguments if there is one, without `--only`, and print its report. The mode is **own**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub. Start the agents as `review` says.
 
+In the first round, first look in this session for the last `review` report. When its `Head:` line is the head commit from step 1, without `+ uncommitted changes`, reuse it: keep its findings from the code checks, blocking and suggestions alike, and run `review` with `--only description` instead of the full review. That runs the cold read, the PR material check and the thread check of `THREADS.md`. This round's report is the kept findings plus that report. Example: `implement` reviewed `a1b2c3d` and `draft-pr` pushed it unchanged, so the first round reuses that review. Every later round follows a fix commit, so it runs the full review.
+
 Each blocking finding in the report is a **finding problem**. So is every thread in the report's **Threads** section with a FIX, NOT RESOLVED or NEW PROBLEM verdict, and every human thread with a DISCUSS or CLARIFY verdict that you have not answered. Findings that were dropped in verification don't count.
 
 ## 3. Check the PR state
@@ -131,10 +133,11 @@ When a blocking item was skipped, or the review loop stopped with blocking items
 
 ```
 # NOT READY
+Review: reused from <short sha>
 - [<check or state>] <one sentence per problem; for a change to a decision: the decision line, the fact found, the question, and your recommendation>
 ```
 
-List every problem left, findings first, then state problems.
+List every problem left, findings first, then state problems. Print the `Review:` line, in this output and in READY, only when the first round reused a review.
 
 When there is no problem left:
 
@@ -146,6 +149,7 @@ When there is no problem left:
 ```
 # READY
 PR #<num> is out of draft: <url>
+Review: reused from <short sha>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 New suggestions: <one line each, from rounds after the first, or: none>
 Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
