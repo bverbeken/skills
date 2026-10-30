@@ -33,6 +33,20 @@ When the shape of that interface is itself in question (how deep the module is, 
 - **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
 - **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
 
+## Test runs
+
+Every test run has a time limit. The default is 10 minutes. A repo can set its own limit next to its test command, in its `README.md`, `CLAUDE.md` or `AGENTS.md`, for example "Full suite: `./gradlew test`, limit 30 minutes."
+
+- A limit of 10 minutes or less: run the tests in the foreground, with the Bash tool's `timeout` set to the limit.
+- A longer limit: run the tests in the background, inside `timeout <limit>` (`gtimeout` on macOS), for example `timeout 30m ./gradlew test`, and wait for the notice that the run ended.
+
+Check on a test run only through its end or its limit. A loop of `sleep` and a look at the output, with no end, can hold a build for hours.
+
+When a run hits its limit, the last lines of output show which tests were still running:
+
+- Only tests this change added or changed: count it as a failing test, with the reason "timed out", and make it pass in the loop.
+- An existing test: the cause is outside the change. Stop the loop. In a build, `implement` handles it as a setup failure. Called on its own, show the user the command, the limit and the last lines of output, and ask.
+
 ## Rules of the loop
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
