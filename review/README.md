@@ -130,6 +130,7 @@ Who depends on what:
 - **Licenses**: which licenses your dependencies may have, if that differs from the default in `review-dependencies`. Example: "No GPL, also not in CI."
 - **Consumers**: which repos use which code. A consumer that isn't checked out next to the others is reported as "not checked".
 - **Review settings**: a file your `CLAUDE.md` names, usually `docs/agents/review-settings.md`, with one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions.
+- **Merge without review**: in the pull request doc your `CLAUDE.md` names, usually `docs/agents/pull-requests.md`, a line that reads exactly `Merge without review.`. Then `ready-for-review` moves a clean PR's issue to `APPROVED` instead of `REVIEW`.
 - **Coding standards and decisions**: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, ADRs, a glossary. The checks find these by themselves, so only name them when they live somewhere unusual.
 
 ## Credits
