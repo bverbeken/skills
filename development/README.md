@@ -49,7 +49,7 @@ The skills name statuses with fixed UPPERCASE names:
 | `READY` | prepared, you give the go: it can be built |
 | `BUSY` | being built, by you or by `foreman` |
 | `REVIEW` | the PR is ready for your review |
-| `APPROVED` | you approve the PR: it can be merged |
+| `APPROVED` | the PR can be merged: you approve it, or `ready-for-review` does in a repo that merges without review |
 | `DONE` | merged |
 
 Your tracker docs map each one to a status of your own, in any format. For example, a table with a column for the factory status:
