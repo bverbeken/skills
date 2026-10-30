@@ -1,6 +1,6 @@
 # Threads
 
-How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code) carry the user's login, so they count as the user's. One exception: a comment from the user's login that starts with `🤖 ` is the **build**'s. `ready-for-review` posts the build's `🤖 ` comments, with and without `--afk`, and they count as neither yours nor someone else's. It posts four kinds:
+How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code) carry the user's login, so they count as the user's. One exception: a comment from the user's login that starts with `🤖 ` is the **build**'s. It counts as neither yours nor someone else's. `ready-for-review` posts the build's `🤖 ` comments, with and without `--afk`. It posts four kinds:
 
 - A reply to a bot thread, for example a Copilot thread, that says what was fixed or why not. The build resolves the thread.
 - A reply that names the commit of a fix. The build resolves the thread.

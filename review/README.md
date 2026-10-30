@@ -28,7 +28,7 @@ A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets 
 |---|---|---|
 | Open thread, someone else has the last word | Checked against the code: FIXED, FIX, DISMISS, DISCUSS or CLARIFY, with a draft reply | Your threads and answered bot threads: RESOLVED, NOT RESOLVED (with the example that still fails) or NEW PROBLEM, with a draft reply |
 | Resolved thread | Checked again: you want your PR spotless before it goes out of draft | Settled: never raised again |
-| You have the last word | Triaged when you answered the build or a bot, or when only you wrote in it; listed as waiting when you answered a colleague | Listed as waiting |
+| You have the last word | Triaged when you answered the build or a bot, or when only you wrote in it. Listed as waiting when you answered a colleague. | Listed as waiting |
 | The build has the last word (a reply under your login that starts with `🤖 `), or only bots answered the build's reply | Listed as waiting; checked again once you answer | |
 
 A finding that is already in a thread is not reported twice. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
