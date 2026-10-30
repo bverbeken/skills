@@ -41,6 +41,15 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
 
 The worktree is done when `git -C <path> status` shows the branch, clean. Run every later command from the worktree path. Leave the worktree in place at the end.
 
+## Setup failures
+
+Before the first tdd cycle, run one existing test near the code the change touches, in the fresh worktree. When the repo has no tests, skip the check. When that test fails, the cause is the machine, not the change: for example a database version the migrations need, or a missing tool. Name the cause, then:
+
+- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run the failing test again, and go on in the same session once it passes.
+- With `--afk`: **stop** with the cause as the question.
+
+A test that fails later in the build for a reason outside the change gets the same treatment. The user fixes the machine. The build stays on the base it started from, keeps every test enabled, and leaves every tool and database on the machine as it is.
+
 ## Build
 
 Call the Skill tool with "tdd" where possible, at pre-agreed seams.
