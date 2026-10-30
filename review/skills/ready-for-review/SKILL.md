@@ -101,7 +101,7 @@ A bot thread with a FIX verdict is already a TODO item: it gets its reply in ste
 
 ## 6. Fix the items
 
-Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails in step 2, is skipped without asking: delete it from the list. It is an open suggestion. For each item:
+Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails in step 2, is skipped without asking: delete it from the list. For each item:
 
 1. Decide if the fix is clear. On an answered bot thread, the answer says what to do. When the answer leads to no change, post a `🤖 ` reply with the reason, leave the thread open, tick the item, and go to the next item, with and without `--afk`. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
@@ -127,7 +127,7 @@ Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to 
 
 First run step 5 for every open bot thread that has no `🤖 ` reply yet: a round without problems comes here without step 5.
 
-Then write the open suggestions as "Open suggestions" says. With `--afk`, the suggestions of the last round that you did not fix are open suggestions too.
+Then write the open suggestions as "Open suggestions" says.
 
 When a blocking item was skipped, or the review loop stopped with blocking items open, leave the PR in draft and end with:
 
@@ -160,7 +160,7 @@ Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> sta
 
 Open suggestions are the suggestions nobody decided on:
 
-- With `--afk`: every suggestion you skipped.
+- With `--afk`: every suggestion you skipped, and every suggestion of the last round that you did not fix.
 - Without `--afk`: the new suggestions of rounds after the first, and a screenshot suggestion that step 6 skips without asking.
 
 A suggestion the user said to skip is not open.
