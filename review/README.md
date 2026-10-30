@@ -43,7 +43,7 @@ It posts the build's comments under your login, each starting with `🤖 `, with
 
 With `--afk` it asks nothing: it takes its own recommendation, also answers your own threads (with the commit that fixed it, or with the reason it changes nothing), and leaves the PR in draft when something only you can decide is left.
 
-After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `REVIEW`. It refuses PRs that are not yours.
+After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `REVIEW`. In a repo whose pull request doc has the line `Merge without review.`, it moves the issue to `APPROVED` instead, when it skipped nothing and left no open suggestion. With `--afk`, `foreman` then merges it in the same run. It refuses PRs that are not yours.
 
 Some suggestions are left open: nobody decided on them. With `--afk`, these are the suggestions it skipped. Without `--afk`, these are the new suggestions of rounds after the first. Where they go depends on the `Reviewer:` line:
 
