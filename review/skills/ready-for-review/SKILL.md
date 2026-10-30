@@ -87,7 +87,7 @@ Otherwise put a **TODO list** in the PR description, between two markers, after 
 - **Suggestions**: every suggestion from the review, most useful first.
 - One line per item: the check or state, the location, one sentence.
 
-Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers and the `## Open suggestions` section: the rest of the description is the user's. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
+Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers and the `## Open suggestions` section: the rest of the description is the user's. A `## Skipped: your call` section, from an older version of this skill, is this skill's too: its items are open suggestions, so remove the section. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
 
 ## 5. Handle bot threads
 
