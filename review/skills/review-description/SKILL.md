@@ -11,7 +11,7 @@ disable-model-invocation: true
 
 ## Check
 
-The text of a PR is its title and body, without the TODO list between the `<!-- ready-for-review:todo -->` markers: `ready-for-review` keeps its working list there.
+The text of a PR is its title and body, without the TODO list between the `<!-- ready-for-review:todo -->` markers and without the `## Open suggestions` section: `ready-for-review` writes both for itself.
 
 There are two roles. The **caller** knows the change: the session that wrote the text, or `review` with `<contextFile>`. The **cold reader** is an agent that gets only the text.
 
