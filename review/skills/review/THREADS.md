@@ -5,7 +5,7 @@ How `review` handles a PR that already has comments. "You" is the user: `gh api 
 - A reply to a bot thread, for example a Copilot thread, that says what was fixed or why not. The build resolves the thread.
 - A reply that names the commit of a fix. The build resolves the thread.
 - A reply with the reason it changes nothing: on a bot thread you answered, and with `--afk` on a human thread it dismisses. The thread stays open.
-- A **skip reply**, `🤖 <url> Skipped: this one is your call.`, on a thread whose decision is yours. The thread stays open.
+- A **skip reply** on a thread whose decision is yours, as "Skip replies" in `ready-for-review` says. The thread stays open.
 
 When you answer after the build on a bot thread, the thread goes to **triage** (step 2), and `ready-for-review` handles it as a human thread: it does what your answer asks.
 
