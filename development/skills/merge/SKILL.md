@@ -22,7 +22,7 @@ Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,st
 
 Pick `<method>` from the merge methods the repo allows (`gh api repos/<owner>/<repo> -q '{squash: .allow_squash_merge, rebase: .allow_rebase_merge, merge: .allow_merge_commit}'`): `--squash` when it is allowed, otherwise `--rebase`, otherwise `--merge`.
 
-Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. Run every later command in the main checkout or one of its worktrees, so `gh` finds the PR without `-R`. `<worktree>` is the worktree that has `<branch>` checked out (`git worktree list --porcelain`). When there is none, it is `<repo>/../<repo>.worktrees/<branch>`, where `implement` puts it.
+Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. When that folder is a linked worktree, for example the PR's own worktree, take the main worktree instead: the first entry of `git worktree list --porcelain`. Step 6 removes the PR's worktree. Run every later command in the main checkout or one of its worktrees, so `gh` finds the PR without `-R`. `<worktree>` is the worktree that has `<branch>` checked out (`git worktree list --porcelain`). When there is none, it is `<repo>/../<repo>.worktrees/<branch>`, where `implement` puts it.
 
 Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo without tests skips every test step below.
 
