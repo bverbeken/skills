@@ -152,7 +152,7 @@ When there is no problem left:
    - No review thread on the PR is unresolved. A thread left open waits on the user: for example a human thread with a DISMISS reply, or a thread an earlier run skipped.
    - The issue tracker docs map a status to `APPROVED`.
 
-   Before the move to `APPROVED`, wait for CI: `gh pr checks <num> --watch`. Some CI only starts when the PR leaves draft, and `merge` refuses a pending check. When a check fails, move the issue to `REVIEW` instead.
+   Before the move to `APPROVED`, wait for CI. Some CI only starts when the PR leaves draft, and GitHub takes a moment to register it. Wait at most 2 minutes until `gh pr view <num> --json statusCheckRollup` shows a check that started after `gh pr ready`. Then wait for the checks to finish: `gh pr checks <num> --watch`. When a check fails, move the issue to `REVIEW` instead.
 4. End with:
 
 ```
