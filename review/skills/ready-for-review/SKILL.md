@@ -161,7 +161,7 @@ PR #<num> is out of draft: <url>
 Review: reused from <short sha>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 Open suggestions: <one line each, or: none>
-Tracker: <issue> moved to `REVIEW`, or: <issue> moved to `APPROVED`: the repo merges without review, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
+Tracker: <issue> moved to `REVIEW`, or: <issue> moved to `APPROVED`: the repo merges without review, or: <issue> moved to `REVIEW`, not `APPROVED`: <the condition that failed, for example a failed check>, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
 ```
 
 ## Open suggestions
