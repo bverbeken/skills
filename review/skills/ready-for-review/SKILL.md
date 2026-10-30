@@ -19,7 +19,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
 - Anything else, and every item that is still not fixed after you tried: skip it.
 
-To skip an item, delete it from the list, and post a skip reply as "Skip replies" says. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion goes in a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
+To skip an item, delete it from the list, and post a skip reply as "Skip replies" says. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion is an open suggestion, as "Open suggestions" says.
 
 A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
 
@@ -87,7 +87,7 @@ Otherwise put a **TODO list** in the PR description, between two markers, after 
 - **Suggestions**: every suggestion from the review, most useful first.
 - One line per item: the check or state, the location, one sentence.
 
-Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers: the rest of the description is the user's. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
+Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers and the `## Open suggestions` section: the rest of the description is the user's. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
 
 ## 5. Handle bot threads
 
@@ -101,7 +101,7 @@ A bot thread with a FIX verdict is already a TODO item: it gets its reply in ste
 
 ## 6. Fix the items
 
-Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails in step 2, is skipped without asking: delete it from the list, and put it in `## Skipped: your call`. For each item:
+Take the unticked items one by one, blocking first, then suggestions, in list order. A screenshot suggestion that needs something only the user can make, or whose upload fails in step 2, is skipped without asking: delete it from the list. It is an open suggestion. For each item:
 
 1. Decide if the fix is clear. On an answered bot thread, the answer says what to do. When the answer leads to no change, post a `🤖 ` reply with the reason, leave the thread open, tick the item, and go to the next item, with and without `--afk`. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
@@ -121,19 +121,20 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
 The loop is done when every item on the list is ticked.
 
-Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list, and keep new suggestions for the final output. With `--afk`, nobody reads the final output: add the new suggestions of a later round to the list and fix them too.
+Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list: new suggestions are open suggestions. With `--afk`, add the new suggestions of a later round to the list and fix them too.
 
 ## 7. Decide
 
 First run step 5 for every open bot thread that has no `🤖 ` reply yet: a round without problems comes here without step 5.
 
-With `--afk`, then put the suggestions of the last round that you did not fix in `## Skipped: your call`.
+Then write the open suggestions as "Open suggestions" says. With `--afk`, the suggestions of the last round that you did not fix are open suggestions too.
 
 When a blocking item was skipped, or the review loop stopped with blocking items open, leave the PR in draft and end with:
 
 ```
 # NOT READY
 Review: reused from <short sha>
+Open suggestions: <one line each, or: none>
 - [<check or state>] <one sentence per problem; for a change to a decision: the decision line, the fact found, the question, and your recommendation>
 ```
 
@@ -151,9 +152,26 @@ When there is no problem left:
 PR #<num> is out of draft: <url>
 Review: reused from <short sha>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
-New suggestions: <one line each, from rounds after the first, or: none>
+Open suggestions: <one line each, or: none>
 Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
 ```
+
+## Open suggestions
+
+Open suggestions are the suggestions nobody decided on:
+
+- With `--afk`: every suggestion you skipped.
+- Without `--afk`: the new suggestions of rounds after the first, and a screenshot suggestion that step 6 skips without asking.
+
+A suggestion the user said to skip is not open.
+
+Read the `Reviewer:` line in the issue tracker docs: `Reviewer: me` or `Reviewer: team`. No docs, or no line, counts as `team`.
+
+- `Reviewer: me`: write them in a `## Open suggestions` section at the end of the PR description, after the TODO markers. One line each, with the check, the place and your recommendation: `- [refactoring] \`src/Order.kt:30\` Extract the discount rule into \`Discount.apply\`.`
+- `Reviewer: team`, without `--afk`: list them in the final output only. The description stays clean for colleagues.
+- `Reviewer: team`, with `--afk`: write them in the issue, in an `## Open suggestions` section, as the tracker docs say, with the same lines. With no issue, list them in the final output only.
+
+Each run rewrites the section, and removes it when no open suggestion is left. Every final output lists them too.
 
 ## Skip replies
 
