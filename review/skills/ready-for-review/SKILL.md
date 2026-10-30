@@ -171,7 +171,7 @@ Read the `Reviewer:` line in the issue tracker docs: `Reviewer: me` or `Reviewer
 - `Reviewer: team`, without `--afk`: list them in the final output only. The description stays clean for colleagues.
 - `Reviewer: team`, with `--afk`: write them in the issue, in an `## Open suggestions` section, as the tracker docs say, with the same lines. With no issue, list them in the final output only.
 
-Each run rewrites the section, and removes it when no open suggestion is left. Every final output lists them too.
+Each run rewrites the section, and removes it when no open suggestion is left. It also removes an `## Open suggestions` section that an earlier run left in the place it does not write to now: the PR description or the issue. Every final output lists them too.
 
 ## Skip replies
 
