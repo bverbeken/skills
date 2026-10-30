@@ -38,7 +38,7 @@ A finding that is already in a thread is not reported twice. On a colleague's PR
 It posts the build's comments under your login, each starting with `🤖 `, with and without `--afk`:
 
 - Copilot and other bot threads get a short reply and are resolved, both the fixed and the dismissed ones. A bot thread it can't decide on gets a skip reply.
-- A **skip reply**, `🤖 <url> Skipped: this one is your call.`, goes on a thread whose decision it leaves to you. The thread stays open, and `review` leaves it alone until someone other than a bot writes on it again.
+- A **skip reply**, `🤖 <url> Skipped: this one is your call.`, goes on a thread whose decision it leaves to you. The thread stays open. `ready-for-review` leaves it out until someone other than a bot writes on it again, and `review` lists it as waiting.
 - When you answer the build on a bot thread, the next run triages your answer as a human thread: it does what you ask, or replies with the reason it changes nothing.
 
 With `--afk` it asks nothing: it takes its own recommendation, also answers your own threads (with the commit that fixed it, or with the reason it changes nothing), and leaves the PR in draft when something only you can decide is left.
