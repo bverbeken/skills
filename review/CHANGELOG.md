@@ -2,6 +2,11 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-30
+
+- `review`: the report has a `Head:` line with the commit it reviewed, and says `+ uncommitted changes` when it reviewed more than the commit.
+- `ready-for-review`: when this session already reviewed the PR's head commit, without uncommitted changes, the first round keeps those code findings and runs only the description check and the thread check. The output says `Review: reused from <short sha>`. Later rounds run the full review.
+
 ## 2026-10-29
 
 - `review` and `ready-for-review`: an author whose GraphQL type is `Bot` counts as a bot. GraphQL gives CodeRabbit's login as `coderabbitai`, without `[bot]`, so CodeRabbit counted as a human before.
