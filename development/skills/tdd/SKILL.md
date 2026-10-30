@@ -40,7 +40,7 @@ Every test run has a time limit. The default is 10 minutes. A repo can set its o
 - A limit of 10 minutes or less: run the tests in the foreground, with the Bash tool's `timeout` set to the limit.
 - A longer limit: run the tests in the background, inside `timeout <limit>` (`gtimeout` on macOS), for example `timeout 30m ./gradlew test`, and wait for the notice that the run ended.
 
-Check on a test run only through its end or its limit. A loop of `sleep` and a look at the output, with no end, can hold a build for hours.
+Wait for the notice that the run ended or hit its limit. Never poll a test run with `sleep`: a poll loop with no end can hold a build for hours.
 
 When a run hits its limit, the last lines of output show which tests were still running:
 
