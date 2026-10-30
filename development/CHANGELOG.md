@@ -4,7 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-30
 
-- `tdd` and `implement` run every test run with a time limit: 10 minutes, or the limit the repo sets next to its test command. A test the change wrote that times out counts as a failing test. An existing test that times out stops the build, as a setup failure: without `--afk` it asks you, with `--afk` it writes the command, the limit and the last lines of output as an open question and moves the issue to `TO_CLARIFY`.
+- `tdd` and `implement` run every test run with a time limit: 10 minutes, or the limit the repo sets next to its test command. A test the change wrote that times out counts as a failing test. An existing test that times out runs once more on the base: when it ends in time there, the change caused the hang and it counts as a failing test. When it hangs on the base too, it stops the build, as a setup failure: without `--afk` it asks you, with `--afk` it writes the command, the limit and the last lines of output as an open question and moves the issue to `TO_CLARIFY`.
 - `merge` started in a linked worktree, such as the PR's own, works from the main worktree. `foreman --afk` can now call it from the PR's worktree, right after `ready-for-review` moves the issue to `APPROVED`.
 - `foreman` without `--afk` moves a `BUSY` issue with a linked PR on. It first asks whether a build may still be running on the PR, and goes on only after a yes. A draft PR gets `ready-for-review`, which moves the issue to `REVIEW`. A PR out of draft moves the issue to `REVIEW` directly. With `--afk`, such an issue still has no step. `foreman status` marks it `▶`: if no build is running on the PR, run `/foreman <issue>`.
 
