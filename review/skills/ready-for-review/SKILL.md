@@ -151,6 +151,8 @@ When there is no problem left:
    - No item was skipped, and there is no open suggestion.
    - No review thread on the PR is unresolved. A thread left open waits on the user: for example a human thread with a DISMISS reply, or a thread an earlier run skipped.
    - The issue tracker docs map a status to `APPROVED`.
+
+   Before the move to `APPROVED`, wait for CI: `gh pr checks <num> --watch`. Some CI only starts when the PR leaves draft, and `merge` refuses a pending check. When a check fails, move the issue to `REVIEW` instead.
 4. End with:
 
 ```
