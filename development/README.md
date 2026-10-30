@@ -37,6 +37,16 @@ The review settings are in `docs/agents/review-settings.md`.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it. A line that reads exactly `Merge without review.` lets `ready-for-review` move a clean PR's issue to `APPROVED` instead of `REVIEW`, so `foreman --afk` merges it without waiting for you.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
+### Test time limit
+
+`tdd` and `implement` stop every test run after 10 minutes, so a hanging test can't hold a build for hours. When your tests need longer, set your own limit next to the test command, in your `README.md`, `CLAUDE.md` or `AGENTS.md`:
+
+```markdown
+Full suite: `./gradlew test`, limit 30 minutes.
+```
+
+A run longer than 10 minutes runs in the background inside `timeout`, which macOS has as `gtimeout` from `brew install coreutils`.
+
 ## Factory statuses
 
 The skills name statuses with fixed UPPERCASE names:
@@ -70,5 +80,5 @@ A status counts as mapped only when your docs map it, also when your tracker has
 |---|---|---|
 | codebase-design | skills/engineering/codebase-design | none |
 | grilling | skills/productivity/grilling | asks one question at a time (most decisions depending on it first), not a full round; skips its closing question when the calling skill confirms itself |
-| implement | skills/engineering/implement | only builds: `foreman` runs the review and the PR steps; fixes the review findings it gets; commits as it goes, one small commit per step, instead of once at the end; asks a new open decision through `prepare`; stops on a setup failure and never works around it; `--afk` builds without asking |
-| tdd | skills/engineering/tdd | refers to `review` instead of `code-review`; adds the rule "commit on green" (one commit per cycle); takes confirmed seams from the issue's `## Decisions` and asks about others through `prepare`, or picks them itself with `--afk` |
+| implement | skills/engineering/implement | only builds: `foreman` runs the review and the PR steps; fixes the review findings it gets; commits as it goes, one small commit per step, instead of once at the end; asks a new open decision through `prepare`; stops on a setup failure, or an existing test that hits its time limit, and never works around it; `--afk` builds without asking |
+| tdd | skills/engineering/tdd | refers to `review` instead of `code-review`; adds the rule "commit on green" (one commit per cycle); takes confirmed seams from the issue's `## Decisions` and asks about others through `prepare`, or picks them itself with `--afk`; runs every test run with a time limit |
