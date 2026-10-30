@@ -22,20 +22,20 @@ Read the PR once: `gh pr view <num> -R <owner>/<repo> --json number,title,url,st
 
 Pick `<method>` from the merge methods the repo allows (`gh api repos/<owner>/<repo> -q '{squash: .allow_squash_merge, rebase: .allow_rebase_merge, merge: .allow_merge_commit}'`): `--squash` when it is allowed, otherwise `--rebase`, otherwise `--merge`.
 
-Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. Run every later command in the main checkout or one of its worktrees, so `gh` finds the PR without `-R`. `<worktree>` is the worktree that has `<branch>` checked out (`git worktree list --porcelain`). When there is none, it is `<repo>/../<repo>.worktrees/<branch>`, where `implement` puts it.
+Work in the repo's main checkout: the current repo when its `origin` points to `<owner>/<repo>`, or else a folder next to it whose `origin` does. When there is none, **refuse**. When that folder is a linked worktree, for example the PR's own worktree, take the main worktree instead: the first entry of `git worktree list --porcelain`. Step 6 removes the PR's worktree. Run every later command in the main checkout or one of its worktrees, so `gh` finds the PR without `-R`. `<worktree>` is the worktree that has `<branch>` checked out (`git worktree list --porcelain`). When there is none, it is `<repo>/../<repo>.worktrees/<branch>`, where `implement` puts it.
 
 Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo without tests skips every test step below.
 
 ## 2. Check
 
-When the issue tracker docs map no status to `APPROVED`, **refuse**: merge can't tell whether the user approved the PR.
+When the issue tracker docs map no status to `APPROVED`, **refuse**: merge can't tell whether the PR was approved.
 
 When the PR is already merged, an earlier run broke off after the merge. Skip the checks below. Go on with step 4 when the issue is still in `APPROVED`, or with step 6 when it moved on.
 
 Otherwise, **refuse** when any of these is true:
 
 - The PR's author is not the user (`gh api user -q .login`). Merge only merges the user's own PRs.
-- The issue is not in `APPROVED`. That status is the user's approval: a GitHub approval is not needed.
+- The issue is not in `APPROVED`. That status is the approval: the user's, or that of `ready-for-review` in a repo whose pull request doc says `Merge without review.`. A GitHub approval is not needed.
 - The PR is closed without a merge, or it is a draft.
 - A CI check failed or is still pending (`gh pr checks <num>`). No CI at all is fine.
 

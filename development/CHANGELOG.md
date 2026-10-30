@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-30
 
+- `merge` started in a linked worktree, such as the PR's own, works from the main worktree. `foreman --afk` can now call it from the PR's worktree, right after `ready-for-review` moves the issue to `APPROVED`.
 - `foreman` without `--afk` moves a `BUSY` issue with a linked PR on. It first asks whether a build may still be running on the PR, and goes on only after a yes. A draft PR gets `ready-for-review`, which moves the issue to `REVIEW`. A PR out of draft moves the issue to `REVIEW` directly. With `--afk`, such an issue still has no step. `foreman status` marks it `▶`: if no build is running on the PR, run `/foreman <issue>`.
 
 ## 2026-10-29

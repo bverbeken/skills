@@ -34,7 +34,7 @@ The review settings are in `docs/agents/review-settings.md`.
 ```
 
 - `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [factory status](#factory-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). `foreman`, `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
-- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
+- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it. A line that reads exactly `Merge without review.` lets `ready-for-review` move a clean PR's issue to `APPROVED` instead of `REVIEW`, so `foreman --afk` merges it without waiting for you.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
 ## Factory statuses
@@ -49,7 +49,7 @@ The skills name statuses with fixed UPPERCASE names:
 | `READY` | prepared, you give the go: it can be built |
 | `BUSY` | being built, by you or by `foreman` |
 | `REVIEW` | the PR is ready for your review |
-| `APPROVED` | you approve the PR: it can be merged |
+| `APPROVED` | the PR can be merged: you approve it, or `ready-for-review` does in a repo that merges without review |
 | `DONE` | merged |
 
 Your tracker docs map each one to a status of your own, in any format. For example, a table with a column for the factory status:

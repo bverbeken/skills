@@ -144,7 +144,15 @@ When there is no problem left:
 
 1. Remove the ticked items from the TODO list. Remove an empty `### Blocking` or `### Suggestions` heading. When no item is left, remove the whole list with its markers. The public description shows the change, not the fixes on the way.
 2. Run `gh pr ready <num> -R <owner>/<repo>`.
-3. When the PR belongs to an issue, move the issue to `REVIEW`, the factory status that the issue tracker docs map to a status of the tracker. Take the issue from the arguments, or else find it in the branch name, the PR title or its body. In a public repo, issue numbers stay out of the branch and the PR, so only the arguments name the issue. With no issue, leave the tracker alone. When the docs map no status to `REVIEW`, leave the issue where it is and say so at the end.
+3. When the PR belongs to an issue, move the issue to `REVIEW`, or to `APPROVED` as below. Use the status of the tracker that the issue tracker docs map to that factory status. Take the issue from the arguments, or else find it in the branch name, the PR title or its body. In a public repo, issue numbers stay out of the branch and the PR, so only the arguments name the issue. With no issue, leave the tracker alone. When the docs map no status to the one you move to, leave the issue where it is and say so at the end.
+
+   Move the issue to `APPROVED` instead of `REVIEW` when all of these are true:
+   - The repo's pull request doc has a line that reads exactly `Merge without review.`, on its own line. Find the doc as `draft-pr` does: a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it names it, usually `docs/agents/pull-requests.md`, relative to the folder of the file that names it. A sentence that only holds the phrase, such as `We never merge without review.`, does not count.
+   - No item was skipped, and there is no open suggestion.
+   - No review thread on the PR is unresolved. A thread left open waits on the user: for example a human thread with a DISMISS reply, or a thread an earlier run skipped.
+   - The issue tracker docs map a status to `APPROVED`.
+
+   Before the move to `APPROVED`, wait for CI. Some CI only starts when the PR leaves draft, and GitHub takes a moment to register it. Wait at most 2 minutes until `gh pr view <num> --json statusCheckRollup` shows a check that started after `gh pr ready`. Then wait for the checks to finish: `gh pr checks <num> --watch`. When a check failed or was cancelled, move the issue to `REVIEW` instead. No CI at all is fine.
 4. End with:
 
 ```
@@ -153,7 +161,7 @@ PR #<num> is out of draft: <url>
 Review: reused from <short sha>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 Open suggestions: <one line each, or: none>
-Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
+Tracker: <issue> moved to `REVIEW`, or: <issue> moved to `APPROVED`: the repo merges without review, or: <issue> moved to `REVIEW`, not `APPROVED`: <the condition that failed, for example a failed check>, or: the tracker has no `REVIEW`, <issue> stays <status>, or: no issue
 ```
 
 ## Open suggestions
