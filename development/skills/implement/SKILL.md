@@ -45,10 +45,10 @@ The worktree is done when `git -C <path> status` shows the branch, clean. Run ev
 
 Before the first tdd cycle, run one existing test near the code the change touches, in the fresh worktree. When the repo has no tests, skip the check. When that test fails, the cause is the machine, not the change: for example a database version the migrations need, or a missing tool. Name the cause, then:
 
-- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run the failing test again, and go on in the same session once it passes.
+- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run `git fetch origin`, move a branch without commits of its own to the current default branch as step 3 of `Worktree` says, run the failing test again, and go on in the same session once it passes.
 - With `--afk`: **stop** with the cause as the question.
 
-A test that fails later in the build for a reason outside the change gets the same treatment, and so does an existing test that hits its time limit on the base too, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine. The build stays on the base it started from, keeps every test enabled, and leaves every tool and database on the machine as it is.
+A test that fails later in the build for a reason outside the change gets the same treatment, and so does an existing test that hits its time limit on the base too, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine, or for a time limit the test or the limit on the default branch. Once the branch has commits of its own, the build stays on the base it started from, keeps every test enabled, and leaves every tool and database on the machine as it is.
 
 ## Build
 
