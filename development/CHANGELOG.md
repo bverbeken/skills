@@ -2,6 +2,10 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-10-30
+
+- `foreman` without `--afk` moves a `BUSY` issue with a linked PR on. It first asks whether a build may still be running on the PR, and goes on only after a yes. A draft PR gets `ready-for-review`, which moves the issue to `REVIEW`. A PR out of draft moves the issue to `REVIEW` directly. With `--afk`, such an issue still has no step. `foreman status` marks it `▶`: if no build is running on the PR, run `/foreman <issue>`.
+
 ## 2026-10-29
 
 - `implement` runs one existing test near the change before the first tdd cycle. When a test fails for a reason outside the change, such as a database version or a missing tool, it names the cause and waits for you to fix the machine. With `--afk`, it writes the cause as an open question and moves the issue to `TO_CLARIFY`. It never bases the branch on an older commit, skips a test, or changes the machine to make tests pass.
