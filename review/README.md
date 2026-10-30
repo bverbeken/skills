@@ -45,6 +45,12 @@ With `--afk` it asks nothing: it takes its own recommendation, also answers your
 
 After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `REVIEW`. It refuses PRs that are not yours.
 
+Some suggestions are left open: nobody decided on them. With `--afk`, these are the suggestions it skipped. Without `--afk`, these are the new suggestions of rounds after the first. Where they go depends on the `Reviewer:` line:
+
+- `Reviewer: me`: in an `## Open suggestions` section at the end of the PR description.
+- `Reviewer: team`, without `--afk`: in the final output only, so the description stays clean for colleagues.
+- `Reviewer: team`, with `--afk`: in an `## Open suggestions` section in the issue.
+
 ## What it does
 
 - **Takes any target.** A PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or nothing for the current branch (uncommitted changes included).
@@ -106,7 +112,7 @@ All nineteen skills must sit next to each other: the checks read the shared step
 
 ## Set up your project
 
-Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads there which status `REVIEW` maps to, and moves the issue to it when the PR is ready. The [development README](../development/README.md#factory-statuses) lists the factory statuses.
+Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads there which status `REVIEW` maps to, and moves the issue to it when the PR is ready. It also reads who reviews your PRs there, from a `Reviewer: me` or `Reviewer: team` line. No line counts as `team`. The [development README](../development/README.md#factory-statuses) lists the factory statuses.
 
 Example:
 

@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-30
 
+- `ready-for-review`: keeps the suggestions nobody decided on. With `Reviewer: me` in the issue tracker doc, they go in an `## Open suggestions` section in the PR description. With `Reviewer: team`, or no line, they stay in the final output, or with `--afk` go in the issue. The `## Skipped: your call` section is gone.
 - `review`: the report has a `Head:` line with the commit it reviewed, and says `+ uncommitted changes` when it reviewed more than the commit.
 - `ready-for-review`: when this session already reviewed the PR's head commit, without uncommitted changes, the first round keeps those code findings and runs only the description check and the thread check. The output says `Review: reused from <short sha>`. Later rounds run the full review.
 
