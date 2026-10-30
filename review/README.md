@@ -28,12 +28,22 @@ A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets 
 |---|---|---|
 | Open thread, someone else has the last word | Checked against the code: FIXED, FIX, DISMISS, DISCUSS or CLARIFY, with a draft reply | Your threads and answered bot threads: RESOLVED, NOT RESOLVED (with the example that still fails) or NEW PROBLEM, with a draft reply |
 | Resolved thread | Checked again: you want your PR spotless before it goes out of draft | Settled: never raised again |
-| You have the last word | Listed as waiting | Listed as waiting |
+| You have the last word | Triaged when you answered the build or a bot, or when only you wrote in it. Listed as waiting when you answered a colleague. | Listed as waiting |
 | The build has the last word (a reply under your login that starts with `🤖 `), or only bots answered the build's reply | Listed as waiting; checked again once you answer | |
 
 A finding that is already in a thread is not reported twice. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
 
-**Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you when a fix needs your choice, or would change a line in the issue's `## Decisions` section, as `prepare` writes it. With `--afk` it asks nothing: it takes its own recommendation, answers your threads with replies that start with `🤖 `, and leaves the PR in draft when something only you can decide is left. Copilot threads get a short reply and are resolved, both the fixed and the dismissed ones. After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `REVIEW`. It refuses PRs that are not yours.
+**Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you when a fix needs your choice, or would change a line in the issue's `## Decisions` section, as `prepare` writes it.
+
+It posts the build's comments under your login, each starting with `🤖 `, with and without `--afk`:
+
+- Copilot and other bot threads get a short reply and are resolved, both the fixed and the dismissed ones. A bot thread it can't decide on gets a skip reply.
+- A **skip reply**, `🤖 <url> Skipped: this one is your call.`, goes on a thread whose decision it leaves to you. The thread stays open. `ready-for-review` leaves it out until someone other than a bot writes on it again, and `review` lists it as waiting.
+- When you answer the build on a bot thread, the next run triages your answer as a human thread: it does what you ask, or replies with the reason it changes nothing.
+
+With `--afk` it asks nothing: it takes its own recommendation, also answers your own threads (with the commit that fixed it, or with the reason it changes nothing), and leaves the PR in draft when something only you can decide is left.
+
+After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `REVIEW`. It refuses PRs that are not yours.
 
 ## What it does
 

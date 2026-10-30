@@ -19,7 +19,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
 - Anything else, and every item that is still not fixed after you tried: skip it.
 
-To skip an item, delete it from the list. When the item comes from an open thread, post a **skip reply** on it. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion goes in a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
+To skip an item, delete it from the list, and post a skip reply as "Skip replies" says. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion goes in a `## Skipped: your call` section in the PR description, outside the markers, with your recommendation.
 
 A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
 
@@ -62,7 +62,7 @@ A **round** is one pass through steps 2 and 3. After step 3, check whether the r
 - This is the 5th round with blocking items (finding problems or state problems): stop the review loop.
 - A blocking finding came back that you fixed in an earlier round: the same check and the same problem in the same place, in any wording. Example: round 2 fixed "[bugs] `Order.kt:42` empty cart returns null", and round 4 reports "[bugs] `Order.kt:44` an empty cart gives null instead of 0". Only findings you fixed yourself count. Stop the review loop.
 
-When the review loop stops, fix nothing more. Write the TODO list as step 4 says, with the blocking items of this round, and untick the item of a finding that came back. Post a **skip reply** on each open thread among those items. Then go to step 7: those items stay open.
+When the review loop stops, fix nothing more. Write the TODO list as step 4 says, with the blocking items of this round, and untick the item of a finding that came back. Post the skip replies as "Skip replies" says. Then go to step 7: those items stay open.
 
 ## 4. Write the TODO list
 
@@ -93,9 +93,9 @@ Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body
 
 Step 1 of `../review/THREADS.md` defines a **bot**. Answer every open bot thread that has no `🤖 ` reply yet, so none of them stays new:
 
-- DISMISS: post a **bot reply** and resolve the thread (see "Bot replies" below).
+- DISMISS: post a **bot reply** and resolve the thread, as "Bot replies" says.
 - FIXED: post a bot reply that names the commit that fixed it, and resolve the thread.
-- DISCUSS or CLARIFY: post a **skip reply** and leave the thread open (see "Skip replies" below).
+- DISCUSS or CLARIFY: post a skip reply as "Skip replies" says.
 
 A bot thread with a FIX verdict is already a TODO item: it gets its reply in step 6, once it is fixed.
 
@@ -112,7 +112,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread other than an answered bot thread.
    - You tried and the item is still not fixed.
 
-   Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list, note it as skipped, and post a **skip reply** when it comes from an open thread.
+   Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list, note it as skipped, and post a skip reply as "Skip replies" says.
 2. Fix it. For a bug or a missing test: write the test first and see it fail, then fix the code. For failing CI: read the failing job's log (`gh run view <run-id> --log-failed`) and fix the cause. For pending CI: wait for it (`gh pr checks <num> --watch`). For a description finding: edit the description outside the markers, with no commit. For a screenshot finding: make and upload the images as `SCREENSHOTS.md` in this skill's folder says.
 3. Run the tests that cover the change. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
@@ -157,7 +157,14 @@ Tracker: <issue> moved to `REVIEW`, or: the tracker has no `REVIEW`, <issue> sta
 
 ## Skip replies
 
-A skip reply tells a thread that its decision is the user's: `🤖 <url> Skipped: this one is your call.` Post it as the last paragraph of "Bot replies" says, but leave the thread open. Post one per thread, also when more than one item comes from it. Post none when the thread's last comment, as step 3 finds it, is a skip reply already.
+A skip reply tells a thread that its decision is the user's: `🤖 <url> Skipped: this one is your call.` Post one on the thread in each of these cases:
+
+- With `--afk`, you skip an item that comes from an open thread.
+- In step 6, the user says to skip an item that comes from an open thread.
+- In step 3, the review loop stops: each open thread among the blocking items of that round.
+- In step 5, a bot thread gets a DISCUSS or CLARIFY verdict.
+
+Post it as the last paragraph of "Bot replies" says, but leave the thread open. Post one per thread, also when more than one item comes from it. Post none when the thread's last comment, as step 3 finds it, is a skip reply already.
 
 ## Bot replies
 
