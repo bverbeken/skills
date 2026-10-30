@@ -149,6 +149,7 @@ When there is no problem left:
    Move the issue to `APPROVED` instead of `REVIEW` when all of these are true:
    - The repo's pull request doc has a line that reads exactly `Merge without review.`, on its own line. Find the doc as `draft-pr` does: a `CLAUDE.md` or `AGENTS.md` in the repo or in a folder above it names it, usually `docs/agents/pull-requests.md`, relative to the folder of the file that names it. A sentence that only holds the phrase, such as `We never merge without review.`, does not count.
    - No item was skipped, and there is no open suggestion.
+   - No review thread on the PR is unresolved. A thread left open waits on the user: for example a human thread with a DISMISS reply, or a thread an earlier run skipped.
    - The issue tracker docs map a status to `APPROVED`.
 4. End with:
 

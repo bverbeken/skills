@@ -4,7 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-10-30
 
-- `ready-for-review`: in a repo whose pull request doc has a line that reads exactly `Merge without review.`, it moves the issue to `APPROVED` instead of `REVIEW`, when it skipped nothing, left no open suggestion, and the tracker maps `APPROVED`. With `--afk`, `foreman` then merges it in the same run.
+- `ready-for-review`: in a repo whose pull request doc has a line that reads exactly `Merge without review.`, it moves the issue to `APPROVED` instead of `REVIEW`, when it skipped nothing, left no open suggestion and no unresolved thread, and the tracker maps `APPROVED`. With `--afk`, `foreman` then merges it in the same run.
 - `ready-for-review`: keeps the suggestions nobody decided on. With `Reviewer: me` in the issue tracker doc, they go in an `## Open suggestions` section in the PR description. With `Reviewer: team`, or no line, they stay in the final output, or with `--afk` go in the issue. The `## Skipped: your call` section is gone: a run turns an old one into open suggestions.
 - `review` and `review-description`: leave the `## Open suggestions` section out of the spec and out of the description text, as they do for the TODO list.
 - `review`: the report has a `Head:` line with the commit it reviewed, and says `+ uncommitted changes` when it reviewed more than the commit.
