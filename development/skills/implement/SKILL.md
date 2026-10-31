@@ -53,7 +53,7 @@ A test that fails later in the build for a reason outside the change gets the sa
 
 ## Merge the default branch
 
-A fix on the default branch reaches the branch only through a merge. Run `git fetch origin`. When `origin/<default branch>` has commits the branch doesn't have, note `git rev-parse HEAD` as the commit before the merge, and merge it: `git merge --no-edit origin/<default branch>`, as one merge commit. A merge needs no force-push, and `draft-pr` never force-pushes. Merge the default branch also when the branch started from another branch that is not merged yet.
+A fix on the default branch reaches the branch only through a merge. Run `git fetch origin`. When `origin/<default branch>` has commits the branch doesn't have, note `git rev-parse HEAD` as the commit before the merge, and merge it: `git merge --no-ff --no-edit origin/<default branch>`, as one merge commit. A merge needs no force-push, and `draft-pr` never force-pushes. Merge the default branch also when the branch started from another branch that is not merged yet.
 
 When `git status --porcelain` shows anything, also untracked files, stash it first, with a message you print and keep: `msg="implement <branch> $(date +%s)"; echo "$msg"; git stash push -u -m "$msg"`. All worktrees of a repo share one stash list, so it can hold entries of the user or of other builds. Pop only this entry, by its ref. Find the ref in `git stash list` by the entry's full message, for example `git stash pop stash@{1}`. Pop it after the merge commit. When the merge changed setup or dependency files, such as a lockfile, run steps 4 and 5 of `Worktree` again before the next test run.
 
