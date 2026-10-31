@@ -49,8 +49,9 @@ When GitHub refuses it, read `gh pr view <num> --json mergeStateStatus`. GitHub 
 
 1. `git fetch origin`, then `git rebase origin/<base>`. On a conflict: `git rebase --abort`, and **stop** with the files that conflict. Merge never fixes a conflict itself: a fix is new code the user did not review.
 2. Run the tests on the branch. When they fail: reset the branch to `origin/<branch>`, and **stop** with the failing tests.
-3. `git push --force-with-lease=<branch>:<headRefOid> origin <branch>`. When the repo has CI, wait at most 10 minutes until `gh pr view <num> --json headRefOid,statusCheckRollup` shows the new head commit with its checks started. Then wait at most 60 minutes for them to finish: `gh pr checks <num> --watch`. When a limit runs out, **stop** with "no CI result for <sha>". When a check fails, **stop** with the failing checks.
-4. Run `gh pr merge <num> <method> --match-head-commit <new head>` again. When GitHub refuses it again, **stop** with its message. When it accepts it, go to step 4.
+3. `git push --force-with-lease=<branch>:<headRefOid> origin <branch>`.
+4. When the repo has CI, wait at most 10 minutes until `gh pr view <num> --json headRefOid,statusCheckRollup` shows the new head commit with its checks started. Then wait at most 60 minutes for them to finish: `gh pr checks <num> --watch`. When a limit runs out, **stop** with "no CI result for <sha>". When a check fails, **stop** with the failing checks.
+5. Run `gh pr merge <num> <method> --match-head-commit <new head>` again. When GitHub refuses it again, **stop** with its message. When it accepts it, go to step 4.
 
 ## 4. Test the merged code
 
@@ -92,4 +93,4 @@ End with the PR link, the status the issue is in now, and, after a stop, the pro
 
 Run `git fetch origin`. When `git merge-base --is-ancestor origin/<base> <headRefOid>` succeeds, the PR is not behind `<base>` and does not conflict with it: say so, change nothing, and end.
 
-Otherwise do steps 1 to 3 of the rebase in step 3, with its worktree and its checks before the rebase, up to the push. Skip the CI wait. End with the PR link and the new head commit.
+Otherwise rebase as step 3 does: its worktree, its checks before the rebase, and its steps 1 to 3. End with the PR link and the new head commit.
