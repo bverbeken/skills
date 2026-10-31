@@ -45,7 +45,10 @@ Wait for the notice that the run ended or hit its limit. A poll loop with `sleep
 When a run hits its limit, find the tests that hang. The last lines of output often name the tests that were still running. When they name none, run only the tests this change added or changed, with the same limit. When that run ends in time, the hang is in an existing test.
 
 - Only tests this change added or changed: count it as a failing test, with the reason "timed out", and make it pass in the loop.
-- An existing test: run it once on the commit the branch started from, with the same limit, in a detached worktree with the same ignored files and installs as the build's own. When it passes there, the change made it hang: count it as a failing test, with the reason "timed out", and make it pass in the loop. When it hangs or fails there too, the cause is outside the change. Stop the loop. In a build, `implement` handles it as a setup failure. Called on its own, show the user the command, the limit and the last lines of output, and ask.
+- An existing test, while the branch has no commits of its own and no uncommitted changes: the cause is outside the change.
+- Any other existing test: run it once on the commit the branch started from, with the same limit, in a detached worktree with the same ignored files and installs as the build's own. When it passes there, the change made it hang: count it as a failing test, with the reason "timed out", and make it pass in the loop. When it hangs or fails there too, the cause is outside the change.
+
+When the cause is outside the change, stop the loop. In a build, `implement` handles it as a setup failure. Called on its own, show the user the command, the limit and the last lines of output, and ask.
 
 ## Rules of the loop
 
