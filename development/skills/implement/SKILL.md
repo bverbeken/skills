@@ -34,10 +34,11 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
 2. Pick the branch: the issue's git branch name from the issue tracker, or a short kebab-case name for a spec without an issue.
 3. Run `git fetch origin`, then create the worktree at `<repo>/../<repo>.worktrees/<branch>`:
    - New branch: `git worktree add --no-track -b <branch> <path> origin/<default branch>`. `--no-track` keeps the new branch from tracking the default branch.
-   - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree. Then **merge the default branch**, below.
+   - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree.
    - If the work depends on a branch that is not merged yet, ask which base to use.
 4. Copy the ignored local setup files from the main checkout into the worktree, for example `.java-version` or `.env`. List them with `git -C <repo> ls-files --others --ignored --exclude-standard --directory`, and skip build output and dependency folders.
 5. Install what the build needs in the worktree (for example `yarn install`), before the first test run.
+6. When the branch existed already, **merge the default branch**, below.
 
 The worktree is done when `git -C <path> status` shows the branch, clean. Run every later command from the worktree path. Leave the worktree in place at the end.
 
