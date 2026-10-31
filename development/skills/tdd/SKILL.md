@@ -33,6 +33,23 @@ When the shape of that interface is itself in question (how deep the module is, 
 - **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
 - **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
 
+## Test runs
+
+Every test run has a time limit. The default is 10 minutes. A repo can set its own limit next to its test command, in its `README.md`, `CLAUDE.md` or `AGENTS.md`, for example "Full suite: `./gradlew test`, limit 30 minutes."
+
+- A limit of 10 minutes or less: run the tests in the foreground, with the Bash tool's `timeout` set to the limit.
+- A longer limit: run the tests in the background, inside `timeout -k 1m <limit>`, for example `timeout -k 1m 30m ./gradlew test`. With `-k 1m`, `timeout` kills the run one minute after the limit when a test ignores the stop signal. On macOS, `timeout` comes from `brew install coreutils`. When `timeout` is missing, the cause is outside the change, as below.
+
+Wait for the notice that the run ended or hit its limit. A poll loop with `sleep` and no end can hold a build for hours.
+
+When a run hits its limit, find the tests that hang. The last lines of output often name the tests that were still running. When they name none, run only the tests this change added or changed, with the same limit. When that run ends in time, the hang is in an existing test.
+
+- Only tests this change added or changed: count it as a failing test, with the reason "timed out", and make it pass in the loop.
+- An existing test, while the branch has no commits of its own and no uncommitted changes: the cause is outside the change.
+- Any other existing test: run it once on the commit the branch started from, with the same limit. Run it in a detached worktree, with the ignored setup files and the installs of steps 4 and 5 of `Worktree` in `implement`. When it passes there, the change made it hang: count it as a failing test, with the reason "timed out", and make it pass in the loop. When it hangs or fails there too, the cause is outside the change.
+
+When the cause is outside the change, stop the loop. In a build, `implement` handles it as a setup failure. When `tdd` runs on its own, show the user the command, the limit and the last lines of output, and ask.
+
 ## Rules of the loop
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
