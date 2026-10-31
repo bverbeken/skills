@@ -46,7 +46,7 @@ When a run hits its limit, find the tests that hang. The last lines of output of
 
 - Only tests this change added or changed: count it as a failing test, with the reason "timed out", and make it pass in the loop.
 - An existing test, while the branch has no commits of its own and no uncommitted changes: the cause is outside the change.
-- Any other existing test: run it once on the commit the branch started from, with the same limit, in a detached worktree with the same ignored files and installs as the build's own. When it passes there, the change made it hang: count it as a failing test, with the reason "timed out", and make it pass in the loop. When it hangs or fails there too, the cause is outside the change.
+- Any other existing test: run it once on the commit the branch started from, with the same limit, in a detached worktree, with the ignored setup files and the installs of steps 4 and 5 of `Worktree` in `implement`. When it passes there, the change made it hang: count it as a failing test, with the reason "timed out", and make it pass in the loop. When it hangs or fails there too, the cause is outside the change.
 
 When the cause is outside the change, stop the loop. In a build, `implement` handles it as a setup failure. Called on its own, show the user the command, the limit and the last lines of output, and ask.
 
