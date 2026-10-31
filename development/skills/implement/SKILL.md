@@ -54,9 +54,9 @@ A test that fails later in the build for a reason outside the change gets the sa
 
 A fix on the default branch reaches the branch only through a merge. Run `git fetch origin`. When `origin/<default branch>` has commits the branch doesn't have, merge it: `git merge --no-edit origin/<default branch>`, as one merge commit. Never rebase: `draft-pr` never force-pushes. Merge the default branch also when the branch started from another branch that is not merged yet.
 
-When the worktree has uncommitted changes, run `git stash` first, and `git stash pop` after the merge.
+When `git status --porcelain` shows anything, also untracked files, stash it first: `git stash push -u -m "implement <branch>"`. All worktrees of a repo share one stash list, so pop only this entry, by its ref: find it in `git stash list` by its message, for example `git stash pop stash@{1}`. Pop it after the merge commit.
 
-On a conflict, in the merge or in the pop, resolve it yourself, run the tests near the conflict, and go on. A pop with a conflict keeps the stash: drop it with `git stash drop` once the conflict is resolved. When you can't resolve a conflict, name the conflicting files and what each side changed:
+On a conflict, in the merge or in the pop, resolve it yourself, run the tests near the conflict, and go on. A pop with a conflict keeps the entry: once the conflict is resolved, drop it by its ref, as above. When you can't resolve a conflict, name the conflicting files and what each side changed:
 
 - Without `--afk`: ask the user how to resolve it.
 - With `--afk`: **stop** with the conflict as the question.
