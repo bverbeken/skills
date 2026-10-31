@@ -59,7 +59,7 @@ When `git status --porcelain` shows anything, also untracked files, stash it fir
 On a conflict, in the merge or in the pop, resolve it yourself, run the tests, and go on. A pop also fails when the merge added a file at the path of a stashed untracked file: treat that as a pop conflict. A pop with a conflict keeps the entry: once the conflict is resolved, drop it by its ref, as above. When you can't resolve a conflict, name the conflicting files and what each side changed:
 
 - Without `--afk`: ask the user how to resolve it.
-- With `--afk`: put the worktree back first, so a retry can merge again. On a merge conflict, run `git merge --abort`, then pop the stash entry, if there is one. On a pop conflict, run `git reset --merge`: the entry stays in the stash list. Then remove the untracked files the pop brought back, as they are in the entry too: `git ls-tree -r --name-only <entry>^3 | xargs git clean -f --`. Then **stop** with the conflict as the question. Name the stash entry that still holds the uncommitted changes, if any, by its full message. Its `stash@{n}` ref shifts when another worktree stashes.
+- With `--afk`: put the worktree back as it was before the merge, so a retry can merge again. On a merge conflict, run `git merge --abort`, then pop the stash entry, if there is one. On a pop conflict, undo the merge too: run `git reset --hard <the commit before the merge>`, then `git clean -f`, then pop the entry. The entry took every untracked file, so `git clean -f` removes only what the failed pop brought back. On the commit before the merge, the entry applies without a conflict. Then **stop** with the conflict as the question.
 
 ## Build
 
