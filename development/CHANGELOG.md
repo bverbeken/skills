@@ -2,9 +2,14 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
-## 2026-10-30
+## 2026-10-31
 
 - `foreman` never merges an issue whose repo's pull request doc has a line that reads exactly `Only Ben merges, with /merge or on GitHub.`. On such an `APPROVED` issue it has no step and says "merge it yourself with `/merge <issue>` or on GitHub". `foreman --afk` without an issue skips it, and `foreman status` marks it `▶` with the same text. `/merge` still merges it.
+- `tdd` and `implement` run every test run with a time limit: 10 minutes, or the limit the repo sets next to its test command. A test the change wrote that times out counts as a failing test. An existing test that times out before the change has any commit or edit stops the build at once. When an existing test times out later in the build, it runs once more on the base, set up like the build. When it passes there, the change caused the hang, and it counts as a failing test. When it hangs or fails on the base too, it stops the build as a setup failure. Without `--afk`, `implement` asks you. With `--afk`, it writes the command, the limit and the last lines of output as an open question, and moves the issue to `TO_CLARIFY`. A missing `timeout` for a limit over 10 minutes stops the build the same way.
+
+## 2026-10-30
+
+- `foreman` and `prepare` leave an issue to you when your tracker docs mark it as by hand, for example a live run or a change on two machines. `foreman` does not build it in any status, also not in `READY`, and `foreman --afk` does not pick it. `foreman status` marks it `▶` with "by hand: run it yourself". `prepare` settles its decisions but leaves its status alone.
 - `merge` started in a linked worktree, such as the PR's own, works from the main worktree. `foreman --afk` can now call it from the PR's worktree, right after `ready-for-review` moves the issue to `APPROVED`.
 - `foreman` without `--afk` moves a `BUSY` issue with a linked PR on. It first asks whether a build may still be running on the PR, and goes on only after a yes. A draft PR gets `ready-for-review`, which moves the issue to `REVIEW`. A PR out of draft moves the issue to `REVIEW` directly. With `--afk`, such an issue still has no step. `foreman status` marks it `▶`: if no build is running on the PR, run `/foreman <issue>`.
 

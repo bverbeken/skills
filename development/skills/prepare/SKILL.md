@@ -45,6 +45,7 @@ Leave the status alone and say so in each of these cases:
 
 - There is no issue, only a spec.
 - `--keep-status` was passed.
+- The issue tracker docs mark the issue as by hand. Say that the docs mark it as by hand, so the user runs it and moves it on. A tracker whose docs don't mention by hand has no by-hand issues.
 - The issue tracker docs map no status to `READY`.
 - The issue is in `BLOCKED`, or closed without being done, for example canceled.
 - The issue is already in `READY` or past it, for example in `REVIEW` or `DONE`.
