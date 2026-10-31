@@ -47,7 +47,7 @@ Full suite: `./gradlew test`, limit 30 minutes.
 
 A limit over 10 minutes runs the tests in the background inside `timeout`. On macOS, install it with `brew install coreutils`. Without it, such a run stops the build as a setup failure.
 
-A hanging test holds a build for at most three runs at the limit: the run that hangs, a run of only the tests the change added or changed when the output names no test, and a run on the base for an existing test.
+Finding a hanging test takes at most three runs at the limit: the run that hangs, a run of only the tests the change added or changed when the output names no test, and a run on the base for an existing test. A hang outside the change then stops the build. A hang the change caused is a failing test, and `tdd` fixes it like any other.
 
 ## Factory statuses
 
