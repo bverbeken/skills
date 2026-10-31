@@ -45,7 +45,7 @@ The review settings are in `docs/agents/review-settings.md`.
 Full suite: `./gradlew test`, limit 30 minutes.
 ```
 
-A run longer than 10 minutes runs in the background inside `timeout`, which macOS has as `gtimeout` from `brew install coreutils`.
+A limit over 10 minutes runs the tests in the background inside `timeout`. On macOS, install it with `brew install coreutils`. Without it, such a run stops the build as a setup failure.
 
 ## Factory statuses
 
