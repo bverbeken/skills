@@ -47,7 +47,7 @@ An issue the issue tracker docs mark as by hand has no step, in any status, also
 
 A `BUSY` issue is **fresh** when a person moved it there and no build has started: it is assigned to the user (when the issue tracker docs say issues have an assignee), no PR is linked to it in the tracker, and no branch with the issue's branch name exists, locally or on `origin`, in the repo the work belongs in. Pick that repo as `implement` does. When it could be more than one repo, ask, or with `--afk`, treat the issue as not fresh.
 
-The **user reviews** when the issue tracker docs have a line that starts with `Reviewer: me`, for example `- Reviewer: me. Ben reviews his own PRs.`. A tracker with `Reviewer: team`, or without a `Reviewer:` line, waits on a reviewer the user requests.
+The **user reviews** when the issue tracker docs have a line that starts with `Reviewer: me`, after an optional list dash, for example `- Reviewer: me. Ben reviews his own PRs.`. A tracker with `Reviewer: team`, or without a `Reviewer:` line, waits on a reviewer the user requests.
 
 The **user merges** an `APPROVED` issue when the pull request doc of the repo its PR is in has a line that reads exactly `Only Ben merges, with /merge or on GitHub.`, on its own line. Find the doc as `draft-pr` does, from the repo's main checkout. A sentence that only holds the phrase does not count.
 
