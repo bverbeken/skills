@@ -7,10 +7,10 @@ Skills for building software with an agent, from an issue to a merged PR. Say `/
 | Skill | What it does |
 |---|---|
 | `foreman` | Does the next step for an issue, based on its status: `prepare` for an issue to clarify, a build up to a PR that is ready for review, `ready-for-review` for new review threads, `merge` for an approved issue. With `--afk`, it asks nothing and keeps going until the issue waits on you. `/foreman` without an issue, or `/foreman status`, lists the issues in the pipeline and marks the ones that wait on you. |
-| `implement` | Builds an issue or a spec with `tdd` in a separate worktree, one commit per step, and fixes the review findings it gets. It asks a new open decision through `prepare`. It stops when a test fails for a reason outside the change, such as a database version, and never works around it. |
+| `implement` | Builds an issue or a spec with `tdd` in a separate worktree, one commit per step, and fixes the review findings it gets. It asks a new open decision through `prepare`. It stops when a test fails or hangs for a reason outside the change, such as a database version, and never works around it. |
 | `prepare` | Lists the decisions an issue leaves open, asks you about them with `grilling`, and writes your answers in the issue under `## Decisions`. |
 | `grilling` | Asks you one question at a time, with a recommended answer, until every decision is settled. |
-| `tdd` | The red → green loop: what a good test is, where tests go, and one commit per green cycle. |
+| `tdd` | The red → green loop: what a good test is, where tests go, one commit per green cycle, and a time limit on every test run. |
 | `codebase-design` | Shared words for designing deep modules: module, interface, depth, seam, adapter. |
 | `draft-pr` | Pushes the branch and opens a draft PR, with a description written from the commits and the diff. |
 | `merge` | Merges the PR of an approved issue with a squash merge, or the method the repo allows, tests the merged code, closes the issue with a result, and removes the worktree and the branch. |
