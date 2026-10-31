@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-31
 
+- `merge --rebase-only` rebases the PR of an approved issue when it is behind its base or conflicts with it, runs the tests and pushes with `--force-with-lease`. It does the same checks as a merge, but merges nothing, waits for no CI, leaves the issue in its status and keeps the worktree. A PR that needs no rebase stays as it is. A conflict or failing tests stop it as they stop a merge. A job that can't run `gh pr merge` itself can use it, and merge the PR on its own.
 - `tdd` and `implement` run every test run with a time limit: 10 minutes, or the limit the repo sets next to its test command. A test the change wrote that times out counts as a failing test. An existing test that times out before the change has any commit or edit stops the build at once. When an existing test times out later in the build, it runs once more on the base, set up like the build. When it passes there, the change caused the hang, and it counts as a failing test. When it hangs or fails on the base too, it stops the build as a setup failure. Without `--afk`, `implement` asks you. With `--afk`, it writes the command, the limit and the last lines of output as an open question, and moves the issue to `TO_CLARIFY`. A missing `timeout` for a limit over 10 minutes stops the build the same way.
 
 ## 2026-10-30
