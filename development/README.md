@@ -1,12 +1,12 @@
 # development
 
-Skills for building software with an agent, from an issue to a merged PR. Say `/foreman ACME-123` and Claude does the next step for that issue, based on its status. An issue to clarify gets your open decisions asked. A ready issue gets built test-first in its own git worktree, reviewed, and ends as a PR that is ready for review. An approved issue gets merged. Say `/foreman ACME-123 --afk` and Claude asks nothing: it keeps going until the issue waits on you.
+Skills for building software with an agent, from an issue to a merged PR. Say `/foreman ACME-123` and Claude does the next step for that issue, based on its status. An issue to clarify gets your open decisions asked. A ready issue gets built test-first in its own git worktree, reviewed, and ends as a PR that is ready for review. An approved issue gets merged, unless your repo leaves the merge to you. Say `/foreman ACME-123 --afk` and Claude asks nothing: it keeps going until the issue waits on you.
 
 ## The skills
 
 | Skill | What it does |
 |---|---|
-| `foreman` | Does the next step for an issue, based on its status: `prepare` for an issue to clarify, a build up to a PR that is ready for review, `ready-for-review` for new review threads, `merge` for an approved issue. With `--afk`, it asks nothing and keeps going until the issue waits on you. `/foreman` without an issue, or `/foreman status`, lists the issues in the pipeline and marks the ones that wait on you. |
+| `foreman` | Does the next step for an issue, based on its status: `prepare` for an issue to clarify, a build up to a PR that is ready for review, `ready-for-review` for new review threads, `merge` for an approved issue, unless your repo leaves the merge to you. With `--afk`, it asks nothing and keeps going until the issue waits on you. `/foreman` without an issue, or `/foreman status`, lists the issues in the pipeline and marks the ones that wait on you. |
 | `implement` | Builds an issue or a spec with `tdd` in a separate worktree, one commit per step, and fixes the review findings it gets. It asks a new open decision through `prepare`. It stops when a test fails or hangs for a reason outside the change, such as a database version, and never works around it. |
 | `prepare` | Lists the decisions an issue leaves open, asks you about them with `grilling`, and writes your answers in the issue under `## Decisions`. |
 | `grilling` | Asks you one question at a time, with a recommended answer, until every decision is settled. |
@@ -34,7 +34,7 @@ The review settings are in `docs/agents/review-settings.md`.
 ```
 
 - `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [factory status](#factory-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, how an issue is marked as one you run by hand, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). `foreman` builds no by-hand issue, and `prepare` leaves its status alone. `foreman`, `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
-- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it. A line that reads exactly `Merge without review.` lets `ready-for-review` move a clean PR's issue to `APPROVED` instead of `REVIEW`, so `foreman --afk` merges it without waiting for you.
+- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it. A line that reads exactly `Merge without review.` lets `ready-for-review` move a clean PR's issue to `APPROVED` instead of `REVIEW`, so `foreman --afk` merges it without waiting for you. A line that reads exactly `Only Ben merges, with /merge or on GitHub.` makes `foreman` leave an `APPROVED` issue to you: it never merges it, and `foreman status` marks it `▶`. `/merge <issue>` still merges it.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
 ### Test time limit

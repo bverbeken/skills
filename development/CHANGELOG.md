@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-10-31
 
+- `foreman` never merges an issue whose repo's pull request doc has a line that reads exactly `Only Ben merges, with /merge or on GitHub.`. On such an `APPROVED` issue it has no step and says "merge it yourself with `/merge <issue>` or on GitHub". `foreman --afk` without an issue skips it, and `foreman status` marks it `▶` with the same text. `/merge` still merges it.
 - `tdd` and `implement` run every test run with a time limit: 10 minutes, or the limit the repo sets next to its test command. A test the change wrote that times out counts as a failing test. An existing test that times out before the change has any commit or edit stops the build at once. When an existing test times out later in the build, it runs once more on the base, set up like the build. When it passes there, the change caused the hang, and it counts as a failing test. When it hangs or fails on the base too, it stops the build as a setup failure. Without `--afk`, `implement` asks you. With `--afk`, it writes the command, the limit and the last lines of output as an open question, and moves the issue to `TO_CLARIFY`. A missing `timeout` for a limit over 10 minutes stops the build the same way.
 
 ## 2026-10-30
