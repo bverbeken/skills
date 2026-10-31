@@ -33,7 +33,7 @@ The rules for pull requests are in `docs/agents/pull-requests.md`.
 The review settings are in `docs/agents/review-settings.md`.
 ```
 
-- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [factory status](#factory-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). `foreman`, `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
+- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [factory status](#factory-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, how an issue is marked as one you run by hand, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). `foreman` builds no by-hand issue, and `prepare` leaves its status alone. `foreman`, `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it. A line that reads exactly `Merge without review.` lets `ready-for-review` move a clean PR's issue to `APPROVED` instead of `REVIEW`, so `foreman --afk` merges it without waiting for you.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
