@@ -56,7 +56,7 @@ A fix on the default branch reaches the branch only through a merge. Run `git fe
 
 When `git status --porcelain` shows anything, also untracked files, stash it first: `git stash push -u -m "implement <branch> $(date +%s)"`. All worktrees of a repo share one stash list, and an earlier stop can leave an entry behind, so pop only this entry, by its ref: find it in `git stash list` by its full message, for example `git stash pop stash@{1}`. Pop it after the merge commit.
 
-On a conflict, in the merge or in the pop, resolve it yourself, run the tests near the conflict, and go on. A pop with a conflict keeps the entry: once the conflict is resolved, drop it by its ref, as above. When you can't resolve a conflict, name the conflicting files and what each side changed:
+On a conflict, in the merge or in the pop, resolve it yourself, run the tests, and go on. A pop with a conflict keeps the entry: once the conflict is resolved, drop it by its ref, as above. When you can't resolve a conflict, name the conflicting files and what each side changed:
 
 - Without `--afk`: ask the user how to resolve it.
 - With `--afk`: put the worktree back first, so a retry can merge again. On a merge conflict, run `git merge --abort`, then pop the stash entry, if there is one. On a pop conflict, run `git reset --merge`: the entry stays in the stash list. Then **stop** with the conflict as the question, and name the stash entry that still holds the uncommitted changes, if any.
