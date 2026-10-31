@@ -93,4 +93,6 @@ End with the PR link, the status the issue is in now, and, after a stop, the pro
 
 Run `git fetch origin`. When `git merge-base --is-ancestor origin/<base> <headRefOid>` succeeds, the PR is not behind `<base>` and does not conflict with it: say so, change nothing, and end.
 
+This check uses git, not `mergeStateStatus`: GitHub only reports `BEHIND` when the repo requires branches to be up to date.
+
 Otherwise rebase as step 3 does: its worktree, its checks before the rebase, and its steps 1 to 3. End with the PR link and the new head commit.
