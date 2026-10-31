@@ -38,7 +38,7 @@ When the shape of that interface is itself in question (how deep the module is, 
 Every test run has a time limit. The default is 10 minutes. A repo can set its own limit next to its test command, in its `README.md`, `CLAUDE.md` or `AGENTS.md`, for example "Full suite: `./gradlew test`, limit 30 minutes."
 
 - A limit of 10 minutes or less: run the tests in the foreground, with the Bash tool's `timeout` set to the limit.
-- A longer limit: run the tests in the background, inside `timeout <limit>` (`gtimeout` on macOS), for example `timeout 30m ./gradlew test`.
+- A longer limit: run the tests in the background, inside `timeout -k 1m <limit>` (`gtimeout` on macOS), for example `timeout -k 1m 30m ./gradlew test`. With `-k 1m`, `timeout` kills the run one minute after the limit when a test ignores the stop signal.
 
 Wait for the notice that the run ended or hit its limit. A poll loop with `sleep` and no end can hold a build for hours.
 
