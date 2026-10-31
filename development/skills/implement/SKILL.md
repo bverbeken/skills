@@ -34,7 +34,7 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
 2. Pick the branch: the issue's git branch name from the issue tracker, or a short kebab-case name for a spec without an issue.
 3. Run `git fetch origin`, then create the worktree at `<repo>/../<repo>.worktrees/<branch>`:
    - New branch: `git worktree add --no-track -b <branch> <path> origin/<default branch>`. `--no-track` keeps the new branch from tracking the default branch.
-   - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree.
+   - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree. Then **merge the default branch**, below.
    - If the work depends on a branch that is not merged yet, ask which base to use.
 4. Copy the ignored local setup files from the main checkout into the worktree, for example `.java-version` or `.env`. List them with `git -C <repo> ls-files --others --ignored --exclude-standard --directory`, and skip build output and dependency folders.
 5. Install what the build needs in the worktree (for example `yarn install`), before the first test run.
@@ -45,10 +45,21 @@ The worktree is done when `git -C <path> status` shows the branch, clean. Run ev
 
 Before the first tdd cycle, run one existing test near the code the change touches, in the fresh worktree. When the repo has no tests, skip the check. When that test fails, the cause is the machine, not the change: for example a database version the migrations need, or a missing tool. Name the cause, then:
 
-- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run the failing test again, and go on in the same session once it passes.
+- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, **merge the default branch**, below, then run the failing test again, and go on in the same session once it passes.
 - With `--afk`: **stop** with the cause as the question.
 
-A test that fails later in the build for a reason outside the change gets the same treatment. So does an existing test that also hits its time limit on the base, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine. The build stays on the base it started from, keeps every test enabled, and leaves every tool and database on the machine as it is.
+A test that fails later in the build for a reason outside the change gets the same treatment. So does an existing test that also hits its time limit on the base, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine, or fixes the cause on the default branch. The build keeps every test enabled, and leaves every tool and database on the machine as it is.
+
+## Merge the default branch
+
+A fix on the default branch reaches the branch only through a merge. Run `git fetch origin`. When `origin/<default branch>` has commits the branch doesn't have, merge it: `git merge --no-edit origin/<default branch>`, as one merge commit. Never rebase: `draft-pr` never force-pushes. Merge the default branch also when the branch started from another branch that is not merged yet.
+
+When the worktree has uncommitted changes, run `git stash` first, and `git stash pop` after the merge.
+
+On a conflict, in the merge or in the pop, resolve it yourself, run the tests near the conflict, and go on. A pop with a conflict keeps the stash: drop it with `git stash drop` once the conflict is resolved. When you can't resolve a conflict, name the conflicting files and what each side changed:
+
+- Without `--afk`: ask the user how to resolve it.
+- With `--afk`: **stop** with the conflict as the question.
 
 ## Build
 
