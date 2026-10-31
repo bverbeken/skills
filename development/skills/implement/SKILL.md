@@ -34,7 +34,7 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
 2. Pick the branch: the issue's git branch name from the issue tracker, or a short kebab-case name for a spec without an issue.
 3. Run `git fetch origin`, then create the worktree at `<repo>/../<repo>.worktrees/<branch>`:
    - New branch: `git worktree add --no-track -b <branch> <path> origin/<default branch>`. `--no-track` keeps the new branch from tracking the default branch.
-   - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree. When the branch has no commits of its own (`git rev-list --count origin/<default branch>..<branch>` is 0) move it to the current default branch: `git -C <path> merge --ff-only origin/<default branch>`. A build that stopped before its first commit then picks up the fix the user made on the default branch.
+   - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree.
    - If the work depends on a branch that is not merged yet, ask which base to use.
 4. Copy the ignored local setup files from the main checkout into the worktree, for example `.java-version` or `.env`. List them with `git -C <repo> ls-files --others --ignored --exclude-standard --directory`, and skip build output and dependency folders.
 5. Install what the build needs in the worktree (for example `yarn install`), before the first test run.
@@ -45,10 +45,10 @@ The worktree is done when `git -C <path> status` shows the branch, clean. Run ev
 
 Before the first tdd cycle, run one existing test near the code the change touches, in the fresh worktree. When the repo has no tests, skip the check. When that test fails, the cause is the machine, not the change: for example a database version the migrations need, or a missing tool. Name the cause, then:
 
-- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run `git fetch origin`, move a branch without commits of its own to the current default branch as step 3 of `Worktree` says, run the failing test again, and go on in the same session once it passes.
+- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run the failing test again, and go on in the same session once it passes.
 - With `--afk`: **stop** with the cause as the question.
 
-A test that fails later in the build for a reason outside the change gets the same treatment, and so does an existing test that hits its time limit on the base too, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine, or for a time limit the test or the limit on the default branch. Once the branch has commits of its own, the build stays on the base it started from, keeps every test enabled, and leaves every tool and database on the machine as it is.
+A test that fails later in the build for a reason outside the change gets the same treatment, and so does an existing test that hits its time limit on the base too, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine. The build stays on the base it started from, keeps every test enabled, and leaves every tool and database on the machine as it is.
 
 ## Build
 
