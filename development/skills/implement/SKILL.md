@@ -40,7 +40,7 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
 5. Install what the build needs in the worktree (for example `yarn install`), before the first test run.
 6. When the branch existed already, **merge the default branch**, below.
 
-The worktree is done when `git -C <path> status` shows the branch, clean. Run every later command from the worktree path. Leave the worktree in place at the end.
+The worktree is done when `git -C <path> status` shows the branch, clean apart from the uncommitted changes that step 6 put back. Run every later command from the worktree path. Leave the worktree in place at the end.
 
 ## Setup failures
 
