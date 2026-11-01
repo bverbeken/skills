@@ -6,7 +6,7 @@ argument-hint: "[issue | status] [--afk]"
 
 Do the next step for the issue in `$ARGUMENTS`. The order of the steps lives only in this skill. Each worker skill does one step: call it with the Skill tool.
 
-UPPERCASE statuses, such as `READY`, are factory statuses. The issue tracker docs map each one to a status of the tracker.
+UPPERCASE statuses, such as `READY`, are Foreman statuses. The issue tracker docs map each one to a status of the tracker.
 
 Without `--afk`, do one step and end. With `--afk`, nobody watches: ask nothing, pass `--afk` on to `implement`, `ready-for-review` and `merge`, and keep going until the issue waits on the user.
 
@@ -14,7 +14,7 @@ To **stop** with a problem: without `--afk`, show the user the problem and end. 
 
 ## 1. Check the mapping
 
-Read the issue tracker docs. When they don't map all 8 factory statuses (`BACKLOG`, `BLOCKED`, `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW`, `APPROVED`, `DONE`), refuse: name the statuses that are missing, change nothing, and end.
+Read the issue tracker docs. When they don't map all 8 Foreman statuses (`BACKLOG`, `BLOCKED`, `TO_CLARIFY`, `READY`, `BUSY`, `REVIEW`, `APPROVED`, `DONE`), refuse: name the statuses that are missing, change nothing, and end.
 
 Show the [status](#status) instead of steps 2 to 4 when the first word of `$ARGUMENTS` is `status`, or when `$ARGUMENTS` names no issue and has no `--afk`. `--afk` changes nothing for `status`.
 
