@@ -24,7 +24,7 @@ With an issue reference, fetch the issue and state its title. If the reference i
 
 Without one, with `--afk`, pick the issue closest to done:
 
-1. `APPROVED`
+1. `APPROVED`, unless the user merges it (see step 3)
 2. `REVIEW` with a new thread (see step 3)
 3. `READY`
 
@@ -38,14 +38,18 @@ An issue the issue tracker docs mark as by hand has no step, in any status, also
 |---|---|
 | `TO_CLARIFY` | Without `--afk`: call "prepare" with the issue. With `--afk`: no step, the decisions are the user's. |
 | `READY` | Build, below. |
-| `REVIEW` | When the PR has a **new thread**: an unresolved review thread whose first comment and last comment both do not start with `🤖 `, unless the user wrote the last comment as an answer to a colleague: another person, not the build and not a bot. That thread waits on the colleague. To find the last comment, skip the bot comments that come after a `🤖 ` comment. A thread where only bots wrote after the build's reply is not new. Fetch the threads with the query in step 1 of `<this skill's folder>/../review/THREADS.md`, which also defines a bot. The build starts each comment it posts with `🤖 `. Then **open the PR's worktree**, below, and **ready the PR** from it. Otherwise: no step, the PR waits on a reviewer: the user requests one and moves the issue to `APPROVED` once they approve. |
-| `APPROVED` | Call "merge" with the issue. |
+| `REVIEW` | When the PR has a **new thread**: an unresolved review thread whose first comment and last comment both do not start with `🤖 `, unless the user wrote the last comment as an answer to a colleague: another person, not the build and not a bot. That thread waits on the colleague. To find the last comment, skip the bot comments that come after a `🤖 ` comment. A thread where only bots wrote after the build's reply is not new. Fetch the threads with the query in step 1 of `<this skill's folder>/../review/THREADS.md`, which also defines a bot. The build starts each comment it posts with `🤖 `. Then **open the PR's worktree**, below, and **ready the PR** from it. Otherwise: no step, the PR waits on its review. When the **user reviews**, say "review PR #n, and move it to `APPROVED` when ok". Otherwise say "request a reviewer on PR #n, and move it to `APPROVED` once they approve". |
+| `APPROVED` | When the **user merges** it: no step. Say "merge it yourself with `/merge <issue>` or on GitHub". Otherwise: call "merge" with the issue. |
 | `BACKLOG` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `DONE`. |
 | `BUSY` | When the issue is **fresh**: build, below. When a PR is linked to it in the tracker, without `--afk`: ask "PR #n is linked. A build may still be running on it, on this machine or the Mac mini. Continue?", and go on only after a yes. When the PR is still in draft, **open the PR's worktree**, below, and **ready the PR** from it. When the PR is open and out of draft, move the issue to `REVIEW`. When the PR is closed or merged, **stop** with its state. With `--afk`, or without a linked PR: no step, a build may still be running, or it broke off. To build it again, the user moves it back to `READY`. |
 | `DONE` | No step: the issue is merged. |
 
 A `BUSY` issue is **fresh** when a person moved it there and no build has started: it is assigned to the user (when the issue tracker docs say issues have an assignee), no PR is linked to it in the tracker, and no branch with the issue's branch name exists, locally or on `origin`, in the repo the work belongs in. Pick that repo as `implement` does. When it could be more than one repo, ask, or with `--afk`, treat the issue as not fresh.
+
+The **user reviews** when the issue tracker docs have a line that starts with `Reviewer: me`, after an optional list dash, for example `- Reviewer: me. Ben reviews his own PRs.`. A tracker with `Reviewer: team`, or without a `Reviewer:` line, waits on a reviewer the user requests.
+
+The **user merges** an `APPROVED` issue when the pull request doc of the repo its PR is in has a line that reads exactly `Only Ben merges, with /merge or on GitHub.`, on its own line. Find the doc as `draft-pr` does, from the repo's main checkout. A sentence that only holds the phrase does not count.
 
 When there is no step, change nothing. When `implement` or `merge` stops, it writes its own question and moves the issue: end. When another worker ends without its normal result, for example `draft-pr` can't push, **stop** with its message.
 
@@ -93,8 +97,10 @@ Give each issue one line: its id, its title, its PR link when it has one, and wh
 | `BUSY`, not fresh, with a PR link | the user | if no build is running on PR #<n>, run `/foreman <issue>` |
 | `BUSY`, not fresh, without a PR link | `foreman` | what step 3 says for `BUSY` |
 | `REVIEW` with a new thread (step 3) | `foreman` | run `/foreman <issue>` |
-| `REVIEW` without a new thread | the user | request a reviewer on PR #<n>, and move it to `APPROVED` once they approve; or, without a PR link: no PR linked |
-| `APPROVED` | `foreman` | run `/foreman <issue>` |
+| `REVIEW` without a new thread, the user reviews (step 3) | the user | review PR #<n>, and move it to `APPROVED` when ok; or, without a PR link: no PR linked |
+| `REVIEW` without a new thread, otherwise | the user | request a reviewer on PR #<n>, and move it to `APPROVED` once they approve; or, without a PR link: no PR linked |
+| `APPROVED`, the user merges it (step 3) | the user | merge it yourself with `/merge <issue>` or on GitHub |
+| `APPROVED`, otherwise | `foreman` | run `/foreman <issue>` |
 
 End with one line that names the user's first action: the one on the first marked line. When no issue waits on the user, say so.
 
