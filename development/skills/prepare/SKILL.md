@@ -39,7 +39,7 @@ Show the user the full section, and the open question section you will remove, a
 
 ## 5. Move
 
-UPPERCASE statuses, such as `READY`, are factory statuses. The issue tracker docs map each one to a status of the tracker.
+UPPERCASE statuses, such as `READY`, are Foreman statuses. The issue tracker docs map each one to a status of the tracker.
 
 Leave the status alone and say so in each of these cases:
 

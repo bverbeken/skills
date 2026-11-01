@@ -10,7 +10,7 @@ If the user passes an issue reference, fetch it from the issue tracker and state
 
 When the arguments hold review findings, the build is done already: fix each finding in its own commit, in the existing worktree, and end as below.
 
-UPPERCASE statuses, such as `TO_CLARIFY`, are factory statuses. The issue tracker docs map each one to a status of the tracker.
+UPPERCASE statuses, such as `TO_CLARIFY`, are Foreman statuses. The issue tracker docs map each one to a status of the tracker.
 
 ## --afk
 
