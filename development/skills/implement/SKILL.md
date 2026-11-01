@@ -38,17 +38,29 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
    - If the work depends on a branch that is not merged yet, ask which base to use.
 4. Copy the ignored local setup files from the main checkout into the worktree, for example `.java-version` or `.env`. List them with `git -C <repo> ls-files --others --ignored --exclude-standard --directory`, and skip build output and dependency folders.
 5. Install what the build needs in the worktree (for example `yarn install`), before the first test run.
+6. When the branch existed already, **merge the default branch**, below.
 
-The worktree is done when `git -C <path> status` shows the branch, clean. Run every later command from the worktree path. Leave the worktree in place at the end.
+The worktree is done when `git -C <path> status` shows the branch, clean apart from the uncommitted changes that step 6 put back. Run every later command from the worktree path. Leave the worktree in place at the end.
 
 ## Setup failures
 
 Before the first tdd cycle, run one existing test near the code the change touches, in the fresh worktree. When the repo has no tests, skip the check. When that test fails, the cause is the machine, not the change: for example a database version the migrations need, or a missing tool. Name the cause, then:
 
-- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, run the failing test again, and go on in the same session once it passes.
+- Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, **merge the default branch**, below, then run the failing test again, and go on in the same session once it passes.
 - With `--afk`: **stop** with the cause as the question.
 
-A test that fails later in the build for a reason outside the change gets the same treatment. So does an existing test that also hits its time limit on the base, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine. The build stays on the base it started from, keeps every test enabled, and leaves every tool and database on the machine as it is.
+A test that fails later in the build for a reason outside the change gets the same treatment. So does an existing test that also hits its time limit on the base, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine, or fixes the cause on the default branch. The build keeps every test enabled, and leaves every tool and database on the machine as it is.
+
+## Merge the default branch
+
+A fix on the default branch reaches the branch only through a merge. Run `git fetch origin`. When `origin/<default branch>` has commits the branch doesn't have, note `git rev-parse HEAD` as the commit before the merge, and merge it: `git merge --no-ff --no-edit origin/<default branch>`, as one merge commit. A merge needs no force-push, and `draft-pr` never force-pushes. Merge the default branch also when the branch started from another branch that is not merged yet.
+
+When `git status --porcelain` shows anything, also untracked files, stash it first, with a message you print and keep: `msg="implement <branch> $(date +%s)"; echo "$msg"; git stash push -u -m "$msg"`. All worktrees of a repo share one stash list, so it can hold entries of the user or of other builds. Pop only this entry, by its ref. Look the ref up by the entry's full message in the same command as the pop, as another worktree can shift it: `git stash pop "$(git stash list | grep -F "$msg" | cut -d: -f1)"`. Drop it the same way. Pop it after the merge commit. When the merge changed setup or dependency files, such as a lockfile, run steps 4 and 5 of `Worktree` again before the next test run.
+
+On a conflict, in the merge or in the pop, resolve it yourself, run the tests, and go on. A pop also fails when the merge added a file at the path of a stashed untracked file: treat that as a pop conflict. A pop with a conflict keeps the entry: once the conflict is resolved, drop it, as above. When you can't resolve a conflict, name the conflicting files and what each side changed:
+
+- Without `--afk`: ask the user how to resolve it.
+- With `--afk`: put the worktree back as it was before the merge, so a retry can merge again. On a merge conflict, run `git merge --abort`, then pop the stash entry, if there is one. On a pop conflict, undo the merge too: run `git reset --hard <the commit before the merge>`, then `git clean -fd`, then pop the entry. The entry took every untracked file and folder, so `git clean -fd` removes only what the failed pop brought back. On the commit before the merge, the entry applies without a conflict. Then **stop** with the conflict as the question.
 
 ## Build
 
