@@ -1,10 +1,12 @@
 ---
 name: merge
-description: "Merge the PR of an approved issue with a squash merge, or the method the repo allows, close the issue with a result, and remove its worktree and branch. Use when the user says \"merge <issue>\" or \"merge the PR of <issue>\", or when another skill merges an approved issue."
-argument-hint: "<issue> [--afk]"
+description: "Merge the PR of an approved issue with a squash merge, or the method the repo allows, close the issue with a result, and remove its worktree and branch. With --rebase-only, only rebase the PR on its base and push it. Use when the user says \"merge <issue>\" or \"merge the PR of <issue>\", or when another skill merges an approved issue."
+argument-hint: "<issue> [--rebase-only] [--afk]"
 ---
 
 Merge the PR of the issue in `$ARGUMENTS`, then close the issue and clean up. Merge never asks the user anything. A problem found before anything changed makes it **refuse**; a problem after it changed something makes it **stop**. `--afk` changes nothing; accept it so a calling skill can pass it to every worker.
+
+With `--rebase-only`, merge does steps 1 and 2, then [rebases only](#rebase-only) and ends. It merges nothing, waits for no CI, leaves the issue in its status and leaves the worktree in place. Without the flag, merge does every step from 1 to 6.
 
 To **refuse**: print why, change nothing, and end.
 
@@ -30,7 +32,7 @@ Find the test command in the repo's README, `CLAUDE.md` or `AGENTS.md`. A repo w
 
 When the issue tracker docs map no status to `APPROVED`, **refuse**: merge can't tell whether the PR was approved.
 
-When the PR is already merged, an earlier run broke off after the merge. Skip the checks below. Go on with step 4 when the issue is still in `APPROVED`, or with step 6 when it moved on.
+When the PR is already merged, an earlier run broke off after the merge. Skip the checks below. Go on with step 4 when the issue is still in `APPROVED`, or with step 6 when it moved on. With `--rebase-only`, **refuse** instead: there is nothing to rebase.
 
 Otherwise, **refuse** when any of these is true:
 
@@ -47,8 +49,9 @@ When GitHub refuses it, read `gh pr view <num> --json mergeStateStatus`. GitHub 
 
 1. `git fetch origin`, then `git rebase origin/<base>`. On a conflict: `git rebase --abort`, and **stop** with the files that conflict. Merge never fixes a conflict itself: a fix is new code the user did not review.
 2. Run the tests on the branch. When they fail: reset the branch to `origin/<branch>`, and **stop** with the failing tests.
-3. `git push --force-with-lease=<branch>:<headRefOid> origin <branch>`. When the repo has CI, wait at most 10 minutes until `gh pr view <num> --json headRefOid,statusCheckRollup` shows the new head commit with its checks started. Then wait at most 60 minutes for them to finish: `gh pr checks <num> --watch`. When a limit runs out, **stop** with "no CI result for <sha>". When a check fails, **stop** with the failing checks.
-4. Run `gh pr merge <num> <method> --match-head-commit <new head>` again. When GitHub refuses it again, **stop** with its message.
+3. `git push --force-with-lease=<branch>:<headRefOid> origin <branch>`. When the push fails: reset the branch to `origin/<branch>`, and **stop** with git's message.
+4. When the repo has CI, wait at most 10 minutes until `gh pr view <num> --json headRefOid,statusCheckRollup` shows the new head commit with its checks started. Then wait at most 60 minutes for them to finish: `gh pr checks <num> --watch`. When a limit runs out, **stop** with "no CI result for <sha>". When a check fails, **stop** with the failing checks.
+5. Run `gh pr merge <num> <method> --match-head-commit <new head>` again. When GitHub refuses it again, **stop** with its message. When it accepts it, go to step 4.
 
 ## 4. Test the merged code
 
@@ -85,3 +88,11 @@ That is the PR title, the PR link, and the short SHA of the PR's commit on `<bas
 When you kept the worktree, say why and give its path.
 
 End with the PR link, the status the issue is in now, and, after a stop, the problem.
+
+## Rebase only
+
+Run `git fetch origin`. When `git merge-base --is-ancestor origin/<base> <headRefOid>` succeeds, the PR is not behind `<base>` and does not conflict with it: say so, change nothing, and end.
+
+This check uses git, not `mergeStateStatus`: GitHub only reports `BEHIND` when the repo requires branches to be up to date.
+
+Otherwise rebase as step 3 does: its worktree, its checks before the rebase, and its steps 1 to 3. End with the PR link and the new head commit.
