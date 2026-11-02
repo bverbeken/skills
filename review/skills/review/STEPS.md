@@ -42,7 +42,7 @@ The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>`
 
 If the diff is empty, stop and say so.
 
-With `--since <sha>`, also note the **new lines**: the lines that `git -C <reviewDir> diff <sha>` adds or removes, except the lines that only a merge of `<base>` brought in or took out: the PR did not write those. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. The new files are the files in both `git -C <reviewDir> diff --name-only <sha>` and `git -C <reviewDir> diff --name-only <merge-base>`. Also note the commits `git -C <reviewDir> log --oneline <sha>..HEAD`. A finding **counts** with `--since` when its location is a new line, or when a new line causes it, for example a missing test for a new line.
+With `--since <sha>`, also note the **new lines**: the lines that `git -C <reviewDir> diff <sha>` adds or removes, except the lines that only a merge of `<base>` brought in or took out: the PR did not write those. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. The **changed files** are the files in `git -C <reviewDir> diff --name-only <sha>`, except those that only a merge of `<base>` changed. Also note the commits `git -C <reviewDir> log --oneline <sha>..HEAD`. A finding **counts** with `--since` when its location is a new line, or when a new line causes it, for example a missing test for a new line.
 
 Print one line so the user can check the target: `Reviewing <PR #<num> | branch <name>> in <owner/repo> (dir: <reviewDir>)`. Continue without waiting.
 
@@ -56,7 +56,7 @@ There is always some spec: everything that says what the change should do. Colle
 
 Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and an `## Open suggestions` section in the PR description or the issue. They list review findings, not requirements.
 
-Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the new lines, the new files and their commits. List each source by name or link at the top.
+Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the new lines, the changed files and their commits. List each source by name or link at the top.
 
 If there is no issue, the spec is the PR description and the commit messages. Say so at the top of `<contextFile>`.
 
