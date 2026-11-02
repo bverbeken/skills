@@ -42,7 +42,7 @@ The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>`
 
 If the diff is empty, stop and say so.
 
-With `--since <sha>`, also note the **new lines**: the lines that are in `git -C <reviewDir> diff <sha>` and also in the full diff. A line that only came in with a merge of `<base>` is not a new line: the PR did not write it. The new files are the files in both `git -C <reviewDir> diff --name-only <sha>` and `git -C <reviewDir> diff --name-only <merge-base>`. Also note the commits `git -C <reviewDir> log --oneline <sha>..HEAD`.
+With `--since <sha>`, also note the **new lines**: the lines that are in `git -C <reviewDir> diff <sha>` and also in the full diff. A line that only came in with a merge of `<base>` is not a new line: the PR did not write it. The new files are the files in both `git -C <reviewDir> diff --name-only <sha>` and `git -C <reviewDir> diff --name-only <merge-base>`. Also note the commits `git -C <reviewDir> log --oneline <sha>..HEAD`. A finding **counts** with `--since` when its location is a new line, or when a new line causes it, for example a missing test for a new line.
 
 Print one line so the user can check the target: `Reviewing <PR #<num> | branch <name>> in <owner/repo> (dir: <reviewDir>)`. Continue without waiting.
 
@@ -193,7 +193,7 @@ _Why:_ <one sentence, from the code>
 ```
 
 - **Head** says `+ uncommitted changes` when the review ran in place and `git -C <reviewDir> status --porcelain` showed anything, so the diff held more than the commit. `ready-for-review` reads this line to reuse a review of the same commit.
-- **Since** is printed only with `--since`. The findings are only those on the new lines.
+- **Since** is printed only with `--since`. The report holds only the findings that count, as step 2 says.
 - **Threads** lists every thread in the triage and recheck groups of `THREADS.md`, with its verdict. Add `(blocking)` when its finding is blocking.
 - **Drafts** are only written by `review`, never by a check run on its own. Number them in the order they appear in the report, and put the `[D<n>]` tag on the line they belong to.
   - A reply for each thread with a draft reply from `THREADS.md` step 3. Quote the comment you answer verbatim: the newest one when the thread has answers, after one line that sums up the earlier exchange. Trim a quote longer than 12 lines and end it with `> …(trimmed)`.
