@@ -1,6 +1,6 @@
 ---
 name: foreman
-description: "Do the next step for an issue, based on its status: prepare it, build it up to a PR that is ready for review, handle new review threads, or merge it. Or, without an issue, show the issues in the pipeline and mark the ones that wait on the user. Use when the user says \"foreman\", \"do the next thing\", \"next step for <issue>\", \"foreman, do the next thing on <issue>\", or \"foreman status\"."
+description: "Do the next step for an issue, based on its status: prepare it, build it up to a PR that is ready for review, or handle new review threads. Or, without an issue, show the issues in the pipeline and mark the ones that wait on the user. Use when the user says \"foreman\", \"do the next thing\", \"next step for <issue>\", \"foreman, do the next thing on <issue>\", or \"foreman status\"."
 argument-hint: "[issue | status] [--afk]"
 ---
 
@@ -8,7 +8,7 @@ Do the next step for the issue in `$ARGUMENTS`. The order of the steps lives onl
 
 UPPERCASE statuses, such as `NEXT_UP`, are Foreman statuses. The issue tracker docs map each one to a status of the tracker.
 
-Without `--afk`, do one step and end. With `--afk`, nobody watches: ask nothing, pass `--afk` on to `implement`, `ready-for-review` and `merge`, and keep going until the issue waits on the user.
+Without `--afk`, do one step and end. With `--afk`, nobody watches: ask nothing, pass `--afk` on to `implement` and `ready-for-review`, and keep going until the issue waits on the user.
 
 To **stop** with a problem: without `--afk`, show the user the problem and end. The issue stays in its status: say so, and say which status to move it to. With `--afk`, write the problem in the issue's open question section, as the issue tracker docs name it, move the issue to `TO_CLARIFY`, and end. When the docs name no such section, print the problem, leave the status alone, and end.
 
@@ -24,9 +24,8 @@ With an issue reference, fetch the issue and state its title. If the reference i
 
 Without one, with `--afk`, pick the issue closest to done:
 
-1. `READY_TO_MERGE`, unless the user merges it (see step 3)
-2. `READY_FOR_REVIEW` with a new thread (see step 3)
-3. `NEXT_UP`
+1. `READY_FOR_REVIEW` with a new thread (see step 3)
+2. `NEXT_UP`
 
 Skip the issues the tracker docs mark as by hand (see step 3). Within one status, order the issues as the board order in the tracker docs, or else oldest first, and take the first one. Say which issue you picked and why. When no issue has a step, say so, name what waits on the user, and end.
 
@@ -39,7 +38,7 @@ An issue the issue tracker docs mark as by hand has no step, in any status, also
 | `TO_CLARIFY` | Without `--afk`: call "prepare" with the issue. With `--afk`: no step, the decisions are the user's. |
 | `NEXT_UP` | Build, below. |
 | `READY_FOR_REVIEW` | When the PR has a **new thread**: an unresolved review thread whose first comment and last comment both do not start with `🤖 `, unless the user wrote the last comment as an answer to a colleague: another person, not the build and not a bot. That thread waits on the colleague. To find the last comment, skip the bot comments that come after a `🤖 ` comment. A thread where only bots wrote after the build's reply is not new. Fetch the threads with the query in step 1 of `<this skill's folder>/../review/THREADS.md`, which also defines a bot. The build starts each comment it posts with `🤖 `. Then **open the PR's worktree**, below, and **ready the PR** from it. Otherwise: no step, the PR waits on its review. When the **user reviews**, say "review PR #n, and move it to `READY_TO_MERGE` when ok". Otherwise say "request a reviewer on PR #n, and move it to `READY_TO_MERGE` once they approve". |
-| `READY_TO_MERGE` | When the **user merges** it: no step. Say "merge it yourself with `/merge <issue>` or on GitHub". Otherwise: call "merge" with the issue. |
+| `READY_TO_MERGE` | No step: the user merges the PR on GitHub. Say "merge PR #n on GitHub". |
 | `USEFUL` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `MERGED` or `DONE`. |
 | `BUSY` | When the issue tracker docs say issues have an assignee, and the issue is assigned to someone other than the user: no step, a teammate builds it. When the issue is **fresh**: build, below. When a PR is linked to it in the tracker, without `--afk`: ask "PR #n is linked. A build may still be running on it, on this machine or the Mac mini. Continue?", and go on only after a yes. When the PR is still in draft, **open the PR's worktree**, below, and **ready the PR** from it. When the PR is open and out of draft, move the issue to `READY_FOR_REVIEW`. When the PR is closed or merged, **stop** with its state. With `--afk`, or without a linked PR: no step, a build may still be running, or it broke off. To build it again, the user moves it back to `NEXT_UP`. |
@@ -50,9 +49,7 @@ A `BUSY` issue is **fresh** when a person moved it there and no build has starte
 
 The **user reviews** when the issue tracker docs have a line that starts with `Reviewer: me`, after an optional list dash, for example `- Reviewer: me. Ben reviews his own PRs.`. A tracker with `Reviewer: team`, or without a `Reviewer:` line, waits on a reviewer the user requests.
 
-The **user merges** a `READY_TO_MERGE` issue when the pull request doc of the repo its PR is in has a line that reads exactly `Only Ben merges, with /merge or on GitHub.`, on its own line. Find the doc as `draft-pr` does, from the repo's main checkout. A sentence that only holds the phrase does not count.
-
-When there is no step, change nothing. When `implement` or `merge` stops, it writes its own question and moves the issue: end. When another worker ends without its normal result, for example `draft-pr` can't push, **stop** with its message.
+When there is no step, change nothing. When `implement` stops, it writes its own question and moves the issue: end. When another worker ends without its normal result, for example `draft-pr` can't push, **stop** with its message.
 
 ### Build
 
@@ -65,7 +62,7 @@ When there is no step, change nothing. When `implement` or `merge` stops, it wri
 
 ### Open the PR's worktree
 
-Find the repo's main checkout and the worktree that has the PR's branch checked out, as `merge` step 1 does, and run `git fetch origin`. When there is no such worktree, create it at `<repo>/../<repo>.worktrees/<branch>`: `git worktree add <path> <branch>` when the local branch exists, otherwise `git worktree add --no-track -b <branch> <path> origin/<branch>`. Copy the ignored setup files into it and install what the tests need, as `implement` does. When the branch is behind `origin/<branch>`, fast-forward it.
+Find the repo's main checkout: the current repo when its `origin` points to the PR's repo, or else a folder next to it whose `origin` does. When that folder is a linked worktree, take the main worktree instead: the first entry of `git worktree list --porcelain`. Find the worktree that has the PR's branch checked out in `git worktree list --porcelain`, and run `git fetch origin`. When there is no such worktree, create it at `<repo>/../<repo>.worktrees/<branch>`: `git worktree add <path> <branch>` when the local branch exists, otherwise `git worktree add --no-track -b <branch> <path> origin/<branch>`. Copy the ignored setup files into it and install what the tests need, as `implement` does. When the branch is behind `origin/<branch>`, fast-forward it.
 
 ### Ready the PR
 
@@ -101,8 +98,7 @@ Give each issue one line: its id, its title, its PR link when it has one, and wh
 | `READY_FOR_REVIEW` with a new thread (step 3) | `foreman` | run `/foreman <issue>` |
 | `READY_FOR_REVIEW` without a new thread, the user reviews (step 3) | the user | review PR #<n>, and move it to `READY_TO_MERGE` when ok; or, without a PR link: no PR linked |
 | `READY_FOR_REVIEW` without a new thread, otherwise | the user | request a reviewer on PR #<n>, and move it to `READY_TO_MERGE` once they approve; or, without a PR link: no PR linked |
-| `READY_TO_MERGE`, the user merges it (step 3) | the user | merge it yourself with `/merge <issue>` or on GitHub |
-| `READY_TO_MERGE`, otherwise | `foreman` | run `/foreman <issue>` |
+| `READY_TO_MERGE` | the user | merge PR #<n> on GitHub |
 | `MERGED` | the user | do the docs, changelog and release, then move it to `DONE` |
 
 End with one line that names the user's first action: the one on the first marked line. When no issue waits on the user, say so.
