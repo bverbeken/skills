@@ -42,7 +42,7 @@ The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>`
 
 If the diff is empty, stop and say so.
 
-With `--since <sha>`, also note the **new lines**: the lines that are in `git -C <reviewDir> diff <sha>` and also in the full diff. A line that only came in with a merge of `<base>` is not a new line: the PR did not write it. The new files are the files in both `git -C <reviewDir> diff --name-only <sha>` and `git -C <reviewDir> diff --name-only <merge-base>`. Also note the commits `git -C <reviewDir> log --oneline <sha>..HEAD`. A finding **counts** with `--since` when its location is a new line, or when a new line causes it, for example a missing test for a new line.
+With `--since <sha>`, also note the **new lines**: the lines that `git -C <reviewDir> diff <sha>` adds or removes, except the lines that only a merge of `<base>` brought in or took out: the PR did not write those. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. The new files are the files in both `git -C <reviewDir> diff --name-only <sha>` and `git -C <reviewDir> diff --name-only <merge-base>`. Also note the commits `git -C <reviewDir> log --oneline <sha>..HEAD`. A finding **counts** with `--since` when its location is a new line, or when a new line causes it, for example a missing test for a new line.
 
 Print one line so the user can check the target: `Reviewing <PR #<num> | branch <name>> in <owner/repo> (dir: <reviewDir>)`. Continue without waiting.
 
