@@ -42,7 +42,7 @@ The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>`
 
 If the diff is empty, stop and say so.
 
-With `--since <sha>`, also note the new lines: `git -C <reviewDir> diff <sha>`, and the commits `git -C <reviewDir> log --oneline <sha>..HEAD`.
+With `--since <sha>`, also note the **new lines**: the lines that are in `git -C <reviewDir> diff <sha>` and also in the full diff. A line that only came in with a merge of `<base>` is not a new line: the PR did not write it. The new files are the files in both `git -C <reviewDir> diff --name-only <sha>` and `git -C <reviewDir> diff --name-only <merge-base>`. Also note the commits `git -C <reviewDir> log --oneline <sha>..HEAD`.
 
 Print one line so the user can check the target: `Reviewing <PR #<num> | branch <name>> in <owner/repo> (dir: <reviewDir>)`. Continue without waiting.
 
@@ -56,7 +56,7 @@ There is always some spec: everything that says what the change should do. Colle
 
 Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and an `## Open suggestions` section in the PR description or the issue. They list review findings, not requirements.
 
-Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, with `--since` the diff command and the commits of the new lines, the PR data and the CI status. List each source by name or link at the top.
+Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the new lines, the new files and their commits. List each source by name or link at the top.
 
 If there is no issue, the spec is the PR description and the commit messages. Say so at the top of `<contextFile>`.
 
