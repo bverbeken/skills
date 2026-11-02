@@ -62,7 +62,7 @@ When there is no step, change nothing. When `implement` stops, it writes its own
 
 ### Open the PR's worktree
 
-Find the repo's main checkout: the current repo when its `origin` points to the PR's repo, or else a folder next to it whose `origin` does. When that folder is a linked worktree, take the main worktree instead: the first entry of `git worktree list --porcelain`. Find the worktree that has the PR's branch checked out in `git worktree list --porcelain`, and run `git fetch origin`. When there is no such worktree, create it at `<repo>/../<repo>.worktrees/<branch>`: `git worktree add <path> <branch>` when the local branch exists, otherwise `git worktree add --no-track -b <branch> <path> origin/<branch>`. Copy the ignored setup files into it and install what the tests need, as `implement` does. When the branch is behind `origin/<branch>`, fast-forward it.
+Find the repo whose `origin` points to the PR's repo: the current repo, or else a folder next to it. When there is none, **stop**. Take its main worktree as `<repo>`, as step 1 of `Worktree` in `implement` does. Find the worktree that has the PR's branch checked out in `git worktree list --porcelain`, and run `git fetch origin`. When there is no such worktree, create it at `<repo>/../<repo>.worktrees/<branch>`: `git worktree add <path> <branch>` when the local branch exists, otherwise `git worktree add --no-track -b <branch> <path> origin/<branch>`. Copy the ignored setup files into it and install what the tests need, as `implement` does. When the branch is behind `origin/<branch>`, fast-forward it.
 
 ### Ready the PR
 
