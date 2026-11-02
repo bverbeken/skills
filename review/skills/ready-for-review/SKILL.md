@@ -127,7 +127,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
 The loop is done when every item on the list is ticked.
 
-Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list: new suggestions are open suggestions. With `--afk`, add the new suggestions of a later round to the list and fix them too.
+Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list: new suggestions are open suggestions, with and without `--afk`.
 
 ## 7. Decide
 
@@ -166,8 +166,9 @@ Tracker: <issue> moved to `READY_FOR_REVIEW`, or: the tracker has no `READY_FOR_
 
 Open suggestions are the suggestions nobody decided on:
 
-- With `--afk`: every suggestion you skipped, and every suggestion of the last round that you did not fix.
-- Without `--afk`: the new suggestions of rounds after the first, and a screenshot suggestion that step 6 skips without asking.
+- The new suggestions of rounds after the first.
+- A screenshot suggestion that step 6 skips without asking.
+- With `--afk`: every suggestion you skipped.
 
 A suggestion the user said to skip is not open.
 
