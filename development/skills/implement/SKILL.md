@@ -30,9 +30,9 @@ Build from the issue's `## Decisions` section. When an open decision comes up du
 
 Build the work in its own git worktree, so the user's checkout stays untouched.
 
-1. Pick the repo the work belongs in. In a multi-repo workspace, take it from the issue (its labels, the code it names). If it could be more than one repo, ask.
+1. Pick the repo the work belongs in. In a multi-repo workspace, take it from the issue (its labels, the code it names). If it could be more than one repo, ask. `<repo>` is the repo's main worktree: the first entry of `git worktree list --porcelain`, also when you run from a linked worktree.
 2. Pick the branch: the issue's git branch name from the issue tracker, or a short kebab-case name for a spec without an issue.
-3. Run `git fetch origin`, then create the worktree at `<repo>/../<repo>.worktrees/<branch>`:
+3. Run `git fetch origin` and **remove merged work**, below, then create the worktree at `<repo>/../<repo>.worktrees/<branch>`:
    - New branch: `git worktree add --no-track -b <branch> <path> origin/<default branch>`. `--no-track` keeps the new branch from tracking the default branch.
    - Branch exists already: `git worktree add <path> <branch>`. If it is checked out in another worktree, use that worktree.
    - If the work depends on a branch that is not merged yet, ask which base to use.
@@ -41,6 +41,19 @@ Build the work in its own git worktree, so the user's checkout stays untouched.
 6. When the branch existed already, **merge the default branch**, below.
 
 The worktree is done when `git -C <path> status` shows the branch, clean apart from the uncommitted changes that step 6 put back. Run every later command from the worktree path. Leave the worktree in place at the end.
+
+## Remove merged work
+
+Remove the repo's local branches whose PR is merged, with the worktrees that have them checked out. Check each local branch other than the default branch and `<branch>`:
+
+1. Run `gh pr view <local branch> --json state,headRefOid`. Go to the next branch unless `state` is `MERGED`.
+2. Skip the branch when `git cat-file -e <headRefOid>^{commit}` fails: the commit isn't known locally.
+3. Skip the branch when `git merge-base --is-ancestor <local branch> <headRefOid>` fails: the branch has commits the PR doesn't have.
+4. Skip the branch when its worktree has uncommitted changes: `git -C <worktree> status --porcelain` shows anything.
+5. Skip the branch when the main worktree has it checked out, or when its worktree holds the current folder (`git rev-parse --show-toplevel`). Those worktrees stay.
+6. Otherwise run `git worktree remove <worktree>`, when it has one, then `git branch -D <local branch>`.
+
+Say what you removed, and for each branch you skipped, say why. Example: `Removed dark-mode and its worktree. Skipped faster-search: its worktree has uncommitted changes. Skipped old-fix: this session runs in its worktree.`
 
 ## Setup failures
 

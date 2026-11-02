@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-11-02
 
+- `ready-for-review`: always moves a clean PR's issue to `READY_FOR_REVIEW`. The `Merge without review.` line in the pull request doc no longer does anything.
 - `ready-for-review`: moves the issue to `READY_FOR_REVIEW`, or to `READY_TO_MERGE` in a repo that merges without review. These were `REVIEW` and `APPROVED`. Your tracker docs need the new names.
 
 ## 2026-10-30
