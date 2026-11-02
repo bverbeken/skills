@@ -39,17 +39,17 @@ Show the user the full section, and the open question section you will remove, a
 
 ## 5. Move
 
-UPPERCASE statuses, such as `READY`, are Foreman statuses. The issue tracker docs map each one to a status of the tracker.
+UPPERCASE statuses, such as `NEXT_UP`, are Foreman statuses. The issue tracker docs map each one to a status of the tracker.
 
 Leave the status alone and say so in each of these cases:
 
 - There is no issue, only a spec.
 - `--keep-status` was passed.
 - The issue tracker docs mark the issue as by hand. Say that the docs mark it as by hand, so the user runs it and moves it on. A tracker whose docs don't mention by hand has no by-hand issues.
-- The issue tracker docs map no status to `READY`.
+- The issue tracker docs map no status to `NEXT_UP`.
 - The issue is in `BLOCKED`, or closed without being done, for example canceled.
-- The issue is already in `READY` or past it, for example in `REVIEW` or `DONE`.
+- The issue is already in `NEXT_UP` or past it, for example in `READY_FOR_REVIEW` or `MERGED`.
 
-Otherwise, move the issue to `READY`.
+Otherwise, move the issue to `NEXT_UP`.
 
 When there is an issue, tell the user what changed in it. When another skill called this one, go back to it and continue its next step.
