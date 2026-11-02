@@ -34,7 +34,7 @@ The review settings are in `docs/agents/review-settings.md`.
 ```
 
 - `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [Foreman status](#foreman-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, how an issue is marked as one you run by hand, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). `foreman` builds no by-hand issue, and `prepare` leaves its status alone. `foreman`, `implement`, `prepare`, `review`, `ready-for-review` and `merge` read it.
-- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it. A line that reads exactly `Merge without review.` lets `ready-for-review` move a clean PR's issue to `APPROVED` instead of `REVIEW`, so `foreman --afk` merges it without waiting for you. A line that reads exactly `Only Ben merges, with /merge or on GitHub.` makes `foreman` leave an `APPROVED` issue to you: it never merges it, and `foreman status` marks it `▶`. `/merge <issue>` still merges it.
+- `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it. A line that reads exactly `Merge without review.` lets `ready-for-review` move a clean PR's issue to `READY_TO_MERGE` instead of `READY_FOR_REVIEW`, so `foreman --afk` merges it without waiting for you. A line that reads exactly `Only Ben merges, with /merge or on GitHub.` makes `foreman` leave a `READY_TO_MERGE` issue to you: it never merges it, and `foreman status` marks it `▶`. `/merge <issue>` still merges it.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
 ### Test time limit
@@ -55,14 +55,15 @@ The skills name statuses with fixed UPPERCASE names:
 
 | Foreman status | Meaning |
 |---|---|
-| `BACKLOG` | worth doing, not planned yet |
-| `BLOCKED` | planned, but a blocker is not `DONE` yet |
+| `USEFUL` | worth doing, not planned yet |
+| `BLOCKED` | planned, but a blocker is not `MERGED` or `DONE` yet |
 | `TO_CLARIFY` | to prepare: open decisions, or an open question from a stopped build |
-| `READY` | prepared, you give the go: it can be built |
-| `BUSY` | being built, by you or by `foreman` |
-| `REVIEW` | the PR is ready for your review |
-| `APPROVED` | the PR can be merged: you approve it, or `ready-for-review` does in a repo that merges without review |
-| `DONE` | merged |
+| `NEXT_UP` | prepared, you give the go: it can be built |
+| `BUSY` | being built: by `foreman`, by you or by a teammate |
+| `READY_FOR_REVIEW` | the PR is ready for your review |
+| `READY_TO_MERGE` | the PR can be merged: you approve it, or `ready-for-review` does in a repo that merges without review |
+| `MERGED` | merged: the docs, changelog and release are left |
+| `DONE` | done: merged, with the docs, changelog and release |
 
 Your tracker docs map each one to a status of your own, in any format. For example, a table with a column for the Foreman status:
 
@@ -70,9 +71,9 @@ Your tracker docs map each one to a status of your own, in any format. For examp
 |---|---|---|
 | `BUSY` | `In Progress` | being built |
 
-A mapping can carry a condition, for example `READY: Next Up, assigned to me`. A move to that status also sets the condition. An issue is only in that status when the condition holds. When two Foreman statuses map to the same tracker status, only the condition tells them apart, so a move between them changes the condition: with `TO_CLARIFY: Next Up, not assigned to me` and `READY: Next Up, assigned to me`, a move to `TO_CLARIFY` removes the assignee.
+A mapping can carry a condition, for example `NEXT_UP: Todo, assigned to me`. A move to that status also sets the condition. An issue is only in that status when the condition holds. When two Foreman statuses map to the same tracker status, only the condition tells them apart, so a move between them changes the condition: with `TO_CLARIFY: Todo, not assigned to me` and `NEXT_UP: Todo, assigned to me`, a move to `TO_CLARIFY` removes the assignee.
 
-A status counts as mapped only when your docs map it, also when your tracker has a status with the same name. A tracker can leave a status out when you call the skills by hand. `foreman` needs all 8, and refuses when one is missing. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing: `merge` doesn't merge when your tracker has no `APPROVED`.
+A status counts as mapped only when your docs map it, also when your tracker has a status with the same name. A tracker can leave a status out when you call the skills by hand. `foreman` needs all 9, and refuses when one is missing. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing.
 
 ## Credits
 

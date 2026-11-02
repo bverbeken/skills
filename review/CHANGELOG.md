@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-02
+
+- `ready-for-review`: moves the issue to `READY_FOR_REVIEW`, or to `READY_TO_MERGE` in a repo that merges without review. These were `REVIEW` and `APPROVED`. Your tracker docs need the new names.
+
 ## 2026-10-30
 
 - `ready-for-review`: in a repo whose pull request doc has a line that reads exactly `Merge without review.`, it moves the issue to `APPROVED` instead of `REVIEW`, when it skipped nothing, left no open suggestion and no unresolved thread, and the tracker maps `APPROVED`. With `--afk`, `foreman` then merges it in the same run.

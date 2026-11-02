@@ -43,7 +43,7 @@ It posts the build's comments under your login, each starting with `🤖 `, with
 
 With `--afk` it asks nothing: it takes its own recommendation, also answers your own threads (with the commit that fixed it, or with the reason it changes nothing), and leaves the PR in draft when something only you can decide is left.
 
-After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `REVIEW`. In a repo whose pull request doc has the line `Merge without review.`, it moves the issue to `APPROVED` instead, when it skipped nothing and left no open suggestion or unresolved thread. With `--afk`, `foreman` then merges it in the same run. It refuses PRs that are not yours.
+After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `READY_FOR_REVIEW`. In a repo whose pull request doc has the line `Merge without review.`, it moves the issue to `READY_TO_MERGE` instead, when it skipped nothing and left no open suggestion or unresolved thread. With `--afk`, `foreman` then merges it in the same run. It refuses PRs that are not yours.
 
 Some suggestions are left open: nobody decided on them. With `--afk`, these are the suggestions it skipped. Without `--afk`, these are the new suggestions of rounds after the first. Where they go depends on the `Reviewer:` line:
 
@@ -112,7 +112,7 @@ All nineteen skills must sit next to each other: the checks read the shared step
 
 ## Set up your project
 
-Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads there which status `REVIEW` maps to, and moves the issue to it when the PR is ready. It also reads who reviews your PRs there, from a `Reviewer: me` or `Reviewer: team` line. No line counts as `team`. The [development README](../development/README.md#foreman-statuses) lists the Foreman statuses.
+Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads there which status `READY_FOR_REVIEW` maps to, and moves the issue to it when the PR is ready. It also reads who reviews your PRs there, from a `Reviewer: me` or `Reviewer: team` line. No line counts as `team`. The [development README](../development/README.md#foreman-statuses) lists the Foreman statuses.
 
 Example:
 
@@ -130,7 +130,7 @@ Who depends on what:
 - **Licenses**: which licenses your dependencies may have, if that differs from the default in `review-dependencies`. Example: "No GPL, also not in CI."
 - **Consumers**: which repos use which code. A consumer that isn't checked out next to the others is reported as "not checked".
 - **Review settings**: a file your `CLAUDE.md` names, usually `docs/agents/review-settings.md`, with one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions.
-- **Merge without review**: in the pull request doc your `CLAUDE.md` names, usually `docs/agents/pull-requests.md`, a line that reads exactly `Merge without review.`. Then `ready-for-review` moves a clean PR's issue to `APPROVED` instead of `REVIEW`.
+- **Merge without review**: in the pull request doc your `CLAUDE.md` names, usually `docs/agents/pull-requests.md`, a line that reads exactly `Merge without review.`. Then `ready-for-review` moves a clean PR's issue to `READY_TO_MERGE` instead of `READY_FOR_REVIEW`.
 - **Coding standards and decisions**: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, ADRs, a glossary. The checks find these by themselves, so only name them when they live somewhere unusual.
 
 ## Credits

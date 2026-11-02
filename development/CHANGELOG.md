@@ -2,6 +2,11 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-02
+
+- `foreman`, `prepare` and `ready-for-review`: the Foreman statuses get the names of seats.io, and there are 9 now: `USEFUL`, `BLOCKED`, `TO_CLARIFY`, `NEXT_UP`, `BUSY`, `READY_FOR_REVIEW`, `READY_TO_MERGE`, `MERGED` and `DONE`. `BACKLOG` became `USEFUL`, `READY` became `NEXT_UP`, `REVIEW` became `READY_FOR_REVIEW`, `APPROVED` became `READY_TO_MERGE`, and the old `DONE` became `MERGED`. The new `DONE` comes after the docs, changelog and release. `foreman` refuses when your tracker docs don't map all 9. A blocker counts as closed once it is `MERGED` or `DONE`. `foreman status` lists `MERGED` issues last and marks them `▶`: do the docs, changelog and release, then move it to `DONE`. `/foreman <issue>` on a `MERGED` issue does nothing and says the same. `merge` keeps the old names until it goes away.
+- `foreman`: a `BUSY` issue assigned to a teammate has no step. `foreman status` shows that it waits on the teammate.
+
 ## 2026-10-31
 
 - `merge --rebase-only` rebases the PR of an approved issue when it is behind its base or conflicts with it, runs the tests and pushes with `--force-with-lease`. It does the same checks as a merge, but merges nothing, waits for no CI, leaves the issue in its status and keeps the worktree. A PR that needs no rebase stays as it is. A conflict or failing tests stop it as they stop a merge. A job that can't run `gh pr merge` itself can use it, and merge the PR on its own.
