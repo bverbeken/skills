@@ -4,7 +4,7 @@ Shared by `review` and its check skills. Each skill says which steps it runs.
 
 ## 1. Resolve the target
 
-The argument is a PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or empty. Strip `--only …` first: only `review` uses it.
+The argument is a PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or empty. Strip `--only …` and `--since …` first: only `review` uses them.
 
 Resolve it to: the repo, the code to review (a ref), the base to diff against, the PR (if any) and the issue (if any). The issue tracker is the one the project's `CLAUDE.md` / `AGENTS.md` names. Use the tool or workflow it describes. If the project names none, look for issue IDs anyway and use whatever tracker tool matches them.
 
@@ -42,6 +42,8 @@ The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>`
 
 If the diff is empty, stop and say so.
 
+With `--since <sha>`, also note the new lines: `git -C <reviewDir> diff <sha>`, and the commits `git -C <reviewDir> log --oneline <sha>..HEAD`.
+
 Print one line so the user can check the target: `Reviewing <PR #<num> | branch <name>> in <owner/repo> (dir: <reviewDir>)`. Continue without waiting.
 
 ## 3. Gather the spec
@@ -54,7 +56,7 @@ There is always some spec: everything that says what the change should do. Colle
 
 Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and an `## Open suggestions` section in the PR description or the issue. They list review findings, not requirements.
 
-Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. List each source by name or link at the top.
+Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, with `--since` the diff command and the commits of the new lines, the PR data and the CI status. List each source by name or link at the top.
 
 If there is no issue, the spec is the PR description and the commit messages. Say so at the top of `<contextFile>`.
 
@@ -149,6 +151,7 @@ Print the report in the terminal. Post nothing: no `gh pr review`, `gh pr commen
 Spec: <the sources, e.g. ISSUE-12 + 1 support conversation, or: PR description and commits only>
 CI: <status from gh pr checks, or: no PR yet>
 Head: <sha of `git -C <reviewDir> rev-parse HEAD`, or: <sha> + uncommitted changes>
+Since: <sha, only with --since>
 Threads: <the line from THREADS.md step 2, or: none>
 
 **Blocking** (verified)
@@ -190,6 +193,7 @@ _Why:_ <one sentence, from the code>
 ```
 
 - **Head** says `+ uncommitted changes` when the review ran in place and `git -C <reviewDir> status --porcelain` showed anything, so the diff held more than the commit. `ready-for-review` reads this line to reuse a review of the same commit.
+- **Since** is printed only with `--since`. The findings are only those on the new lines.
 - **Threads** lists every thread in the triage and recheck groups of `THREADS.md`, with its verdict. Add `(blocking)` when its finding is blocking.
 - **Drafts** are only written by `review`, never by a check run on its own. Number them in the order they appear in the report, and put the `[D<n>]` tag on the line they belong to.
   - A reply for each thread with a draft reply from `THREADS.md` step 3. Quote the comment you answer verbatim: the newest one when the thread has answers, after one line that sums up the earlier exchange. Trim a quote longer than 12 lines and end it with `> …(trimmed)`.

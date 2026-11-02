@@ -1,7 +1,7 @@
 ---
 name: review
 description: "Review <PR number, GitHub or Linear link, issue ID, or branch> at any stage, before or after comments came in: eleven checks in parallel (tests, spec, bugs, performance, style, comments, refactoring, architecture, consumers, dependencies, description), the open review threads checked against the code, draft replies, and a GO / NO GO verdict. Use when the user says \"review <something>\", pastes a PR link to review, asks if a change is ready to merge, says a reviewer replied, asks to handle the comments on a PR, or another skill wants its work reviewed."
-argument-hint: "[PR number | PR link | issue | branch | empty] [--only check,check]"
+argument-hint: "[PR number | PR link | issue | branch | empty] [--only check,check] [--since <sha>]"
 ---
 
 Review the target in `$ARGUMENTS` and give one report. `STEPS.md` in this skill's folder holds the shared steps: read it first.
@@ -16,9 +16,11 @@ When the target is a PR, read `THREADS.md` in this skill's folder and run its st
 
 The checks are the skills next to this one: `review-tests`, `review-spec`, `review-bugs`, `review-performance`, `review-style`, `review-comments`, `review-refactoring`, `review-architecture`, `review-consumers`, `review-dependencies`, `review-description`. Their files are at `<this skill's folder>/../review-<check>/SKILL.md`.
 
-Run all eleven, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always look at the full diff, also when the PR was reviewed before.
+Run all eleven, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always read the full diff, also when the PR was reviewed before.
 
-Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, comments and description. The diff is text-only when every file in `git -C <reviewDir> diff --name-only <merge-base>` ends in `.md` and none is in a skill folder: a folder that holds a `SKILL.md`, in `<reviewDir>` or on the base, or a folder below it. A change to a skill gets all checks. Example: a diff of `CLAUDE.md` and `docs/setup.md` is text-only; a diff of `review/skills/review/STEPS.md` is not.
+With `--since <sha>`, the checks report only on the **new lines**: the lines in `git -C <reviewDir> diff <sha>`. They still read the full diff for context. A finding counts when its location is a new line, or when a new line causes it, for example a missing test for a changed line. Use it to review only the fixes since an earlier review: `review 142 --since a1b2c3d`. When `<sha>` is not an ancestor of the code to review, stop and say so. When there are no new lines, run only `review-description` and the thread agents. Without `--since`, every line of the full diff counts.
+
+Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, comments and description. The diff is text-only when every file in `git -C <reviewDir> diff --name-only <merge-base>`, or `git -C <reviewDir> diff --name-only <sha>` with `--since`, ends in `.md` and none is in a skill folder: a folder that holds a `SKILL.md`, in `<reviewDir>` or on the base, or a folder below it. A change to a skill gets all checks. Example: a diff of `CLAUDE.md` and `docs/setup.md` is text-only; a diff of `review/skills/review/STEPS.md` is not.
 
 `review-bugs` runs as its angles: start one check agent per angle skill that `review-bugs` lists, with the angle's file as the check file. `--only bugs` runs all angles.
 
@@ -26,11 +28,11 @@ Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, co
 
 `review-description` runs only when the target is a PR, and in a different way: instead of a check agent, start its cold reader (step 1 of its check) with the PR's title and body as the text.
 
-First write the list of agents for this round, with the count. Example: "19 agents: 7 checks, 2 find agents, 6 bug angles, 1 cold reader, 3 thread agents". Then send exactly that many `Agent` calls in one message, so they run at the same time: one `Agent` (general-purpose) per check, per find agent and per bug angle, the cold reader, and the thread agents of `THREADS.md` step 3. Start them only as `Agent` calls, all in that one message, in the background, so you can start item agents as soon as a find agent returns. Give each check agent what "Check agents" in step 4 of `STEPS.md` says.
+First write the list of agents for this round, with the count. Example: "19 agents: 7 checks, 2 find agents, 6 bug angles, 1 cold reader, 3 thread agents". Then send exactly that many `Agent` calls in one message, so they run at the same time: one `Agent` (general-purpose) per check, per find agent and per bug angle, the cold reader, and the thread agents of `THREADS.md` step 3. Start them only as `Agent` calls, all in that one message, in the background, so you can start item agents as soon as a find agent returns. Give each check agent what "Check agents" in step 4 of `STEPS.md` says. With `--since`, add to each brief: "Read the full diff for context, but report only findings on the lines in `git -C <reviewDir> diff <sha>`, or caused by them."
 
 ## 3. Verify and report
 
-Wait until all agents have returned, the item agents too. Run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know. When the target is a PR, also run its PR material check. Merge the findings of the bug angles, as "Bug angles" in step 4 of `STEPS.md` says. When the PR has threads, then run step 4 of `THREADS.md` to remove duplicate findings. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
+Wait until all agents have returned, the item agents too. Run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know. When the target is a PR, also run its PR material check. With `--since`, drop the findings of the code checks that are not on a new line and not caused by one. Merge the findings of the bug angles, as "Bug angles" in step 4 of `STEPS.md` says. When the PR has threads, then run step 4 of `THREADS.md` to remove duplicate findings. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
 
 When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
 
