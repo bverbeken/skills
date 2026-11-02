@@ -13,7 +13,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - The fix would change or bend a line in the issue's `## Decisions` section: skip the item. That line is the user's call. This rule wins over the others below.
 - The fix needs a choice: take your own recommendation. When the choice is really the user's, as the spec or the issue leaves it to them, skip the item.
 - The fix changes code outside the PR's files, or needs a new issue: fix a blocking item, skip a suggestion.
-- Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push. When a conflict needs a choice that is really the user's, skip it.
+- Merge conflicts: merge `origin/<base>` into the branch, as one merge commit, fix the conflicts, run the tests, and push. A merge keeps the head of the round before in the history, so the next round can review only what changed since. When a conflict needs a choice that is really the user's, skip it.
 - Unpushed commits: push them.
 - An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open.
 - An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
@@ -48,7 +48,7 @@ In the first round, first look in this session for the last report of `review` w
 - It is an ancestor of the head commit (`git merge-base --is-ancestor <sha> <head commit>`): run `review` with `--since <sha>`, so it reviews only the commits that came after. Keep the suggestions of the earlier report: this round's report is those suggestions plus the new report. Example: `review` gave NO GO on `a1b2c3d`, and `implement` fixed it in `e4f5a6b`, so the first round reviews only the fix.
 - Otherwise, or without such a report: run the full review.
 
-Every later round runs `review` with `--since` and the `Head:` line of the round before, so it reviews only the fixes of that round. After the first round, no round runs the full review.
+Every later round runs `review` with `--since` and the `Head:` line of the round before, so it reviews only the fixes of that round. After the first round, no round runs the full review. When that `Head:` is not an ancestor of the head commit, someone rewrote the branch during the loop: stop the review loop, as step 3 says, with `[state] the branch was rewritten during the review loop` as a blocking item.
 
 Each blocking finding in the report is a **finding problem**. So is every thread in the report's **Threads** section with a FIX, NOT RESOLVED or NEW PROBLEM verdict, and every human thread with a DISCUSS or CLARIFY verdict that you have not answered. Findings that were dropped in verification don't count.
 

@@ -6,6 +6,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 - `review`: a `--since <sha>` option reports only on the lines changed since that commit. The checks still read the whole diff. The report has a `Since:` line.
 - `ready-for-review`: after a review of an older commit, the first round reviews only what changed since, and keeps that review's suggestions. Every later round reviews only the fixes of the round before. No round after the first runs the full review.
+- `ready-for-review`: with `--afk`, it fixes merge conflicts with a merge of the base branch instead of a rebase, and no longer force-pushes. When the branch is rewritten during the review loop, the loop stops.
 - `ready-for-review`: with `--afk`, the new suggestions of later rounds are open suggestions, as without `--afk`. It no longer fixes them.
 - `ready-for-review`: always moves a clean PR's issue to `READY_FOR_REVIEW`. The `Merge without review.` line in the pull request doc no longer does anything.
 - `ready-for-review`: moves the issue to `READY_FOR_REVIEW`, or to `READY_TO_MERGE` in a repo that merges without review. These were `REVIEW` and `APPROVED`. Your tracker docs need the new names.
