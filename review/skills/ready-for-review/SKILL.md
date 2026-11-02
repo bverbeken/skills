@@ -4,7 +4,7 @@ description: "Take one of your own PRs out of draft: run an own-mode review, put
 argument-hint: "[PR number | PR link | empty] [issue] [--afk]"
 ---
 
-Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: `review` without `--only` finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
+Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: the last round's review finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
 
 ## --afk
 
@@ -42,7 +42,13 @@ When the PR's branch is checked out locally, compare it with GitHub. Each differ
 
 Run the `review` skill (`../review/SKILL.md`) on the PR, with the issue from the arguments if there is one, without `--only`, and print its report. The mode is **own**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub. Start the agents as `review` says.
 
-In the first round, first look in this session for the last report of `review` without `--only`, with `mode: own`. A report of a check run alone, of `review --only`, or of an earlier reuse round does not count. When its `Head:` line is the head commit from step 1, without `+ uncommitted changes`, reuse it: keep its findings from the code checks, blocking and suggestions alike, and run `review` with `--only description` instead of the full review. That runs the cold read, the PR material check and the thread check of `THREADS.md`. This round's report is the kept findings plus that report. Example: `implement` reviewed `a1b2c3d` and `draft-pr` pushed it unchanged, so the first round reuses that review. Every later round runs the full review.
+In the first round, first look in this session for the last report of `review` without `--only`, with `mode: own`, also one with `--since`. A report of a check run alone, of `review --only`, or of an earlier reuse round does not count. Take its `Head:` line:
+
+- It is the head commit from step 1, without `+ uncommitted changes`: reuse the report. Keep its findings from the code checks, blocking and suggestions alike, and run `review` with `--only description` instead of the full review. That runs the cold read, the PR material check and the thread check of `THREADS.md`. This round's report is the kept findings plus that report. Example: `implement` reviewed `a1b2c3d` and `draft-pr` pushed it unchanged, so the first round reuses that review.
+- It is an ancestor of the head commit (`git merge-base --is-ancestor <sha> <head commit>`): run `review` with `--since <sha>`, so it reviews only the commits that came after. Keep the suggestions of the earlier report: this round's report is those suggestions plus the new report. Example: `review` gave NO GO on `a1b2c3d`, and `implement` fixed it in `e4f5a6b`, so the first round reviews only the fix.
+- Otherwise, or without such a report: run the full review.
+
+Every later round runs `review` with `--since` and the `Head:` line of the round before, so it reviews only the fixes of that round. After the first round, no round runs the full review.
 
 Each blocking finding in the report is a **finding problem**. So is every thread in the report's **Threads** section with a FIX, NOT RESOLVED or NEW PROBLEM verdict, and every human thread with a DISCUSS or CLARIFY verdict that you have not answered. Findings that were dropped in verification don't count.
 
