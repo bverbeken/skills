@@ -44,9 +44,9 @@ The worktree is done when `git -C <path> status` shows the branch, clean apart f
 
 ## Remove merged work
 
-Remove the repo's local branches whose PR is merged, with the worktrees that have them checked out. Check each local branch other than the default branch and `<branch>`:
+Remove the repo's local branches whose PR is merged, with the worktrees that have them checked out. List the merged PRs once: `gh pr list --state merged --limit 200 --json headRefName,headRefOid`. The list starts with the newest PR. Check each local branch other than the default branch and `<branch>`:
 
-1. Run `gh pr view <local branch> --json state,headRefOid`. Go to the next branch unless `state` is `MERGED`.
+1. Take the first PR in the list whose `headRefName` is the branch, and its `headRefOid`. Go to the next branch when there is none.
 2. Skip the branch when `git cat-file -e <headRefOid>^{commit}` fails: the commit isn't known locally.
 3. Skip the branch when `git merge-base --is-ancestor <local branch> <headRefOid>` fails: the branch has commits the PR doesn't have.
 4. Skip the branch when its worktree has uncommitted changes: `git -C <worktree> status --porcelain` shows anything.
