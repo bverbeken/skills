@@ -120,7 +120,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread other than an answered bot thread.
    - You tried and the item is still not fixed.
 
-   Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list, note it as skipped, and post a skip reply as "Skip replies" says.
+   Ask about one item per message, with the options you see. For merge conflicts, recommend a merge of `origin/<base>`: a rebase rewrites the branch, and the next round then stops the review loop. When the user says to skip an item, delete it from the list, note it as skipped, and post a skip reply as "Skip replies" says.
 2. Fix it. For a bug or a missing test: write the test first and see it fail, then fix the code. For failing CI: read the failing job's log (`gh run view <run-id> --log-failed`) and fix the cause. For pending CI: wait for it (`gh pr checks <num> --watch`). For a description finding: edit the description outside the markers, with no commit. For a screenshot finding: make and upload the images as `SCREENSHOTS.md` in this skill's folder says.
 3. Run the tests that cover the change. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
