@@ -4,7 +4,8 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-11-02
 
-- The Foreman statuses get the names of seats.io, and there are 9 now: `USEFUL`, `BLOCKED`, `TO_CLARIFY`, `NEXT_UP`, `BUSY`, `READY_FOR_REVIEW`, `READY_TO_MERGE`, `MERGED` and `DONE`. `BACKLOG` became `USEFUL`, `READY` became `NEXT_UP`, `REVIEW` became `READY_FOR_REVIEW`, `APPROVED` became `READY_TO_MERGE`, and the old `DONE` became `MERGED`. The new `DONE` comes after the docs, changelog and release. `foreman` refuses when your tracker docs don't map all 9. A blocker counts as closed once it is `MERGED` or `DONE`. `foreman status` lists `MERGED` issues last and marks them `▶`: do the docs, changelog and release, then move it to `DONE`. `/foreman <issue>` on a `MERGED` issue does nothing and says the same. `merge` keeps the old names until it goes away.
+- `foreman`, `prepare` and `ready-for-review`: the Foreman statuses get the names of seats.io, and there are 9 now: `USEFUL`, `BLOCKED`, `TO_CLARIFY`, `NEXT_UP`, `BUSY`, `READY_FOR_REVIEW`, `READY_TO_MERGE`, `MERGED` and `DONE`. `BACKLOG` became `USEFUL`, `READY` became `NEXT_UP`, `REVIEW` became `READY_FOR_REVIEW`, `APPROVED` became `READY_TO_MERGE`, and the old `DONE` became `MERGED`. The new `DONE` comes after the docs, changelog and release. `foreman` refuses when your tracker docs don't map all 9. A blocker counts as closed once it is `MERGED` or `DONE`. `foreman status` lists `MERGED` issues last and marks them `▶`: do the docs, changelog and release, then move it to `DONE`. `/foreman <issue>` on a `MERGED` issue does nothing and says the same. `merge` keeps the old names until it goes away.
+- `foreman`: a `BUSY` issue assigned to a teammate has no step. `foreman status` shows that it waits on the teammate.
 
 ## 2026-10-31
 
