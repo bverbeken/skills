@@ -42,7 +42,7 @@ An issue the issue tracker docs mark as by hand has no step, in any status, also
 | `READY_TO_MERGE` | When the **user merges** it: no step. Say "merge it yourself with `/merge <issue>` or on GitHub". Otherwise: call "merge" with the issue. |
 | `USEFUL` | No step: the issue is not planned yet. |
 | `BLOCKED` | No step: name the issues in its blocked list that are not `MERGED` or `DONE`. |
-| `BUSY` | When the issue is **fresh**: build, below. When a PR is linked to it in the tracker, without `--afk`: ask "PR #n is linked. A build may still be running on it, on this machine or the Mac mini. Continue?", and go on only after a yes. When the PR is still in draft, **open the PR's worktree**, below, and **ready the PR** from it. When the PR is open and out of draft, move the issue to `READY_FOR_REVIEW`. When the PR is closed or merged, **stop** with its state. With `--afk`, or without a linked PR: no step, a build may still be running, or it broke off. To build it again, the user moves it back to `NEXT_UP`. |
+| `BUSY` | When the issue tracker docs say issues have an assignee, and the issue is assigned to someone other than the user: no step, a teammate builds it. When the issue is **fresh**: build, below. When a PR is linked to it in the tracker, without `--afk`: ask "PR #n is linked. A build may still be running on it, on this machine or the Mac mini. Continue?", and go on only after a yes. When the PR is still in draft, **open the PR's worktree**, below, and **ready the PR** from it. When the PR is open and out of draft, move the issue to `READY_FOR_REVIEW`. When the PR is closed or merged, **stop** with its state. With `--afk`, or without a linked PR: no step, a build may still be running, or it broke off. To build it again, the user moves it back to `NEXT_UP`. |
 | `MERGED` | No step. Say "do the docs, changelog and release, then move it to `DONE`". |
 | `DONE` | No step: the issue is done. |
 
@@ -94,6 +94,7 @@ Give each issue one line: its id, its title, its PR link when it has one, and wh
 | any, by hand (step 3) | the user | by hand: run it yourself |
 | `TO_CLARIFY` | the user | answer the open decisions, or the open question when the issue has one |
 | `NEXT_UP` | `foreman` | run `/foreman <issue>` |
+| `BUSY`, assigned to a teammate (step 3) | the teammate | nothing: a teammate builds it |
 | `BUSY`, fresh (step 3) | `foreman` | run `/foreman <issue>` |
 | `BUSY`, not fresh, with a PR link | the user | if no build is running on PR #<n>, run `/foreman <issue>` |
 | `BUSY`, not fresh, without a PR link | `foreman` | what step 3 says for `BUSY` |
