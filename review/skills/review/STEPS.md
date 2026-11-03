@@ -121,6 +121,8 @@ Give each check agent:
 - `<contextFile>`.
 - This brief: "Read the check file and run its check on the code in `<reviewDir>`. Steps 1 to 3 are done: everything they produce is in `<contextFile>`. Return what the check file asks for: your findings in the form of step 4 of `STEPS.md`, or `none`. Do not verify, do not write a report."
 
+With `--since`, add to each brief: "Read the full diff for context, but report only the findings that count with `--since`, as step 2 of `STEPS.md` says. The changed lines are in `<contextFile>`."
+
 ### Item agents
 
 `review-dependencies` and `review-consumers` work in two parts. First a find step lists the items: the new dependencies, or the consumers to check. Then each item gets its own **item agent**, with the skill's item file as its check file: `DEPENDENCY.md` or `CONSUMER.md`, next to its `SKILL.md`.
@@ -129,7 +131,7 @@ Start one item agent per item, also for a single item. Start at most 10 per skil
 
 First write the list of item agents, with the count. Example: "3 item agents: 3 dependencies". Then send exactly that many `Agent` (general-purpose) calls in one message. Start them only as `Agent` calls, all in that one message, in the background when `review` runs them, so the other checks and the other skill's item agents keep running. Give each what "Check agents" says, with the item file as the check file, and add its items, copied from the find step's list. Replace the last two sentences of the brief with: "Return everything the check file asks for: its lines for each item, also an item without findings, and your findings in the form of step 4 of `STEPS.md`. Do not verify, do not write a report."
 
-A find agent gets what "Check agents" says too, but its brief ends with: "Return the list the check file asks for, or `none`. Do not verify, do not write a report."
+A find agent gets what "Check agents" says too, but its brief ends with: "Return the list the check file asks for, or `none`. Do not verify, do not write a report." With `--since`, add to it: "List only the items that the changed lines in `<contextFile>` add or touch."
 
 ### Bug angles
 
