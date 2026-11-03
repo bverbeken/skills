@@ -42,9 +42,9 @@ The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>`
 
 If the diff is empty, stop and say so.
 
-With `--since <sha>`, also note the **new lines**. These are the lines that `git -C <reviewDir> diff <sha>` adds or removes. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. Leave out the lines that a merge of `<base>` brought in or took out without a change: the PR did not write those. A conflict that the merge resolved by hand is a new line. The **changed files** are the files that hold a new line. Also note the commits `git -C <reviewDir> log --oneline --first-parent <sha>..HEAD`, so the commits of `<base>` stay out.
+With `--since <sha>`, also note the **changed lines**. These are the lines that `git -C <reviewDir> diff <sha>` adds or removes. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. Leave out the lines that a merge of `<base>` brought in or took out without a change: the PR did not write those. A conflict that the merge resolved by hand is a changed line. The **changed files** are the files that hold a changed line. Also note the commits `git -C <reviewDir> log --oneline --first-parent <sha>..HEAD`, so the commits of `<base>` stay out.
 
-A finding **counts** with `--since` when its location is a new line, or when a new line causes it, for example a missing test for a new line.
+A finding **counts** with `--since` when its location is a changed line, or when a changed line causes it, for example a missing test for a changed line.
 
 Print one line so the user can check the target: `Reviewing <PR #<num> | branch <name>> in <owner/repo> (dir: <reviewDir>)`. Continue without waiting.
 
@@ -58,7 +58,7 @@ There is always some spec: everything that says what the change should do. Colle
 
 Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and an `## Open suggestions` section in the PR description or the issue. They list review findings, not requirements.
 
-Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the new lines, the changed files and their commits. List each source by name or link at the top.
+Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the changed lines, the changed files and their commits. List each source by name or link at the top.
 
 If there is no issue, the spec is the PR description and the commit messages. Say so at the top of `<contextFile>`.
 
