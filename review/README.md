@@ -20,7 +20,7 @@ A full code review in one command, at any stage of a PR. Say `review 142` or pas
 
 Each check can also run on its own, for example `/review-tests 142`.
 
-A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets only spec, bugs, style, comments and description. A change to a skill's files gets all checks. `--only bugs,tests` runs the named checks on any diff.
+A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets only spec, bugs, style, comments and description. A change to a skill's files gets all checks. `--only bugs,tests` runs the named checks on any diff. `--since a1b2c3d` reports only on the lines changed since that commit, for example the fixes since an earlier review. The checks still read the whole diff.
 
 **Comments already on the PR.** Run `review` again whenever comments come in. It sorts the existing threads and handles each group:
 
@@ -43,9 +43,9 @@ It posts the build's comments under your login, each starting with `🤖 `, with
 
 With `--afk` it asks nothing: it takes its own recommendation, also answers your own threads (with the commit that fixed it, or with the reason it changes nothing), and leaves the PR in draft when something only you can decide is left.
 
-After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `READY_FOR_REVIEW`. It refuses PRs that are not yours.
+The first round reuses a review of the same commit from earlier in the session. After a review of an older commit, it reviews only what changed since. Every later round reviews only the fixes of the round before. After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `READY_FOR_REVIEW`. It refuses PRs that are not yours.
 
-Some suggestions are left open: nobody decided on them. With `--afk`, these are the suggestions it skipped. Without `--afk`, these are the new suggestions of rounds after the first. Where they go depends on the `Reviewer:` line:
+Some suggestions are left open: nobody decided on them. These are the new suggestions of rounds after the first, and with `--afk` also the suggestions it skipped. Where they go depends on the `Reviewer:` line:
 
 - `Reviewer: me`: in an `## Open suggestions` section at the end of the PR description.
 - `Reviewer: team`, without `--afk`: in the final output only, so the description stays clean for colleagues.
@@ -94,6 +94,7 @@ The retry can send the same webhook twice.
 /review feature/retries      # a branch
 /review                      # the current branch
 /review 142 --only bugs,tests
+/review 142 --since a1b2c3d  # only the lines changed since a1b2c3d
 ```
 
 Saying "review 142" or "is this PR ready to merge?" also works.

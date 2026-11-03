@@ -4,7 +4,7 @@ description: "Take one of your own PRs out of draft: run an own-mode review, put
 argument-hint: "[PR number | PR link | empty] [issue] [--afk]"
 ---
 
-Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: `review` without `--only` finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
+Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: the last round's review finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
 
 ## --afk
 
@@ -13,7 +13,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - The fix would change or bend a line in the issue's `## Decisions` section: skip the item. That line is the user's call. This rule wins over the others below.
 - The fix needs a choice: take your own recommendation. When the choice is really the user's, as the spec or the issue leaves it to them, skip the item.
 - The fix changes code outside the PR's files, or needs a new issue: fix a blocking item, skip a suggestion.
-- Merge conflicts: rebase onto `origin/<base>`, fix the conflicts, run the tests, and push with `git push --force-with-lease`. This is the only force-push. When a conflict needs a choice that is really the user's, skip it.
+- Merge conflicts: merge `origin/<base>` into the branch, as one merge commit, fix the conflicts, run the tests, and push. A merge keeps the head of the round before in the history, so the next round can review only what changed since. When a conflict needs a choice that is really the user's, skip it.
 - Unpushed commits: push them.
 - An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open.
 - An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
@@ -42,7 +42,15 @@ When the PR's branch is checked out locally, compare it with GitHub. Each differ
 
 Run the `review` skill (`../review/SKILL.md`) on the PR, with the issue from the arguments if there is one, without `--only`, and print its report. The mode is **own**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub. Start the agents as `review` says.
 
-In the first round, first look in this session for the last report of `review` without `--only`, with `mode: own`. A report of a check run alone, of `review --only`, or of an earlier reuse round does not count. When its `Head:` line is the head commit from step 1, without `+ uncommitted changes`, reuse it: keep its findings from the code checks, blocking and suggestions alike, and run `review` with `--only description` instead of the full review. That runs the cold read, the PR material check and the thread check of `THREADS.md`. This round's report is the kept findings plus that report. Example: `implement` reviewed `a1b2c3d` and `draft-pr` pushed it unchanged, so the first round reuses that review. Every later round runs the full review.
+In the first round, first look in this session for the last report of `review` on this PR or its branch, without `--only`, with `mode: own`. A report of a check run alone, of `review --only`, of `review --since`, or of an earlier reuse round does not count: it does not cover the whole PR. Nor does a report whose `Head:` line has `+ uncommitted changes`: it covers more than the commit. Take its `Head:` line:
+
+- It is the head commit from step 1: reuse the report. Keep its findings from the code checks, blocking and suggestions alike, and run `review` with `--only description` instead of the full review. That runs the cold read, the PR material check and the thread check of `THREADS.md`. This round's report is the kept findings plus that report. Example: `implement` reviewed `a1b2c3d` and `draft-pr` pushed it unchanged, so the first round reuses that review.
+- It is an ancestor of the head commit (`git merge-base --is-ancestor <sha> <head commit>`): run `review` with `--since <sha>`, so it reviews only the commits that came after. Keep the suggestions of the earlier report that this session has not fixed yet. One that an earlier run skipped stays an open suggestion. **Verify again** its blocking findings. This round's report is the kept suggestions, the blocking findings that are still in the code, and the new report. Example: `review` gave NO GO on `a1b2c3d`, and `implement` fixed it in `e4f5a6b`, so the first round reviews only the fix, and checks that the finding is gone.
+- Otherwise, or without such a report: run the full review.
+
+To **verify again** a list of findings, start one `Agent` (general-purpose) per finding, all in one message, once `review` has written `<contextFile>`. A `--since` review only reports on the changed lines, so a fix that missed its finding would go unseen. Verify again every finding of the code checks, and the threads that a commit fixed. Step 3 checks state items, such as CI, again by itself, and `review-description` reads the PR body again in every round. Give each agent `<contextFile>`, its finding and this brief: "Read the code at the head commit. Is this finding still in the code? Answer `NOT FIXED` when you can quote the code that still has the problem. For a finding about something missing, such as a test or a spec requirement, answer `FIXED` only when you can quote the code that now adds it, and `NOT FIXED` otherwise. In all other cases answer `FIXED`. Add one sentence why." A NOT FIXED finding stays blocking. A FIXED one is gone.
+
+Every later round runs `review` with `--since` and the `Head:` line of the round before, so it reviews only the fixes of that round, and **verifies again** the blocking items that the round before fixed with a commit. An item verified again as NOT FIXED is a blocking finding that came back, as step 3 says. After the first round, no round runs the full review. Read the PR's head commit again first (`gh pr view <num> -R <owner>/<repo> --json headRefOid -q .headRefOid`), and fetch it (`git fetch origin pull/<num>/head`): the one from step 1 is old by now, and someone may have pushed it from elsewhere, for example with GitHub's "Update branch". When `git merge-base --is-ancestor` exits with 1, that `Head:` is not an ancestor of the new head commit, and someone rewrote the branch during the loop: stop the review loop, as step 3 says, with `[state] the branch was rewritten during the review loop` as a blocking item. When it exits with another error, git doesn't know one of the two commits: fetch again and run the check once more.
 
 Each blocking finding in the report is a **finding problem**. So is every thread in the report's **Threads** section with a FIX, NOT RESOLVED or NEW PROBLEM verdict, and every human thread with a DISCUSS or CLARIFY verdict that you have not answered. Findings that were dropped in verification don't count.
 
@@ -112,7 +120,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread other than an answered bot thread.
    - You tried and the item is still not fixed.
 
-   Ask about one item per message, with the options you see. When the user says to skip an item, delete it from the list, note it as skipped, and post a skip reply as "Skip replies" says.
+   Ask about one item per message, with the options you see. For merge conflicts, recommend a merge of `origin/<base>`: a rebase rewrites the branch, and the next round then stops the review loop. When the user says to skip an item, delete it from the list, note it as skipped, and post a skip reply as "Skip replies" says.
 2. Fix it. For a bug or a missing test: write the test first and see it fail, then fix the code. For failing CI: read the failing job's log (`gh run view <run-id> --log-failed`) and fix the cause. For pending CI: wait for it (`gh pr checks <num> --watch`). For a description finding: edit the description outside the markers, with no commit. For a screenshot finding: make and upload the images as `SCREENSHOTS.md` in this skill's folder says.
 3. Run the tests that cover the change. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
@@ -121,7 +129,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
 The loop is done when every item on the list is ticked.
 
-Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list: new suggestions are open suggestions. With `--afk`, add the new suggestions of a later round to the list and fix them too.
+Then wait for CI on the new head (`gh pr checks <num> --watch`), and go back to step 2: the code changed, so review it again. In this round and every later one, add only blocking items to the list: new suggestions are open suggestions, with and without `--afk`.
 
 ## 7. Decide
 
@@ -160,8 +168,10 @@ Tracker: <issue> moved to `READY_FOR_REVIEW`, or: the tracker has no `READY_FOR_
 
 Open suggestions are the suggestions nobody decided on:
 
-- With `--afk`: every suggestion you skipped, and every suggestion of the last round that you did not fix.
-- Without `--afk`: the new suggestions of rounds after the first, and a screenshot suggestion that step 6 skips without asking.
+- The new suggestions of rounds after the first.
+- A screenshot suggestion that step 6 skips without asking.
+- A suggestion that the first round keeps from an earlier report, when an earlier run skipped it.
+- With `--afk`: every suggestion you skipped.
 
 A suggestion the user said to skip is not open.
 

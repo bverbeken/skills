@@ -4,7 +4,7 @@ Shared by `review` and its check skills. Each skill says which steps it runs.
 
 ## 1. Resolve the target
 
-The argument is a PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or empty. Strip `--only …` first: only `review` uses it.
+The argument is a PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or empty. Strip `--only …` and `--since …` first: only `review` uses them.
 
 Resolve it to: the repo, the code to review (a ref), the base to diff against, the PR (if any) and the issue (if any). The issue tracker is the one the project's `CLAUDE.md` / `AGENTS.md` names. Use the tool or workflow it describes. If the project names none, look for issue IDs anyway and use whatever tracker tool matches them.
 
@@ -42,6 +42,10 @@ The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>`
 
 If the diff is empty, stop and say so.
 
+With `--since <sha>`, also note the **changed lines**. These are the lines that `git -C <reviewDir> diff <sha>` adds or removes. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. Leave out the lines that a merge of `<base>` brought in or took out without a change: the PR did not write those. A conflict that the merge resolved by hand is a changed line. The **changed files** are the files that hold a changed line. Also note the commits `git -C <reviewDir> log --oneline --first-parent <sha>..HEAD`, so the commits of `<base>` stay out.
+
+A finding **counts** with `--since` when its location is a changed line, or when a changed line causes it, for example a missing test for a changed line.
+
 Print one line so the user can check the target: `Reviewing <PR #<num> | branch <name>> in <owner/repo> (dir: <reviewDir>)`. Continue without waiting.
 
 ## 3. Gather the spec
@@ -54,7 +58,7 @@ There is always some spec: everything that says what the change should do. Colle
 
 Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and an `## Open suggestions` section in the PR description or the issue. They list review findings, not requirements.
 
-Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. List each source by name or link at the top.
+Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the changed lines, the changed files and their commits. List each source by name or link at the top.
 
 If there is no issue, the spec is the PR description and the commit messages. Say so at the top of `<contextFile>`.
 
@@ -117,6 +121,8 @@ Give each check agent:
 - `<contextFile>`.
 - This brief: "Read the check file and run its check on the code in `<reviewDir>`. Steps 1 to 3 are done: everything they produce is in `<contextFile>`. Return what the check file asks for: your findings in the form of step 4 of `STEPS.md`, or `none`. Do not verify, do not write a report."
 
+With `--since`, add to each brief: "Read the full diff for context, but report only the findings that count with `--since`, as step 2 of `STEPS.md` says. The changed lines are in `<contextFile>`."
+
 ### Item agents
 
 `review-dependencies` and `review-consumers` work in two parts. First a find step lists the items: the new dependencies, or the consumers to check. Then each item gets its own **item agent**, with the skill's item file as its check file: `DEPENDENCY.md` or `CONSUMER.md`, next to its `SKILL.md`.
@@ -125,7 +131,7 @@ Start one item agent per item, also for a single item. Start at most 10 per skil
 
 First write the list of item agents, with the count. Example: "3 item agents: 3 dependencies". Then send exactly that many `Agent` (general-purpose) calls in one message. Start them only as `Agent` calls, all in that one message, in the background when `review` runs them, so the other checks and the other skill's item agents keep running. Give each what "Check agents" says, with the item file as the check file, and add its items, copied from the find step's list. Replace the last two sentences of the brief with: "Return everything the check file asks for: its lines for each item, also an item without findings, and your findings in the form of step 4 of `STEPS.md`. Do not verify, do not write a report."
 
-A find agent gets what "Check agents" says too, but its brief ends with: "Return the list the check file asks for, or `none`. Do not verify, do not write a report."
+A find agent gets what "Check agents" says too, but its brief ends with: "Return the list the check file asks for, or `none`. Do not verify, do not write a report." With `--since`, add to it: "List only the items that the changed lines in `<contextFile>` add or touch."
 
 ### Bug angles
 
@@ -149,6 +155,7 @@ Print the report in the terminal. Post nothing: no `gh pr review`, `gh pr commen
 Spec: <the sources, e.g. ISSUE-12 + 1 support conversation, or: PR description and commits only>
 CI: <status from gh pr checks, or: no PR yet>
 Head: <sha of `git -C <reviewDir> rev-parse HEAD`, or: <sha> + uncommitted changes>
+Since: <sha, only with --since>
 Threads: <the line from THREADS.md step 2, or: none>
 
 **Blocking** (verified)
@@ -190,6 +197,7 @@ _Why:_ <one sentence, from the code>
 ```
 
 - **Head** says `+ uncommitted changes` when the review ran in place and `git -C <reviewDir> status --porcelain` showed anything, so the diff held more than the commit. `ready-for-review` reads this line to reuse a review of the same commit.
+- **Since** is printed only with `--since`.
 - **Threads** lists every thread in the triage and recheck groups of `THREADS.md`, with its verdict. Add `(blocking)` when its finding is blocking.
 - **Drafts** are only written by `review`, never by a check run on its own. Number them in the order they appear in the report, and put the `[D<n>]` tag on the line they belong to.
   - A reply for each thread with a draft reply from `THREADS.md` step 3. Quote the comment you answer verbatim: the newest one when the thread has answers, after one line that sums up the earlier exchange. Trim a quote longer than 12 lines and end it with `> …(trimmed)`.
