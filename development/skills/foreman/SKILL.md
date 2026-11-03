@@ -16,18 +16,20 @@ To **stop** with a problem: without `--afk`, show the user the problem and end. 
 
 Read the issue tracker docs. When they don't map all 9 Foreman statuses (`USEFUL`, `BLOCKED`, `TO_CLARIFY`, `NEXT_UP`, `BUSY`, `READY_FOR_REVIEW`, `READY_TO_MERGE`, `MERGED`, `DONE`), refuse: name the statuses that are missing, change nothing, and end.
 
+The issue tracker docs also say which issues are **Foreman's**, for example by a field, a label or an assignee. When they don't say, every issue is Foreman's.
+
 Show the [status](#status) instead of steps 2 to 4 when the first word of `$ARGUMENTS` is `status`, or when `$ARGUMENTS` names no issue and has no `--afk`. `--afk` changes nothing for `status`.
 
 ## 2. Pick the issue
 
-With an issue reference, fetch the issue and state its title. If the reference is ambiguous, ask, or with `--afk`, end.
+With an issue reference, fetch the issue and state its title. If the reference is ambiguous, ask, or with `--afk`, end. Build the issue also when it is not Foreman's: the user named it.
 
 Without one, with `--afk`, pick the issue closest to done:
 
 1. `READY_FOR_REVIEW` with a new thread (see step 3)
 2. `NEXT_UP`
 
-Skip the issues that are not **Foreman's**. The issue tracker docs say which issues are Foreman's, for example by a field, a label or an assignee. When they don't say, every issue is Foreman's. An issue the user names is built also when it is not Foreman's. Within one status, order the issues as the board order in the tracker docs, or else oldest first, and take the first one. Say which issue you picked and why. When no issue has a step, say so, name what waits on the user, and end.
+Skip the issues that are not Foreman's (step 1). Within one status, order the issues as the board order in the tracker docs, or else oldest first, and take the first one. Say which issue you picked and why. When no issue has a step, say so, name what waits on the user, and end.
 
 ## 3. Run the step
 
@@ -82,11 +84,11 @@ Every end of this skill, also a refusal or a stop, ends with the lines below. On
 
 List every issue in `TO_CLARIFY`, `NEXT_UP`, `BUSY`, `READY_FOR_REVIEW`, `READY_TO_MERGE` and `MERGED`, grouped by status in that order. Leave out the other statuses. Within one status, use the order of step 2.
 
-Give each issue one line: its id, its title, its PR link when it has one, and what moves it on. An issue that is not Foreman's (step 2) takes the first row of the table below in place of a row that waits on `foreman`, in the group of its own status. Mark the issues that wait on the user with `▶`.
+Give each issue one line: its id, its title, its PR link when it has one, and what moves it on. An issue that is not Foreman's (step 1) takes the first row of the table below in place of a row that waits on `foreman`, in the group of its own status. Mark the issues that wait on the user with `▶`.
 
 | Status | Waits on | What moves it on |
 |---|---|---|
-| not Foreman's (step 2), where the row would wait on `foreman` | the user | run it yourself |
+| not Foreman's (step 1), where the row would wait on `foreman` | the user | run it yourself |
 | `TO_CLARIFY` | the user | answer the open decisions, or the open question when the issue has one |
 | `NEXT_UP` | `foreman` | run `/foreman <issue>` |
 | `BUSY`, assigned to a teammate (step 3) | the teammate | nothing: a teammate builds it |
