@@ -170,6 +170,7 @@ Open suggestions are the suggestions nobody decided on:
 
 - The new suggestions of rounds after the first.
 - A screenshot suggestion that step 6 skips without asking.
+- A suggestion that the first round keeps from an earlier report, when an earlier run skipped it.
 - With `--afk`: every suggestion you skipped.
 
 A suggestion the user said to skip is not open.
