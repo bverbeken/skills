@@ -72,7 +72,7 @@ Your tracker docs map each one to a status of your own, in any format. For examp
 
 A mapping can carry a condition, for example `NEXT_UP: Todo, assigned to me`. A move to that status also sets the condition. An issue is only in that status when the condition holds. When two Foreman statuses map to the same tracker status, only the condition tells them apart, so a move between them changes the condition: with `TO_CLARIFY: Todo, not assigned to me` and `NEXT_UP: Todo, assigned to me`, a move to `TO_CLARIFY` removes the assignee.
 
-A status counts as mapped only when your docs map it, also when your tracker has a status with the same name. A tracker can leave a status out when you call the skills by hand. `foreman` needs all 9, and refuses when one is missing. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing.
+A status counts as mapped only when your docs map it, also when your tracker has a status with the same name. A tracker can leave a status out when you call the skills yourself. `foreman` needs all 9, and refuses when one is missing. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing.
 
 ## Credits
 
