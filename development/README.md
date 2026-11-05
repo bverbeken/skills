@@ -1,12 +1,11 @@
 # development
 
-Skills for building software with an agent, from an issue to a PR that is ready for review. Say `/foreman ACME-123` and Claude does the next step for that issue, based on its status. An issue to clarify gets your open decisions asked. A ready issue gets built test-first in its own git worktree, reviewed, and ends as a PR that is ready for review. You merge the PR on GitHub. Say `/foreman ACME-123 --afk` and Claude asks nothing: it keeps going until the issue waits on you.
+Skills for building software with an agent, from an issue to a draft PR. `prepare` asks you every open decision of an issue and writes your answers in it. `implement` builds the issue test-first in its own git worktree. `draft-pr` pushes the branch and opens a draft PR. Call them one by one, or from your own skill.
 
 ## The skills
 
 | Skill | What it does |
 |---|---|
-| `foreman` | Does the next step for an issue, based on its status: `prepare` for an issue to clarify, a build up to a PR that is ready for review, or `ready-for-review` for new review threads. It never merges: you merge the PR on GitHub. With `--afk`, it asks nothing and keeps going until the issue waits on you. `/foreman` without an issue, or `/foreman status`, lists the issues in the pipeline and marks the ones that wait on you. |
 | `implement` | Builds an issue or a spec with `tdd` in a separate worktree, one commit per step, and fixes the review findings it gets. Before it creates a worktree, it removes the local branches whose PR is merged, with their worktrees. It asks a new open decision through `prepare`. It stops when a test fails or hangs for a reason outside the change, such as a database version, and never works around it. |
 | `prepare` | Lists the decisions an issue leaves open, asks you about them with `grilling`, and writes your answers in the issue under `## Decisions`. |
 | `grilling` | Asks you one question at a time, with a recommended answer, until every decision is settled. |
@@ -14,7 +13,7 @@ Skills for building software with an agent, from an issue to a PR that is ready 
 | `codebase-design` | Shared words for designing deep modules: module, interface, depth, seam, adapter. |
 | `draft-pr` | Pushes the branch and opens a draft PR, with a description written from the commits and the diff. |
 
-`foreman` calls `review` and `ready-for-review`, from the [review](../review/) skills in this repo. Install those too.
+`draft-pr` uses `review-description`, from the [review](../review/) skills in this repo. Install those too.
 
 ## Install
 
@@ -32,7 +31,7 @@ The rules for pull requests are in `docs/agents/pull-requests.md`.
 The review settings are in `docs/agents/review-settings.md`.
 ```
 
-- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [Foreman status](#foreman-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, which issues are Foreman's, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). When the docs don't say which issues are Foreman's, every issue is. `foreman --afk` without an issue skips an issue that isn't Foreman's, and `foreman status` shows it as "run it yourself". `foreman`, `implement`, `prepare`, `review` and `ready-for-review` read it.
+- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [Foreman status](#foreman-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, which issues are Foreman's, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). When the docs don't say which issues are Foreman's, every issue is. `implement`, `prepare`, `review` and `ready-for-review` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
@@ -58,7 +57,7 @@ The skills name statuses with fixed UPPERCASE names:
 | `BLOCKED` | planned, but a blocker is not `MERGED` or `DONE` yet |
 | `TO_CLARIFY` | to prepare: open decisions, or an open question from a stopped build |
 | `NEXT_UP` | prepared, you give the go: it can be built |
-| `BUSY` | being built: by `foreman`, by you or by a teammate |
+| `BUSY` | being built: by an agent, by you or by a teammate |
 | `READY_FOR_REVIEW` | the PR is ready for your review |
 | `READY_TO_MERGE` | you approved the PR: you merge it on GitHub |
 | `MERGED` | merged: the docs, changelog and release are left |
@@ -72,15 +71,15 @@ Your tracker docs map each one to a status of your own, in any format. For examp
 
 A mapping can carry a condition, for example `NEXT_UP: Todo, assigned to me`. A move to that status also sets the condition. An issue is only in that status when the condition holds. When two Foreman statuses map to the same tracker status, only the condition tells them apart, so a move between them changes the condition: with `TO_CLARIFY: Todo, not assigned to me` and `NEXT_UP: Todo, assigned to me`, a move to `TO_CLARIFY` removes the assignee.
 
-A status counts as mapped only when your docs map it, also when your tracker has a status with the same name. A tracker can leave a status out when you call the skills yourself. `foreman` needs all 9, and refuses when one is missing. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing.
+A status counts as mapped only when your docs map it, also when your tracker has a status with the same name. A tracker can leave a status out when you call the skills yourself. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing.
 
 ## Credits
 
-`implement`, `tdd`, `grilling` and `codebase-design` come from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT, © Matt Pocock), commit `49dd158` (2026-10-09). Each has Matt's license in its folder. `foreman`, `prepare` and `draft-pr` are mine.
+`implement`, `tdd`, `grilling` and `codebase-design` come from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT, © Matt Pocock), commit `49dd158` (2026-10-09). Each has Matt's license in its folder. `prepare` and `draft-pr` are mine.
 
 | Skill | Upstream path | Changes |
 |---|---|---|
 | codebase-design | skills/engineering/codebase-design | none |
 | grilling | skills/productivity/grilling | asks one question at a time (most decisions depending on it first), not a full round; skips its closing question when the calling skill confirms itself |
-| implement | skills/engineering/implement | only builds: `foreman` runs the review and the PR steps; fixes the review findings it gets; removes the local branches whose PR is merged, with their worktrees, before it creates a worktree; commits as it goes, one small commit per step, instead of once at the end; asks a new open decision through `prepare`; stops on a setup failure, or an existing test that also hits its time limit on the base, and never works around it; `--afk` builds without asking |
+| implement | skills/engineering/implement | only builds: the review and the PR are separate steps; fixes the review findings it gets; removes the local branches whose PR is merged, with their worktrees, before it creates a worktree; commits as it goes, one small commit per step, instead of once at the end; asks a new open decision through `prepare`; stops on a setup failure, or an existing test that also hits its time limit on the base, and never works around it; `--afk` builds without asking |
 | tdd | skills/engineering/tdd | refers to `review` instead of `code-review`; adds the rule "commit on green" (one commit per cycle); takes confirmed seams from the issue's `## Decisions` and asks about others through `prepare`, or picks them itself with `--afk`; runs every test run with a time limit |
