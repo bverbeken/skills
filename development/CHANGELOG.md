@@ -2,6 +2,10 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-05
+
+- `foreman` is gone from this repo. It moved to its own repo, which is private. `prepare`, `implement`, `tdd`, `grilling`, `codebase-design` and `draft-pr` still work on their own, or from your own skill that calls them.
+
 ## 2026-11-03
 
 - Your tracker docs say which issues are Foreman's, for example by a field, a label or an assignee. When they don't say, every issue is Foreman's. This replaces the mark for an issue you run yourself. `foreman --afk` without an issue skips an issue that isn't Foreman's. `/foreman <issue>` builds it, because you named it. `foreman status` marks it `▶` with "run it yourself" where it would wait on `foreman`. `prepare` moves it to `NEXT_UP` as usual.

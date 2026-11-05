@@ -4,7 +4,7 @@ description: "Implement a piece of work based on a spec or set of issues. Use wh
 argument-hint: "<issue or spec> [review findings] [--afk]"
 ---
 
-Implement the work described by the user in the spec or issues. Write the code and nothing else: `foreman` holds the steps before and after this one.
+Implement the work described by the user in the spec or issues. Write the code and nothing else: the review and the PR are separate steps.
 
 If the user passes an issue reference, fetch it from the issue tracker and state its title before starting. If the reference is ambiguous, ask.
 
