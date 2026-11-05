@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-11-05
 
+- `prepare` summarizes the issue, what it delivers and what blocks it, before its first question.
 - `foreman` is gone from this repo. It moved to its own repo, which is private. `prepare`, `implement`, `tdd`, `grilling`, `codebase-design` and `draft-pr` still work on their own, or from your own skill that calls them.
 
 ## 2026-11-03
