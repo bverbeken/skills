@@ -36,7 +36,7 @@ Review the current branch in place, when the target is the branch that is checke
 2. Fetch the code: `git -C <repoRoot> fetch origin pull/<num>/head` for a PR (works for forks too), `git -C <repoRoot> fetch origin <branch>` for a branch.
 3. `git -C <repoRoot> worktree add --detach <reviewDir> FETCH_HEAD`.
 
-**Remove the worktree** when the review ends: after the report of step 6, and when the review stops early after step 3 above, for example on an empty diff. Run `git -C <repoRoot> worktree remove --force <reviewDir>`. A review in place removes nothing. A follow-up question about the review makes the worktree again, with steps 1 to 3 above.
+**Remove the worktree** when the review ends: after the report of step 6, and when the review stops early once the worktree exists, for example on an empty diff. Run `git -C <repoRoot> worktree remove --force <reviewDir>`. A review in place removes nothing. A follow-up question about the review makes the worktree again, with the checkout steps above.
 
 The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>` is `git -C <reviewDir> merge-base origin/<base> HEAD`. In place, this includes uncommitted changes. Also note `git -C <reviewDir> log --oneline <merge-base>..HEAD`.
 
