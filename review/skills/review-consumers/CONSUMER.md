@@ -21,4 +21,4 @@ Then remove the worktree: `git -C <consumerRoot> worktree remove --force <consum
 
 ## 3. Return
 
-Report each break as a **BREAKS** finding with the consumer's path and line, in the form of step 4 of `STEPS.md`, with `check: consumers`. Return `none` for a consumer without a break.
+Report each break as a **BREAKS** finding with the consumer's path and line, in the form of step 4 of `STEPS.md`, with `check: consumers`. Put `<consumerRoot>` and `<defaultBranch>` in its evidence, so the verification agent of step 5 can read the consumer's code after its worktree is gone. Return `none` for a consumer without a break.
