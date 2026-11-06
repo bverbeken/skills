@@ -36,11 +36,11 @@ Review the current branch in place, when the target is the branch that is checke
 2. Fetch the code: `git -C <repoRoot> fetch origin pull/<num>/head` for a PR (works for forks too), `git -C <repoRoot> fetch origin <branch>` for a branch.
 3. `git -C <repoRoot> worktree add --detach <reviewDir> FETCH_HEAD`.
 
-Leave the worktree in place afterwards, for follow-up questions.
+**Remove the worktree** when the review ends: after the report of step 6, and when the review stops early once the worktree exists, for example on an empty diff. Run `git -C <repoRoot> worktree remove --force <reviewDir>`. A review in place removes nothing. A follow-up question about the review makes the worktree again, with the checkout steps above.
 
 The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>` is `git -C <reviewDir> merge-base origin/<base> HEAD`. In place, this includes uncommitted changes. Also note `git -C <reviewDir> log --oneline <merge-base>..HEAD`.
 
-If the diff is empty, stop and say so.
+If the diff is empty, remove the worktree as step 2 says, stop and say so.
 
 With `--since <sha>`, also note the **changed lines**. These are the lines that `git -C <reviewDir> diff <sha>` adds or removes. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. Leave out the lines that a merge of `<base>` brought in or took out without a change: the PR did not write those. A conflict that the merge resolved by hand is a changed line. The **changed files** are the files that hold a changed line. Also note the commits `git -C <reviewDir> log --oneline --first-parent <sha>..HEAD`, so the commits of `<base>` stay out.
 
@@ -139,7 +139,7 @@ When the bug angles have returned, merge the findings that are about the same pr
 
 ## 5. Verify blocking findings
 
-For each blocking finding without `verified: yes`, start one `Agent`, in the foreground. First write the list of verification agents, with the count. Example: "4 verification agents: 3 check findings, 1 thread finding". Then send exactly that many `Agent` calls in one message. Start them only as `Agent` calls, all in that one message. Give each agent `<contextFile>` and its own finding, and this brief: "Try to prove this finding wrong. Read the code in `<reviewDir>`, the callers and the tests. Answer `REJECTED` only when the failure it describes cannot happen, or, for a finding that is not about a failure (a broken repo rule, a missing test), when what it describes is not true of the code. How likely or how bad the failure is was already decided by the check: leave that alone. Otherwise answer `CONFIRMED`, also when the code doesn't show that the failure cannot happen, for example because it depends on a caller or input you can't see. A `REJECTED` answer quotes the code that prevents the failure, or, for a finding that is not about a failure, the code that shows it is not true, for example the test that exists. Add one sentence why."
+For each blocking finding without `verified: yes`, start one `Agent`, in the foreground. First write the list of verification agents, with the count. Example: "4 verification agents: 3 check findings, 1 thread finding". Then send exactly that many `Agent` calls in one message. Start them only as `Agent` calls, all in that one message. Give each agent `<contextFile>` and its own finding, and this brief: "Try to prove this finding wrong. Read the code in `<reviewDir>`, the callers and the tests. For a finding in a consumer, read the consumer's code with `git -C <consumerRoot> show origin/<defaultBranch>:<path>`. Answer `REJECTED` only when the failure it describes cannot happen, or, for a finding that is not about a failure (a broken repo rule, a missing test), when what it describes is not true of the code. How likely or how bad the failure is was already decided by the check: leave that alone. Otherwise answer `CONFIRMED`, also when the code doesn't show that the failure cannot happen, for example because it depends on a caller or input you can't see. A `REJECTED` answer quotes the code that prevents the failure, or, for a finding that is not about a failure, the code that shows it is not true, for example the test that exists. Add one sentence why."
 
 A confirmed finding stays blocking. A rejected one moves to "Dropped in verification", with the reason.
 
@@ -213,3 +213,5 @@ _Why:_ <one sentence, from the code>
 - A check run on its own lists only its own count on the "Checks" line, and ends with `# GO (<check> only)` or `# NO GO (<check> only)`. A bug angle run on its own uses its own name instead of `bugs`, for example `bugs-lines 1` and `# GO (bugs-lines only)`.
 
 Be direct. When you are not sure, say "I'm not sure" and why.
+
+After the report, remove the worktree, as step 2 says.
