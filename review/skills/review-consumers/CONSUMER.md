@@ -11,11 +11,13 @@ Check each consumer on its default branch, never on the branch the user has chec
 3. `<consumerDir>` is `<consumerRoot>/../.review-worktrees/<consumer>-<defaultBranch>`. If it exists, remove it: `git -C <consumerRoot> worktree remove --force <consumerDir>`.
 4. `git -C <consumerRoot> worktree add --detach <consumerDir> FETCH_HEAD`
 
-When a step fails, return `not checked: <consumer> (<reason>)` for that consumer.
+When a step fails, remove `<consumerDir>` if it exists, and return `not checked: <consumer> (<reason>)` for that consumer.
 
 ## 2. Search it
 
 Search `<consumerDir>` for code that uses what the change touches, and decide whether it breaks.
+
+Then remove the worktree: `git -C <consumerRoot> worktree remove --force <consumerDir>`.
 
 ## 3. Return
 
