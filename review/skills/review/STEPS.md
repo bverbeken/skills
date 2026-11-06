@@ -40,7 +40,7 @@ Review the current branch in place, when the target is the branch that is checke
 
 The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>` is `git -C <reviewDir> merge-base origin/<base> HEAD`. In place, this includes uncommitted changes. Also note `git -C <reviewDir> log --oneline <merge-base>..HEAD`.
 
-If the diff is empty, remove the worktree, stop and say so.
+If the diff is empty, remove the worktree as step 2 says, stop and say so.
 
 With `--since <sha>`, also note the **changed lines**. These are the lines that `git -C <reviewDir> diff <sha>` adds or removes. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. Leave out the lines that a merge of `<base>` brought in or took out without a change: the PR did not write those. A conflict that the merge resolved by hand is a changed line. The **changed files** are the files that hold a changed line. Also note the commits `git -C <reviewDir> log --oneline --first-parent <sha>..HEAD`, so the commits of `<base>` stay out.
 
