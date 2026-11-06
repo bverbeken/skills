@@ -36,11 +36,11 @@ Review the current branch in place, when the target is the branch that is checke
 2. Fetch the code: `git -C <repoRoot> fetch origin pull/<num>/head` for a PR (works for forks too), `git -C <repoRoot> fetch origin <branch>` for a branch.
 3. `git -C <repoRoot> worktree add --detach <reviewDir> FETCH_HEAD`.
 
-Leave the worktree in place afterwards, for follow-up questions.
+**Remove the worktree** when the review ends: after the report of step 6, and when the review stops early after step 3 above, for example on an empty diff. Run `git -C <repoRoot> worktree remove --force <reviewDir>`. A review in place removes nothing. A follow-up question about the review makes the worktree again, with steps 1 to 3 above.
 
 The diff command is `git -C <reviewDir> diff <merge-base>`, where `<merge-base>` is `git -C <reviewDir> merge-base origin/<base> HEAD`. In place, this includes uncommitted changes. Also note `git -C <reviewDir> log --oneline <merge-base>..HEAD`.
 
-If the diff is empty, stop and say so.
+If the diff is empty, remove the worktree, stop and say so.
 
 With `--since <sha>`, also note the **changed lines**. These are the lines that `git -C <reviewDir> diff <sha>` adds or removes. A removed line counts too, also one the PR itself added before `<sha>`: a fix that only deletes can still break something. Leave out the lines that a merge of `<base>` brought in or took out without a change: the PR did not write those. A conflict that the merge resolved by hand is a changed line. The **changed files** are the files that hold a changed line. Also note the commits `git -C <reviewDir> log --oneline --first-parent <sha>..HEAD`, so the commits of `<base>` stay out.
 
@@ -213,3 +213,5 @@ _Why:_ <one sentence, from the code>
 - A check run on its own lists only its own count on the "Checks" line, and ends with `# GO (<check> only)` or `# NO GO (<check> only)`. A bug angle run on its own uses its own name instead of `bugs`, for example `bugs-lines 1` and `# GO (bugs-lines only)`.
 
 Be direct. When you are not sure, say "I'm not sure" and why.
+
+After the report, remove the worktree, as step 2 says.
