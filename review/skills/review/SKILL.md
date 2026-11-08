@@ -8,7 +8,7 @@ Review the target in `$ARGUMENTS` and give one report. `STEPS.md` in this skill'
 
 ## 1. Set up once
 
-Run steps 1, 2 and 3 of `STEPS.md`. Run them without asking for confirmation. If one fails, stop and report the problem.
+Run steps 1, 2 and 3 of `STEPS.md`. Run them without asking for confirmation. If one fails, remove the worktree as step 2 of `STEPS.md` says, stop and report the problem.
 
 When the target is a PR, read `THREADS.md` in this skill's folder and run its steps 1 and 2. They sort the PR's existing comments into groups.
 
@@ -18,7 +18,7 @@ The checks are the skills next to this one: `review-tests`, `review-spec`, `revi
 
 Run all eleven, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always read the full diff, also when the PR was reviewed before.
 
-With `--since <sha>`, the checks read the full diff for context, and report only the findings that count, as step 2 of `STEPS.md` says. Use it to review only the fixes since an earlier review: `review 142 --since a1b2c3d`. When `<sha>` is not an ancestor of the code to review, stop and say so. When there are no changed lines, run only `review-description` and the thread agents. Without `--since`, every line of the full diff counts.
+With `--since <sha>`, the checks read the full diff for context, and report only the findings that count, as step 2 of `STEPS.md` says. Use it to review only the fixes since an earlier review: `review 142 --since a1b2c3d`. When `<sha>` is not an ancestor of the code to review, remove the worktree as step 2 of `STEPS.md` says, stop and say so. When there are no changed lines, run only `review-description` and the thread agents. Without `--since`, every line of the full diff counts.
 
 Without `--only`, a **text-only** diff gets the short set: spec, bugs, style, comments and description. The diff is text-only when every file in `git -C <reviewDir> diff --name-only <merge-base>` ends in `.md` and none is in a skill folder: a folder that holds a `SKILL.md`, in `<reviewDir>` or on the base, or a folder below it. With `--since`, look at the changed files of step 2 of `STEPS.md` instead. A change to a skill gets all checks. Example: a diff of `CLAUDE.md` and `docs/setup.md` is text-only; a diff of `review/skills/review/STEPS.md` is not.
 

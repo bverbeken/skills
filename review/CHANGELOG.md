@@ -2,6 +2,11 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-06
+
+- `review`: removes the worktree it made in `.review-worktrees` when the review ends, also when it stops early. A follow-up question makes it again. A review in place removes nothing.
+- `review-consumers`: removes the worktree of each consumer after its search.
+
 ## 2026-11-02
 
 - `review`: a `--since <sha>` option reports only on the lines changed since that commit. The checks still read the whole diff. The report has a `Since:` line.
