@@ -2,6 +2,10 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-09
+
+- `implement` clones a repo that is missing from the workspace folder, from the GitHub owner of the other repos in that folder.
+
 ## 2026-11-05
 
 - `prepare` summarizes the issue, what it delivers and what blocks it, before its first question.
