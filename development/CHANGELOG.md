@@ -4,7 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-11-09
 
-- `implement` clones a repo that is missing from the workspace folder, from the GitHub owner of the other repos in that folder.
+- `implement` clones a repo that is missing from the workspace folder, from the GitHub owner that most of the other repos in that folder share.
 
 ## 2026-11-05
 

@@ -30,7 +30,7 @@ Build from the issue's `## Decisions` section. When an open decision comes up du
 
 Build the work in its own git worktree, so the user's checkout stays untouched.
 
-1. Pick the repo the work belongs in. In a multi-repo workspace, take it from the issue (its labels, the code it names). If it could be more than one repo, ask. When the repo is missing from the workspace folder, clone it there, from the GitHub owner of the other repos in that folder. `<repo>` is the repo's main worktree: the first entry of `git worktree list --porcelain`, also when you run from a linked worktree.
+1. Pick the repo the work belongs in. In a multi-repo workspace, take it from the issue (its labels, the code it names). If it could be more than one repo, ask. When the repo is missing from the workspace folder, clone it there, from the GitHub owner that most of the other repos in that folder share. `<repo>` is the repo's main worktree: the first entry of `git worktree list --porcelain`, also when you run from a linked worktree.
 2. Pick the branch: the issue's git branch name from the issue tracker, or a short kebab-case name for a spec without an issue.
 3. Run `git fetch origin` and **remove merged work**, below, then create the worktree at `<repo>/../<repo>.worktrees/<branch>`:
    - New branch: `git worktree add --no-track -b <branch> <path> origin/<default branch>`. `--no-track` keeps the new branch from tracking the default branch.
