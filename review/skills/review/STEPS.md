@@ -81,20 +81,21 @@ Report every finding in this form:
 
 Test: if you would tell the user to fix it before merging, it is blocking.
 
-In **own** mode, a finding blocks when it is one of these six kinds, whatever the check skill says:
+In **own** mode, a finding blocks when it is one of these seven kinds, whatever the check skill says:
 
 - a bug a user can see;
 - a missing test for a behavior the PR adds or fixes;
 - a spec requirement that is missing without explanation;
 - a broken rule in force;
 - a name or a text that makes a reader understand the change wrong;
-- test steps the PR needs and lacks, or a screenshot, before/after or video when the repo's review settings require one (`review-description`, PR material).
+- test steps the PR needs and lacks, or a screenshot, before/after or video when the repo's review settings require one (`review-description`, PR material);
+- a finding with the type `UNDECIDED CASE`.
 
 Everything else is a suggestion in own mode too: duplication, style taste, a test at another level, a risk that needs unlikely input, performance that costs little.
 
 ### Cases nobody decided
 
-A finding is about a **case nobody decided** when the change does what the issue asks, and the issue and its `## Decisions` section don't say what should happen in the case the finding names. Example: nobody said what happens to a run when the tracker is down at the moment the build ends. Give such a finding the type `UNDECIDED CASE`. In own mode it blocks. A finding that breaks what the issue asked for is a bug, and never gets this type. Without an issue, no finding gets this type.
+A finding is about a **case nobody decided** when the change does what the issue asks, and the issue and its `## Decisions` section don't say what should happen in the case the finding names. Example: nobody said what happens to a run when the tracker is down at the moment the build ends. Give such a finding the type `UNDECIDED CASE`. A finding that breaks what the issue asked for is a bug, and never gets this type. Without an issue, no finding gets this type.
 
 ### Rules in force
 
