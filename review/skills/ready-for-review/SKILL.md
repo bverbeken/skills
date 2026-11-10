@@ -193,11 +193,11 @@ Open suggestions are the suggestions nobody decided on:
 
 A suggestion the user said to skip is not open.
 
-Read the `Reviewer:` line in the issue tracker docs: `Reviewer: me` or `Reviewer: team`. No docs, or no line, counts as `team`.
+Where they go depends on the project, as "Solo project" defines it:
 
-- `Reviewer: me`: write them in a `## Open suggestions` section at the end of the PR description, after the TODO markers. One line each, with the check, the place and your recommendation: `- [refactoring] \`src/Order.kt:30\` Extract the discount rule into \`Discount.apply\`.`
-- `Reviewer: team`, without `--afk`: list them in the final output only. The description stays clean for colleagues.
-- `Reviewer: team`, with `--afk`: write them in the issue, in an `## Open suggestions` section, as the tracker docs say, with the same lines. With no issue, list them in the final output only.
+- On a solo project: write them in a `## Open suggestions` section at the end of the PR description, after the TODO markers. One line each, with the check, the place and your recommendation: `- [refactoring] \`src/Order.kt:30\` Extract the discount rule into \`Discount.apply\`.`
+- On a team project, without `--afk`: list them in the final output only. The description stays clean for colleagues.
+- On a team project, with `--afk`: write them in the issue, in an `## Open suggestions` section, as the tracker docs say, with the same lines. With no issue, list them in the final output only.
 
 Each run rewrites the section, and removes it when no open suggestion is left. It also removes an `## Open suggestions` section that an earlier run left in the place it does not write to now: the PR description or the issue. Every final output lists them too.
 
