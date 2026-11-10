@@ -11,6 +11,7 @@ Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean
 With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do this instead:
 
 - The fix would change or bend a line in the issue's `## Decisions` section: skip the item. That line is the user's call. This rule wins over the others below.
+- A finding with the type `UNDECIDED CASE`, on a team project: skip the item and build nothing for it. The case is the user's. This rule wins over the others below.
 - The fix needs a choice: take your own recommendation. When the choice is really the user's, as the spec or the issue leaves it to them, skip the item.
 - The fix changes code outside the PR's files, or needs a new issue: fix a blocking item, skip a suggestion.
 - Merge conflicts: merge `origin/<base>` into the branch, as one merge commit, fix the conflicts, run the tests, and push. A merge keeps the head of the round before in the history, so the next round can review only what changed since. When a conflict needs a choice that is really the user's, skip it.
@@ -22,6 +23,20 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 To skip an item, delete it from the list, and post a skip reply as "Skip replies" says. A skipped blocking item goes in the NOT READY output of step 7. A skipped suggestion is an open suggestion, as "Open suggestions" says.
 
 A human thread with a FIX verdict is an item: once it is fixed, reply and resolve it, as for a bot thread. Start every reply you post with `🤖 `, so `review` knows it is the build's.
+
+## Solo project
+
+A project is **solo** when the issue tracker docs have a line that starts with `Reviewer: me`, after an optional list dash. `Reviewer: team`, no line or no docs is a team project, and this section does not apply. On a solo project, these rules replace the matching parts of the steps below, with and without `--afk`:
+
+- **One review pass, in step 2.** Run the first of these that fits, and run no other review:
+  1. The PR has a new thread (step 3) that a person wrote: run `review --only threads`.
+  2. This session has a report of `review` on this PR or its branch, with `mode: own`, without `--since` or `--only`, whose `Head:` line is the head commit from step 1: keep its findings, blocking and suggestions alike. A light report counts.
+  3. Otherwise: run `review --light`.
+- **No description check.** `review --only description` does not run. The cold read in `draft-pr` is enough.
+- **Follow-up cards, before step 4.** A finding with the type `UNDECIDED CASE` becomes a new issue in `USEFUL`, made as the issue tracker docs say, without showing it first. Its title names the case, and its body says what the case is and which PR found it. Skip it when an issue with that title exists. The finding does not go on the TODO list, and the PR goes ready without it. Add one line per card under a `## Follow-ups` heading in the PR description, outside the TODO markers. The line names the card by its title, and adds its number only when the docs allow issue numbers in PRs.
+- **Suggestions, in step 6.** Apply each one in its own commit, and the tests must pass. A suggestion that changes code outside the PR's files stays open: delete it from the list.
+- **A look at fixes, in step 6.** A one-line fix, a test or a refactoring needs no further look. Any other fix that adds a branch, an error path or a change in behavior gets one read, after its commit. Start one `Agent` (general-purpose) with the finding and the commit's diff, and this brief: "Read this fix. Does it introduce a bug? Name the case that fails, or answer `none`." Fix what it finds in its own commit, without another look.
+- **One round, in steps 3 and 6.** A new commit is not a state problem. When every item is ticked, wait for CI on the new head (`gh pr checks <num> --watch`), fix a check that fails, and run step 3 once more for the state of the PR. Then go to step 7, not back to step 2.
 
 ## 1. Check the PR
 
@@ -42,7 +57,7 @@ When the PR's branch is checked out locally, compare it with GitHub. Each differ
 
 Run the `review` skill (`../review/SKILL.md`) on the PR, with the issue from the arguments if there is one, without `--only`, and print its report. The mode is **own**. When there are state problems from step 1, review the head commit in a worktree, as in step 2 of `STEPS.md`, so the review sees what is on GitHub. Start the agents as `review` says.
 
-In the first round, first look in this session for the last report of `review` on this PR or its branch, without `--only`, with `mode: own`. A report of a check run alone, of `review --only`, of `review --since`, or of an earlier reuse round does not count: it does not cover the whole PR. Nor does a report whose `Head:` line has `+ uncommitted changes`: it covers more than the commit. Take its `Head:` line:
+In the first round, first look in this session for the last report of `review` on this PR or its branch, without `--only`, with `mode: own`. A report of a check run alone, of `review --only`, of `review --since`, of `review --light`, or of an earlier reuse round does not count: it does not cover the whole PR. Nor does a report whose `Head:` line has `+ uncommitted changes`: it covers more than the commit. Take its `Head:` line:
 
 - It is the head commit from step 1: reuse the report. Keep its findings from the code checks, blocking and suggestions alike, and run `review` with `--only description` instead of the full review. That runs the cold read, the PR material check and the thread check of `THREADS.md`. This round's report is the kept findings plus that report. Example: `implement` reviewed `a1b2c3d` and `draft-pr` pushed it unchanged, so the first round reuses that review.
 - It is an ancestor of the head commit (`git merge-base --is-ancestor <sha> <head commit>`): run `review` with `--since <sha>`, so it reviews only the commits that came after. Keep the suggestions of the earlier report that this session has not fixed yet. One that an earlier run skipped stays an open suggestion. **Verify again** its blocking findings. This round's report is the kept suggestions, the blocking findings that are still in the code, and the new report. Example: `review` gave NO GO on `a1b2c3d`, and `implement` fixed it in `e4f5a6b`, so the first round reviews only the fix, and checks that the finding is gone.
@@ -114,6 +129,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 1. Decide if the fix is clear. On an answered bot thread, the answer says what to do. When the answer leads to no change, post a `🤖 ` reply with the reason, leave the thread open, tick the item, and go to the next item, with and without `--afk`. **Stop and ask the user** when any of these is true, and wait for the answer:
    - The fix needs a choice that the spec, the code and the item don't make.
    - The fix would change or bend a line in the issue's `## Decisions` section.
+   - The finding has the type `UNDECIDED CASE`.
    - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user. A blocking screenshot whose upload fails in step 2 also stops here.
    - The thread's verdict is DISCUSS or CLARIFY, and it is not an answered bot thread.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
@@ -143,7 +159,7 @@ When a blocking item was skipped, or the review loop stopped with blocking items
 # NOT READY
 Review: reused from <short sha>
 Open suggestions: <one line each, or: none>
-- [<check or state>] <one sentence per problem; for a change to a decision: the decision line, the fact found, the question, and your recommendation>
+- [<check or state>] <one sentence per problem; for a change to a decision: the decision line, the fact found, the question, and your recommendation; for an `UNDECIDED CASE`: the case, the question, and your recommendation>
 ```
 
 List every problem left, findings first, then state problems. Print the `Review:` line, in this output and in READY, only when the first round reused a review.
@@ -161,6 +177,7 @@ PR #<num> is out of draft: <url>
 Review: reused from <short sha>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 Open suggestions: <one line each, or: none>
+Follow-ups: <the cards made on a solo project, one line each, or: none>
 Tracker: <issue> moved to `READY_FOR_REVIEW`, or: the tracker has no `READY_FOR_REVIEW`, <issue> stays <status>, or: no issue
 ```
 
@@ -171,6 +188,7 @@ Open suggestions are the suggestions nobody decided on:
 - The new suggestions of rounds after the first.
 - A screenshot suggestion that step 6 skips without asking.
 - A suggestion that the first round keeps from an earlier report, when an earlier run skipped it.
+- On a solo project: a suggestion that changes code outside the PR's files.
 - With `--afk`: every suggestion you skipped.
 
 A suggestion the user said to skip is not open.
