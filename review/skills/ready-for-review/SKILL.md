@@ -177,7 +177,7 @@ PR #<num> is out of draft: <url>
 Review: reused from <short sha>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 Open suggestions: <one line each, or: none>
-Follow-ups: <the issues made on a solo project, one line each, or: none>
+Follow-ups: <the issues made on a solo project and the cases with no issue, one line each, or: none>
 Tracker: <issue> moved to `READY_FOR_REVIEW`, or: the tracker has no `READY_FOR_REVIEW`, <issue> stays <status>, or: no issue
 ```
 
