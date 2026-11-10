@@ -2,6 +2,11 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-10
+
+- `implement` rereads its own diff before the full test suite, and adds a test for every branch and error path that has none.
+- `implement` stops on a review finding with the type `UNDECIDED CASE`, also with `--afk`.
+
 ## 2026-11-09
 
 - `implement` clones a repo that is missing from the workspace folder, from the GitHub owner that most of the other repos in that folder share.
