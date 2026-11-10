@@ -28,9 +28,9 @@ A human thread with a FIX verdict is an item: once it is fixed, reply and resolv
 
 A project is **solo** when the issue tracker docs have a line that starts with `Reviewer: me`, after an optional list dash. `Reviewer: team`, no line or no docs is a team project, and this section does not apply. On a solo project, these rules replace the matching parts of the steps below, with and without `--afk`:
 
-- **One review pass, in step 2.** Run the first of these that fits, and run no other review:
+- **One review pass, in step 2.** Run the first of these that fits, and no review it does not name:
   1. The PR has a new thread (step 3) that a person wrote: run `review --only threads`.
-  2. This session has a report of `review` on this PR or its branch, with `mode: own`, without `--since` or `--only`, whose `Head:` line is the head commit from step 1: keep its findings, blocking and suggestions alike. A light report counts.
+  2. This session has a report of `review` on this PR or its branch, with `mode: own`, without `--since` or `--only`, whose `Head:` line is the head commit from step 1: keep its findings, blocking and suggestions alike. A light report counts. When the PR has an open bot thread with no `🤖 ` reply, also run `review --only threads`, as a report made before the PR existed has no verdict for it.
   3. Otherwise: run `review --light`.
 - **No description check.** `review --only description` does not run. The cold read in `draft-pr` is enough.
 - **Follow-up cards, before step 4.** A finding with the type `UNDECIDED CASE` becomes a new issue in `USEFUL`, made as the issue tracker docs say, without showing it first. Its title names the case, and its body says what the case is and which PR found it. Skip it when an issue with that title exists. The finding does not go on the TODO list, and the PR goes ready without it. Add one line per card under a `## Follow-ups` heading in the PR description, outside the TODO markers. The line names the card by its title, and adds its number only when the docs allow issue numbers in PRs.
