@@ -168,7 +168,7 @@ When there is no problem left:
 
 1. Remove the ticked items from the TODO list. Remove an empty `### Blocking` or `### Suggestions` heading. When no item is left, remove the whole list with its markers. The public description shows the change, not the fixes on the way.
 2. Run `gh pr ready <num> -R <owner>/<repo>`.
-3. When the PR belongs to an issue, move the issue to `READY_FOR_REVIEW`. Use the status of the tracker that the issue tracker docs map to that Foreman status. Take the issue from the arguments, or else find it in the branch name, the PR title or its body. In a public repo, issue numbers stay out of the branch and the PR, so only the arguments name the issue. With no issue, leave the tracker alone. When the docs map no status to `READY_FOR_REVIEW`, leave the issue where it is and say so at the end.
+3. When the PR belongs to an issue, move the issue to `READY_FOR_REVIEW`. Use the status of the tracker that the issue tracker docs map to that Faber status. Take the issue from the arguments, or else find it in the branch name, the PR title or its body. In a public repo, issue numbers stay out of the branch and the PR, so only the arguments name the issue. With no issue, leave the tracker alone. When the docs map no status to `READY_FOR_REVIEW`, leave the issue where it is and say so at the end.
 4. End with:
 
 ```

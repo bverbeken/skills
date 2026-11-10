@@ -31,7 +31,7 @@ The rules for pull requests are in `docs/agents/pull-requests.md`.
 The review settings are in `docs/agents/review-settings.md`.
 ```
 
-- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [Foreman status](#foreman-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, which issues are Foreman's, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). When the docs don't say which issues are Foreman's, every issue is. `implement`, `prepare`, `review` and `ready-for-review` read it.
+- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [Faber status](#faber-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, which issues are Faber's, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). When the docs don't say which issues are Faber's, every issue is. `implement`, `prepare`, `review` and `ready-for-review` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
@@ -47,11 +47,11 @@ A limit over 10 minutes runs the tests in the background inside `timeout`. On ma
 
 Finding a hanging test takes at most three runs at the limit: the run that hangs, a run of only the tests the change added or changed when the output names no test, and a run on the base for an existing test. A hang outside the change then stops the build. A hang the change caused is a failing test, and `tdd` fixes it like any other.
 
-## Foreman statuses
+## Faber statuses
 
 The skills name statuses with fixed UPPERCASE names:
 
-| Foreman status | Meaning |
+| Faber status | Meaning |
 |---|---|
 | `USEFUL` | worth doing, not planned yet |
 | `BLOCKED` | planned, but a blocker is not `MERGED` or `DONE` yet |
@@ -63,13 +63,13 @@ The skills name statuses with fixed UPPERCASE names:
 | `MERGED` | merged: the docs, changelog and release are left |
 | `DONE` | done: merged, with the docs, changelog and release |
 
-Your tracker docs map each one to a status of your own, in any format. For example, a table with a column for the Foreman status:
+Your tracker docs map each one to a status of your own, in any format. For example, a table with a column for the Faber status:
 
-| Foreman | Status | Meaning |
+| Faber | Status | Meaning |
 |---|---|---|
 | `BUSY` | `In Progress` | being built |
 
-A mapping can carry a condition, for example `NEXT_UP: Todo, assigned to me`. A move to that status also sets the condition. An issue is only in that status when the condition holds. When two Foreman statuses map to the same tracker status, only the condition tells them apart, so a move between them changes the condition: with `TO_CLARIFY: Todo, not assigned to me` and `NEXT_UP: Todo, assigned to me`, a move to `TO_CLARIFY` removes the assignee.
+A mapping can carry a condition, for example `NEXT_UP: Todo, assigned to me`. A move to that status also sets the condition. An issue is only in that status when the condition holds. When two Faber statuses map to the same tracker status, only the condition tells them apart, so a move between them changes the condition: with `TO_CLARIFY: Todo, not assigned to me` and `NEXT_UP: Todo, assigned to me`, a move to `TO_CLARIFY` removes the assignee.
 
 A status counts as mapped only when your docs map it, also when your tracker has a status with the same name. A tracker can leave a status out when you call the skills yourself. A skill that would move an issue to that status leaves the issue where it is, and says so at the end. A skill that checks for that status stops and changes nothing.
 
