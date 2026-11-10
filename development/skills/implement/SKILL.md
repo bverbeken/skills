@@ -86,7 +86,7 @@ Commit to the worktree's branch as you go, in small commits: one per green tdd c
 
 ## Reread the diff
 
-Before the full test suite runs at the end, read your own diff, uncommitted changes included: `git diff $(git merge-base <base> HEAD)`, where `<base>` is the branch this build started from. For every branch and error path the change adds, find the test that covers it. Write a test for each one that has none, as `tdd` says, at the seams this build already uses. Example: the change adds `if (response.status == 429)` and no test sends a 429, so write that test. Skip this step when the repo has no tests, as there is no suite to add to, and when the arguments hold review findings, as the build is done already.
+Before the full test suite runs at the end, read everything this build added, committed or not: start from `git diff $(git merge-base origin/<default branch> HEAD)` and the new files in `git status --porcelain`, and leave out the code of another branch this build started from. For every branch and error path the change adds, find the test that covers it. Write a test for each one that has none, as `tdd` says, at the seams this build already uses. Example: the change adds `if (response.status == 429)` and no test sends a 429, so write that test. Skip this step when the repo has no tests, as there is no suite to add to, and when the arguments hold review findings, as the build is done already.
 
 ## End
 
