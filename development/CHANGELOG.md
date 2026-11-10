@@ -4,6 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-11-10
 
+- The Foreman statuses are now called Faber statuses.
 - `implement` rereads its own diff before the full test suite, and adds a test for every branch and error path that has none.
 - `implement` stops on a review finding with the type `UNDECIDED CASE`, also with `--afk`.
 
