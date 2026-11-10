@@ -92,6 +92,10 @@ In **own** mode, a finding blocks when it is one of these six kinds, whatever th
 
 Everything else is a suggestion in own mode too: duplication, style taste, a test at another level, a risk that needs unlikely input, performance that costs little.
 
+### Cases nobody decided
+
+A finding is about a **case nobody decided** when the change does what the issue asks, and the issue and its `## Decisions` section don't say what should happen in the case the finding names. Example: nobody said what happens to a run when the tracker is down at the moment the build ends. Give such a finding the type `UNDECIDED CASE`. In own mode it blocks. A finding that breaks what the issue asked for is a bug, and never gets this type. Without an issue, no finding gets this type.
+
 ### Rules in force
 
 A repo rule is **in force** when both are true:
