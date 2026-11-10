@@ -4,7 +4,7 @@ Shared by `review` and its check skills. Each skill says which steps it runs.
 
 ## 1. Resolve the target
 
-The argument is a PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or empty. Strip `--only …` and `--since …` first: only `review` uses them.
+The argument is a PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or empty. Strip `--only …`, `--since …` and `--light` first: only `review` uses them.
 
 Resolve it to: the repo, the code to review (a ref), the base to diff against, the PR (if any) and the issue (if any). The issue tracker is the one the project's `CLAUDE.md` / `AGENTS.md` names. Use the tool or workflow it describes. If the project names none, look for issue IDs anyway and use whatever tracker tool matches them.
 
@@ -207,6 +207,7 @@ _Why:_ <one sentence, from the code>
 - One sentence per finding, plus the optional `Fix:` sentence. The details stay in `evidence`.
 - Leave out empty sections, but always print the "Checks" line, with 0 for a check that found nothing.
 - On a text-only diff without `--only`, the "Checks" line lists only the checks that ran. The parentheses name every check that did not run, with its reason. Example for a branch without a PR: `(text-only diff: tests, performance, refactoring, architecture, consumers, dependencies not run; no PR: description not run)`.
+- With `--light`, the "Checks" line lists only the checks that ran, and starts its parentheses with `light`, for example `(light: performance, style, comments, architecture, consumers, dependencies, description not run)`. `ready-for-review` reads this to tell a light report from a full one.
 - `GO` means merge it. `NO GO` means at least one confirmed blocking finding, from a check or from a thread. There is nothing in between.
 - The verdict line only says why: the worst blocking finding for NO GO, or that none survived for GO. It gives no advice.
 - No praise, no summary beyond the verdict line.

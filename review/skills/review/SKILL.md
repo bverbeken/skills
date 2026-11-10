@@ -1,7 +1,7 @@
 ---
 name: review
 description: "Review <PR number, GitHub or Linear link, issue ID, or branch> at any stage, before or after comments came in: eleven checks in parallel (tests, spec, bugs, performance, style, comments, refactoring, architecture, consumers, dependencies, description), the open review threads checked against the code, draft replies, and a GO / NO GO verdict. Use when the user says \"review <something>\", pastes a PR link to review, asks if a change is ready to merge, says a reviewer replied, asks to handle the comments on a PR, or another skill wants its work reviewed."
-argument-hint: "[PR number | PR link | issue | branch | empty] [--only check,check] [--since <sha>]"
+argument-hint: "[PR number | PR link | issue | branch | empty] [--only check,check] [--since <sha>] [--light]"
 ---
 
 Review the target in `$ARGUMENTS` and give one report. `STEPS.md` in this skill's folder holds the shared steps: read it first.
@@ -16,7 +16,9 @@ When the target is a PR, read `THREADS.md` in this skill's folder and run its st
 
 The checks are the skills next to this one: `review-tests`, `review-spec`, `review-bugs`, `review-performance`, `review-style`, `review-comments`, `review-refactoring`, `review-architecture`, `review-consumers`, `review-dependencies`, `review-description`. Their files are at `<this skill's folder>/../review-<check>/SKILL.md`.
 
-Run all eleven, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always read the full diff, also when the PR was reviewed before.
+Run all eleven, or only the ones named in `--only` (for example `--only bugs,tests`). The checks always read the full diff, also when the PR was reviewed before. `--only threads` starts no check, only the thread agents of `THREADS.md` step 3.
+
+With `--light`, seven agents run instead of the checks: `review-tests`, `review-spec`, `review-refactoring`, and the bug angles `review-bugs-lines`, `review-bugs-removed`, `review-bugs-callers` and `review-bugs-secrets`. No other check runs, and no find agent or cold reader. The thread agents still run when the target is a PR. The text-only rule below does not apply. `--light` is for the build path of a solo project: `foreman` and `ready-for-review` ask for it. When it comes with `--only` or `--since`, remove the worktree as step 2 of `STEPS.md` says, stop and say so.
 
 With `--since <sha>`, the checks read the full diff for context, and report only the findings that count, as step 2 of `STEPS.md` says. Use it to review only the fixes since an earlier review: `review 142 --since a1b2c3d`. When `<sha>` is not an ancestor of the code to review, remove the worktree as step 2 of `STEPS.md` says, stop and say so. When there are no changed lines, run only `review-description` and the thread agents. Without `--since`, every line of the full diff counts.
 
@@ -32,7 +34,7 @@ First write the list of agents for this round, with the count. Example: "19 agen
 
 ## 3. Verify and report
 
-Wait until all agents have returned, the item agents too. Run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know. When the target is a PR, also run its PR material check. With `--since`, drop the findings of the code checks that don't count. Merge the findings of the bug angles, as "Bug angles" in step 4 of `STEPS.md` says. When the PR has threads, then run step 4 of `THREADS.md` to remove duplicate findings. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
+Wait until all agents have returned, the item agents too. Unless the run has `--light` or `--only threads`, run step 2 of `review-description` on the cold reader's answer, with `<contextFile>` as what you know, and when the target is a PR, also run its PR material check. With `--since`, drop the findings of the code checks that don't count. Merge the findings of the bug angles, as "Bug angles" in step 4 of `STEPS.md` says. When the PR has threads, then run step 4 of `THREADS.md` to remove duplicate findings. Then run step 5 of `STEPS.md` on the blocking findings, from the checks and from the threads.
 
 When verification rejects a thread's finding, its verdict becomes DISMISS (triage) or RESOLVED (recheck). Write its reply again to match.
 
