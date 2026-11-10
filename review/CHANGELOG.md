@@ -2,6 +2,13 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-10
+
+- `review`: `--light` runs seven agents: tests, spec, refactoring, and the bug angles lines, removed, callers and secrets. `--only threads` runs only the thread agents.
+- `review`: a finding about a case nobody decided gets the type `UNDECIDED CASE`.
+- `ready-for-review`: on a solo project (`Reviewer: me`), it runs one light review and no repeat rounds, and no description check. It applies the suggestions in that pass. A one-line fix, a test or a refactoring gets no further look, and one agent reads any other fix once. A case nobody decided becomes a new issue in `USEFUL`.
+- `ready-for-review`: on a team project, a case nobody decided stops the build and goes to the user, also with `--afk`.
+
 ## 2026-11-06
 
 - `review`: removes the worktree it made in `.review-worktrees` when the review ends, also when it stops early. A follow-up question makes it again. A review in place removes nothing.

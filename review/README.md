@@ -20,7 +20,7 @@ A full code review in one command, at any stage of a PR. Say `review 142` or pas
 
 Each check can also run on its own, for example `/review-tests 142`.
 
-A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets only spec, bugs, style, comments and description. A change to a skill's files gets all checks. `--only bugs,tests` runs the named checks on any diff. `--since a1b2c3d` reports only on the lines changed since that commit, for example the fixes since an earlier review. The checks still read the whole diff.
+A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets only spec, bugs, style, comments and description. A change to a skill's files gets all checks. `--only bugs,tests` runs the named checks on any diff. `--since a1b2c3d` reports only on the lines changed since that commit, for example the fixes since an earlier review. The checks still read the whole diff. `--light` runs seven agents: tests, spec, refactoring, and the bug angles lines, removed, callers and secrets. `--only threads` runs only the thread agents.
 
 **Comments already on the PR.** Run `review` again whenever comments come in. It sorts the existing threads and handles each group:
 
@@ -50,6 +50,8 @@ Some suggestions are left open: nobody decided on them. These are the new sugges
 - `Reviewer: me`: in an `## Open suggestions` section at the end of the PR description.
 - `Reviewer: team`, without `--afk`: in the final output only, so the description stays clean for colleagues.
 - `Reviewer: team`, with `--afk`: in an `## Open suggestions` section in the issue.
+
+On a solo project (`Reviewer: me`), `ready-for-review` runs one light review and no repeat rounds. It applies the suggestions in that pass. A one-line fix, a test or a refactoring gets no further look, and one agent reads any other fix once. A case nobody decided becomes a new issue in `USEFUL`, and the PR goes ready without it. On a team project the rounds stay, and a case nobody decided stops the build and goes to the user.
 
 ## What it does
 
