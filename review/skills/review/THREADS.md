@@ -23,7 +23,7 @@ query($owner:String!,$repo:String!,$num:Int!){
           id
           isResolved
           isOutdated
-          comments(first:50){ nodes{ author{__typename login} body path line originalLine url createdAt originalCommit{oid} } }
+          comments(first:50){ nodes{ author{__typename login} body path line originalLine url createdAt originalCommit{oid} pullRequestReview{state} } }
         }
       }
       reviews(first:50){ nodes{ author{__typename login} body state submittedAt url commit{oid} } }
