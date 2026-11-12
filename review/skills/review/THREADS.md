@@ -63,7 +63,7 @@ Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 | Open, and you have the last word after someone else | **waiting** |
 | Resolved | **recheck** |
 
-**Colleague mode**
+**Colleague mode**: the first row that matches wins.
 
 | Thread | Group |
 |---|---|
