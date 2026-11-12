@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-12
+
+- `review`: on a colleague's PR, a line thread of your own review that is not submitted yet (`PENDING`) drops a finding about the same problem. It gets no agent and no draft reply. The threads line counts these threads as `pending`.
+
 ## 2026-11-11
 
 - `review` and `ready-for-review`: skip a line thread whose first comment belongs to a review the user has not submitted yet (`PENDING`). The thread query now fetches the review state of each line thread comment.
