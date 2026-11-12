@@ -37,11 +37,11 @@ With the Linear tools, also call `mcp__linear__get_diff_threads` with the PR lin
 
 Turn the result into **threads**:
 
-- Each review thread is a thread. Skip a review thread whose first comment has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet.
+- Each review thread is a thread. A review thread whose first comment has `pullRequestReview.state` `PENDING` is a **pending** thread: the user has not submitted that review yet. Own mode skips it. Colleague mode keeps it, only to drop findings in step 4.
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
 - PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
 
-Example: a PR has two open line threads. The user started the first one in a review that is still `PENDING`. A colleague started the second one in a submitted review, with state `COMMENTED`. Only the second one is a thread.
+Example: a PR has two open line threads. The user started the first one in a review that is still `PENDING`. A colleague started the second one in a submitted review, with state `COMMENTED`. In own mode, only the second one is a thread. In colleague mode, the first one is a pending thread.
 
 The **starter** is the author of a thread's first comment. A **bot** is an author whose `__typename` is `Bot`, or a login that ends in `[bot]` or matches `copilot` (case-insensitive). GraphQL gives an app's login without `[bot]`: CodeRabbit is `coderabbitai`. Everyone else is a human.
 
@@ -67,15 +67,16 @@ Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
 | Thread | Group |
 |---|---|
+| A pending thread | **pending** |
 | You started it or commented in it, and someone answered after your last comment | **recheck** |
 | A bot started it, and a human answered | **recheck** |
 | Resolved, and not in **recheck** | **settled** |
 | You started it, and you have the last word | **waiting** |
 | Anything else | **context** |
 
-**Settled** and **context** threads are only used to remove duplicate findings (see step 4).
+**Pending**, **settled** and **context** threads are only used to remove duplicate findings (see step 4). They get no agent and no draft reply.
 
-Print one line: `Threads: <n> to triage · <n> to recheck · <n> waiting · <n> settled · <n> context`. Leave out groups with 0.
+Print one line: `Threads: <n> to triage · <n> to recheck · <n> waiting · <n> pending · <n> settled · <n> context`. Leave out groups with 0.
 
 ## 3. Check the threads
 
