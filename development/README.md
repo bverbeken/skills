@@ -31,7 +31,7 @@ The rules for pull requests are in `docs/agents/pull-requests.md`.
 The review settings are in `docs/agents/review-settings.md`.
 ```
 
-- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [Faber status](#faber-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, which issues are Faber's, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). When the docs don't say which issues are Faber's, every issue is. `implement`, `prepare`, `review` and `ready-for-review` read it.
+- `docs/agents/issue-tracker.md`: where issues live, how to read and change them, which of its statuses each [Faber status](#faber-statuses) maps to, where a stopped build writes its open question, where an issue's PR link lives, which issues are Faber's, and who reviews your PRs (`Reviewer: me` or `Reviewer: team`). When the docs don't say which issues are Faber's, every issue is. A `Review: <plugin>` line, for example `Review: seatsio`, makes `faber` call `<plugin>:review` and `<plugin>:ready-for-review`. Without it, `faber` calls `review` and `ready-for-review`. `implement`, `prepare`, `review` and `ready-for-review` read it.
 - `docs/agents/pull-requests.md` (optional): your own rules for PR descriptions, for example what the test steps look like per repo. `draft-pr` reads it.
 - `docs/agents/review-settings.md` (optional): review settings, one `key: value` per line. With `screenshots: required`, a missing screenshot, before/after or video blocks your own PRs. Without it, they are suggestions. `review-description` reads it.
 
