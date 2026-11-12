@@ -37,11 +37,13 @@ With the Linear tools, also call `mcp__linear__get_diff_threads` with the PR lin
 
 Turn the result into **threads**:
 
-- Each review thread is a thread. Skip a review thread whose first comment has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet.
+- Each review thread is a thread. Skip a review thread whose first comment, or the user's last comment that does not start with `🤖 `, has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet. Submitting the review makes the thread count again.
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
 - PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
 
 Example: a PR has two open line threads. The user started the first one in a review that is still `PENDING`. A colleague started the second one in a submitted review, with state `COMMENTED`. Only the second one is a thread.
+
+Example: the user writes "Rename this" and submits the review. The build replies "🤖 Done". The user replies "Still wrong" in a review that is still `PENDING`. The thread is skipped until the user submits that review.
 
 The **starter** is the author of a thread's first comment. A **bot** is an author whose `__typename` is `Bot`, or a login that ends in `[bot]` or matches `copilot` (case-insensitive). GraphQL gives an app's login without `[bot]`: CodeRabbit is `coderabbitai`. Everyone else is a human.
 

@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-12
+
+- `review` and `ready-for-review`: also skip a line thread whose last comment from the user belongs to a review the user has not submitted yet (`PENDING`), for example a reply to the build's `🤖 ` reply.
+
 ## 2026-11-11
 
 - `review` and `ready-for-review`: skip a line thread whose first comment belongs to a review the user has not submitted yet (`PENDING`). The thread query now fetches the review state of each line thread comment.
