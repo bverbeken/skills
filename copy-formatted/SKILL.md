@@ -1,6 +1,6 @@
 ---
-name: copy
-description: Copy text from this conversation to the macOS clipboard as rich text (HTML) and Markdown, ready to paste into a chat or an editor. Use when the user says "/copy", "copy this response", "copy that to my clipboard", "put the draft on my clipboard".
+name: copy-formatted
+description: Copy text from this conversation to the macOS clipboard as rich text (HTML) and Markdown, ready to paste into a chat or an editor. Use when the user says "/copy-formatted", "copy this response formatted", "copy that to my clipboard", "put the draft on my clipboard".
 argument-hint: "[what to copy, e.g. this response | the table | the draft]"
 ---
 
