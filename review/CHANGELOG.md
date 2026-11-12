@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-11-12
 
+- `review`: on a colleague's PR, a line thread of your own review that is not submitted yet (`PENDING`) drops a finding about the same problem. It gets no agent and no draft reply. The threads line counts these threads as `pending`.
 - `review` and `ready-for-review`: also skip a line thread whose last comment from the user belongs to a review the user has not submitted yet (`PENDING`), for example a reply to the build's `🤖 ` reply.
 
 ## 2026-11-11

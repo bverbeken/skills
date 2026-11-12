@@ -37,11 +37,11 @@ With the Linear tools, also call `mcp__linear__get_diff_threads` with the PR lin
 
 Turn the result into **threads**:
 
-- Each review thread is a thread. Skip a review thread whose first comment, or the user's last comment that does not start with `🤖 `, has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet. Submitting the review makes the thread count again.
+- Each review thread is a thread. A review thread is **pending** when its first comment, or the user's last comment that does not start with `🤖 `, has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet. Own mode skips it. Submitting the review makes the thread count again.
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
 - PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
 
-Example: a PR has two open line threads. The user started the first one in a review that is still `PENDING`. A colleague started the second one in a submitted review, with state `COMMENTED`. Only the second one is a thread.
+Example: a PR has two open line threads. The user started the first one in a review that is still `PENDING`. A colleague started the second one in a submitted review, with state `COMMENTED`. In own mode, only the second one is a thread. In colleague mode, the first one is a pending thread.
 
 Example: the user writes "Rename this" and submits the review. The build replies "🤖 Done". The user replies "Still wrong" in a review that is still `PENDING`. The thread is skipped until the user submits that review.
 
@@ -65,19 +65,20 @@ Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 | Open, and you have the last word after someone else | **waiting** |
 | Resolved | **recheck** |
 
-**Colleague mode**
+**Colleague mode**: the first row that matches wins.
 
 | Thread | Group |
 |---|---|
+| A pending thread | **pending** |
 | You started it or commented in it, and someone answered after your last comment | **recheck** |
 | A bot started it, and a human answered | **recheck** |
 | Resolved, and not in **recheck** | **settled** |
 | You started it, and you have the last word | **waiting** |
 | Anything else | **context** |
 
-**Settled** and **context** threads are only used to remove duplicate findings (see step 4).
+**Pending**, **settled** and **context** threads are only used to remove duplicate findings (see step 4). They get no agent and no draft reply.
 
-Print one line: `Threads: <n> to triage · <n> to recheck · <n> waiting · <n> settled · <n> context`. Leave out groups with 0.
+Print one line: `Threads: <n> to triage · <n> to recheck · <n> waiting · <n> pending · <n> settled · <n> context`. Leave out groups with 0.
 
 ## 3. Check the threads
 
@@ -122,8 +123,11 @@ When all agents have answered, compare each finding from the checks with the thr
 |---|---|
 | A **triage** or **recheck** thread | Drop the finding. The thread's verdict covers it. |
 | A **waiting** thread | Drop the finding. The thread is listed under "Waiting". |
+| A **pending** thread | Drop the finding. You raised it already, in the review you have not submitted. |
 | A **settled** thread | Drop the finding. |
 | A **context** thread | Move it to "Already raised", with the thread's starter and URL. |
+
+Example: on a colleague's PR you wrote "this returns null for an empty cart" in a review you have not submitted yet. The bugs check finds the same problem. The report drafts no comment for it.
 
 In own mode every resolved thread is in **recheck**, so a resolved thread never hides a finding that is still true.
 
