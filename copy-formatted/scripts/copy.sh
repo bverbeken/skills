@@ -8,7 +8,7 @@ function run(argv) {
   const read = path => $.NSString.stringWithContentsOfFileEncodingError(path, $.NSUTF8StringEncoding, null);
   const pasteboard = $.NSPasteboard.generalPasteboard;
   pasteboard.clearContents;
-  pasteboard.setStringForType(read(argv[0]), $.NSPasteboardTypeHTML);
+  pasteboard.setStringForType('<meta charset="utf-8">' + read(argv[0]).js, $.NSPasteboardTypeHTML);
   pasteboard.setStringForType(read(argv[1]), $.NSPasteboardTypeString);
   return 'Copied to the clipboard as HTML and Markdown';
 }
