@@ -121,8 +121,11 @@ When all agents have answered, compare each finding from the checks with the thr
 |---|---|
 | A **triage** or **recheck** thread | Drop the finding. The thread's verdict covers it. |
 | A **waiting** thread | Drop the finding. The thread is listed under "Waiting". |
+| A **pending** thread | Drop the finding. You raised it already, in the review you have not submitted. |
 | A **settled** thread | Drop the finding. |
 | A **context** thread | Move it to "Already raised", with the thread's starter and URL. |
+
+Example: on a colleague's PR you wrote "this returns null for an empty cart" in a review you have not submitted yet. The bugs check finds the same problem. The report drafts no comment for it.
 
 In own mode every resolved thread is in **recheck**, so a resolved thread never hides a finding that is still true.
 
