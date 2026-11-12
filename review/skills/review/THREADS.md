@@ -23,7 +23,7 @@ query($owner:String!,$repo:String!,$num:Int!){
           id
           isResolved
           isOutdated
-          comments(first:50){ nodes{ author{__typename login} body path line originalLine url createdAt originalCommit{oid} } }
+          comments(first:50){ nodes{ author{__typename login} body path line originalLine url createdAt originalCommit{oid} pullRequestReview{state} } }
         }
       }
       reviews(first:50){ nodes{ author{__typename login} body state submittedAt url commit{oid} } }
@@ -37,9 +37,11 @@ With the Linear tools, also call `mcp__linear__get_diff_threads` with the PR lin
 
 Turn the result into **threads**:
 
-- Each review thread is a thread.
+- Each review thread is a thread. Skip a review thread whose first comment has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet.
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
 - PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
+
+Example: a PR has two open line threads. The user started the first one in a review that is still `PENDING`. A colleague started the second one in a submitted review, with state `COMMENTED`. Only the second one is a thread.
 
 The **starter** is the author of a thread's first comment. A **bot** is an author whose `__typename` is `Bot`, or a login that ends in `[bot]` or matches `copilot` (case-insensitive). GraphQL gives an app's login without `[bot]`: CodeRabbit is `coderabbitai`. Everyone else is a human.
 
