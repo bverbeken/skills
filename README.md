@@ -5,6 +5,7 @@ Claude Code skills I use.
 | Skill | What it does |
 |---|---|
 | [conference-notes](conference-notes/) | Live note-taking during conference talks: type short notes and snap slides from your phone, get structured Markdown notes. |
+| [copy](copy/) | Copy a reply or any part of the conversation to the macOS clipboard as rich text and Markdown, ready to paste. `/copy this response`. |
 | [development](development/) | From an issue to a draft PR: asks you every open decision, builds the change test-first in its own worktree, and opens a draft PR. |
 | [review](review/) | A full code review: eleven checks in parallel (tests, spec, bugs, performance, style, comments, refactoring, architecture, consumers, dependencies, description) and a GO / NO GO verdict. Never posts. |
 | [second-brain/find-in-vault](second-brain/skills/find-in-vault/) | Find places in a notes vault by a `vault-ref` name in their frontmatter instead of a hard-coded path, so skills keep working when you move folders. |
@@ -16,7 +17,7 @@ Clone the repo and link the skill folders you want into `~/.claude/skills/`:
 ```bash
 git clone https://github.com/bverbeken/skills.git ~/skills
 mkdir -p ~/.claude/skills
-for skill in ~/skills/conference-notes ~/skills/development/skills/* ~/skills/review/skills/*; do
+for skill in ~/skills/conference-notes ~/skills/copy ~/skills/development/skills/* ~/skills/review/skills/*; do
   ln -sfn "$skill" ~/.claude/skills/
 done
 ```
