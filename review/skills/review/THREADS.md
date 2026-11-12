@@ -37,7 +37,7 @@ With the Linear tools, also call `mcp__linear__get_diff_threads` with the PR lin
 
 Turn the result into **threads**:
 
-- Each review thread is a thread. Skip a review thread whose first comment, or the last comment from the user's login, has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet. Submitting the review makes the thread count again.
+- Each review thread is a thread. Skip a review thread whose first comment, or the user's last comment that does not start with `🤖 `, has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet. Submitting the review makes the thread count again.
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
 - PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
 
