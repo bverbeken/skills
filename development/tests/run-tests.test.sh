@@ -122,6 +122,17 @@ SUITE
   expect_no_line "line 80"
 }
 
+test_a_failing_run_prints_at_most_50_failures() {
+  passing_timeout_stub "$stubs/timeout"
+  run 10m bash -c 'for i in $(seq 1 200); do echo "FAIL $i"; done; exit 1'
+  expect_line "FAIL 1"
+  expect_line "FAIL 50"
+  expect_no_line "FAIL 60"
+  expect_no_line "FAIL 185"
+  expect_line "FAIL 186"
+  expect_line "FAIL 200"
+}
+
 for test in $(declare -F | awk '{print $3}' | grep '^test_'); do
   failed=0
   setup
