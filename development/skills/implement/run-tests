@@ -11,11 +11,18 @@ code=$?
 
 echo "Exit code: $code"
 echo "Log: $log"
-if [ "$code" = 0 ]; then
-  tail -n 5 "$log"
-else
-  grep -i -E -C 5 -m 50 'fail|error|✕|✗' "$log"
-  echo "Last 15 lines:"
-  tail -n 15 "$log"
-fi
+case "$code" in
+  0)
+    tail -n 5 "$log"
+    ;;
+  124 | 137)
+    echo "Hit the time limit of $limit."
+    tail -n 40 "$log"
+    ;;
+  *)
+    grep -i -E -C 5 -m 50 'fail|error|✕|✗' "$log"
+    echo "Last 15 lines:"
+    tail -n 15 "$log"
+    ;;
+esac
 exit "$code"

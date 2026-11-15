@@ -25,6 +25,16 @@ STUB
   chmod +x "$1"
 }
 
+timed_out_timeout_stub() {
+  cat > "$1" <<STUB
+#!/usr/bin/env bash
+echo "test_x FAILED"
+for i in \$(seq 1 100); do echo "line \$i"; done
+exit $2
+STUB
+  chmod +x "$1"
+}
+
 setup() {
   work="$(mktemp -d)"
   stubs="$work/stubs"
@@ -131,6 +141,26 @@ test_a_failing_run_prints_at_most_50_failures() {
   expect_no_line "FAIL 185"
   expect_line "FAIL 186"
   expect_line "FAIL 200"
+}
+
+expect_a_run_at_the_limit_prints_the_last_40_lines() {
+  timed_out_timeout_stub "$stubs/timeout" "$1"
+  run 7m ./gradlew test
+  expect_equal "$status" "$1"
+  expect_contains "Exit code: $1"
+  expect_line "Hit the time limit of 7m."
+  expect_line "line 61"
+  expect_line "line 100"
+  expect_no_line "line 60"
+  expect_no_line "test_x FAILED"
+}
+
+test_a_run_stopped_at_the_limit_prints_the_last_40_lines() {
+  expect_a_run_at_the_limit_prints_the_last_40_lines 124
+}
+
+test_a_run_killed_after_the_limit_prints_the_last_40_lines() {
+  expect_a_run_at_the_limit_prints_the_last_40_lines 137
 }
 
 for test in $(declare -F | awk '{print $3}' | grep '^test_'); do
