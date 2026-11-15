@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -u
+
+limit="$1"
+shift
+
+log="$(mktemp "${TMPDIR:-/tmp}/run-tests.XXXXXX")"
+
+timeout -k 1m "$limit" "$@" > "$log" 2>&1
+code=$?
+
+echo "Exit code: $code"
+echo "Log: $log"
+tail -n 5 "$log"
+exit "$code"
