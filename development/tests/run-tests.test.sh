@@ -163,6 +163,14 @@ test_a_run_killed_after_the_limit_prints_the_last_40_lines() {
   expect_a_run_at_the_limit_prints_the_last_40_lines 137
 }
 
+test_without_timeout_it_runs_under_gtimeout() {
+  passing_timeout_stub "$stubs/gtimeout"
+  run 10m echo "all green"
+  expect_equal "$status" 0
+  expect_line "all green"
+  expect_equal "$(cat "$stubs/timeout-args")" "-k 1m 10m echo all green"
+}
+
 for test in $(declare -F | awk '{print $3}' | grep '^test_'); do
   failed=0
   setup

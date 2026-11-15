@@ -4,9 +4,12 @@ set -u
 limit="$1"
 shift
 
+timeout_command=timeout
+command -v timeout > /dev/null || timeout_command=gtimeout
+
 log="$(mktemp "${TMPDIR:-/tmp}/run-tests.XXXXXX")"
 
-timeout -k 1m "$limit" "$@" > "$log" 2>&1
+"$timeout_command" -k 1m "$limit" "$@" > "$log" 2>&1
 code=$?
 
 echo "Exit code: $code"
