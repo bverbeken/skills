@@ -59,6 +59,20 @@ expect_equal() {
   fi
 }
 
+expect_line() {
+  if ! grep -qxF -- "$1" <<< "$output"; then
+    echo "  expected a line: $1"
+    failed=1
+  fi
+}
+
+expect_no_line() {
+  if grep -qxF -- "$1" <<< "$output"; then
+    echo "  expected no line: $1"
+    failed=1
+  fi
+}
+
 log_path() {
   sed -n 's/^Log: //p' <<< "$output"
 }
@@ -72,6 +86,40 @@ test_a_passing_run_prints_the_exit_code_the_log_and_the_last_5_lines() {
   expect_not_contains "line 15"
   expect_equal "$(cat "$(log_path)" | wc -l | tr -d ' ')" 20
   expect_equal "$(cat "$stubs/timeout-args")" "-k 1m 10m bash -c for i in \$(seq 1 20); do echo \"line \$i\"; done"
+}
+
+test_a_failing_run_prints_the_failures_with_context_and_the_last_15_lines() {
+  passing_timeout_stub "$stubs/timeout"
+  cat > "$work/suite" <<'SUITE'
+for i in $(seq 1 100); do
+  case $i in
+    20) echo "test_a FAILED" ;;
+    40) echo "Error in b" ;;
+    60) echo "✕ c" ;;
+    70) echo "✗ d" ;;
+    *) echo "line $i" ;;
+  esac
+done
+exit 3
+SUITE
+  run 10m bash "$work/suite"
+  expect_equal "$status" 3
+  expect_contains "Exit code: 3"
+  expect_line "test_a FAILED"
+  expect_line "Error in b"
+  expect_line "✕ c"
+  expect_line "✗ d"
+  expect_line "line 15"
+  expect_line "line 25"
+  expect_line "line 35"
+  expect_line "line 55"
+  expect_line "line 75"
+  expect_line "line 86"
+  expect_line "line 100"
+  expect_no_line "line 14"
+  expect_no_line "line 26"
+  expect_no_line "line 50"
+  expect_no_line "line 80"
 }
 
 for test in $(declare -F | awk '{print $3}' | grep '^test_'); do
