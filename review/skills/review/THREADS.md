@@ -1,13 +1,6 @@
 # Threads
 
-How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code) carry the user's login, so they count as the user's. One exception: a comment from the user's login that starts with `🤖 ` is the **build**'s. It counts as neither yours nor someone else's. `ready-for-review` posts the build's `🤖 ` comments, with and without `--afk`. It posts four kinds:
-
-- A reply to a bot thread, for example a Copilot thread, that says what was fixed or why not. The build resolves the thread.
-- A reply that names the commit of a fix. The build resolves the thread.
-- A reply with the reason it changes nothing: on a bot thread you answered, and with `--afk` on a human thread it dismisses. The thread stays open.
-- A **skip reply** on a thread whose decision is yours, as "Skip replies" in `ready-for-review` says. The thread stays open.
-
-When you answer after the build on a bot thread, the thread goes to **triage** (step 2), and `ready-for-review` handles it as a human thread: it does what your answer asks.
+How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code, or `ready-for-review`) carry the user's login, so they count as the user's. `ready-for-review` replies only on bot threads, and resolves each thread it replies on.
 
 ## 1. Fetch
 
@@ -37,13 +30,13 @@ With the Linear tools, also call `mcp__linear__get_diff_threads` with the PR lin
 
 Turn the result into **threads**:
 
-- Each review thread is a thread. A review thread is **pending** when its first comment, or the user's last comment that does not start with `🤖 `, has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet. Own mode skips it. Submitting the review makes the thread count again.
+- Each review thread is a thread. A review thread is **pending** when its first comment, or the user's last comment, has `pullRequestReview.state` `PENDING`: the user has not submitted that review yet. Own mode skips it. Submitting the review makes the thread count again.
 - Each review body with text is a thread. Skip empty bodies, `PENDING` reviews, and review bodies from a bot: a bot's summary has nothing to act on.
-- PR comments: a comment that answers a review body joins that thread. A build comment that names the URL of a review body or a PR comment joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
+- PR comments: a comment that answers a review body joins that thread. Treat any other PR comment from the PR author after a review body as its answer. Every other PR comment is a thread of its own.
 
 Example: a PR has two open line threads. The user started the first one in a review that is still `PENDING`. A colleague started the second one in a submitted review, with state `COMMENTED`. In own mode, only the second one is a thread. In colleague mode, the first one is a pending thread.
 
-Example: the user writes "Rename this" and submits the review. The build replies "🤖 Done". The user replies "Still wrong" in a review that is still `PENDING`. The thread is skipped until the user submits that review.
+Example: the user writes "Rename this" and submits the review. A colleague replies "Done". The user replies "Still wrong" in a review that is still `PENDING`. The thread is skipped until the user submits that review.
 
 The **starter** is the author of a thread's first comment. A **bot** is an author whose `__typename` is `Bot`, or a login that ends in `[bot]` or matches `copilot` (case-insensitive). GraphQL gives an app's login without `[bot]`: CodeRabbit is `coderabbitai`. Everyone else is a human.
 
@@ -53,12 +46,10 @@ If there are no threads, stop here: `review` runs as for a new PR.
 
 Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
-**Own mode**: the first row that matches wins. Bot comments that come after a build comment don't count for the last word.
+**Own mode**: the first row that matches wins.
 
 | Thread | Group |
 |---|---|
-| Open, and the build has the last word | **waiting** |
-| Open, and you have the last word after the build | **triage** |
 | Open, and someone else has the last word | **triage** |
 | Open, and only you commented in it (a note from you or your tools) | **triage** |
 | Open, and you have the last word after a bot | **triage** |

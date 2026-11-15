@@ -18,14 +18,14 @@ With `--afk`, nobody watches the build. Ask nothing: where a step says to ask, t
 
 - When the issue still has an open question section, its answer never reached the decisions: **stop** without building.
 - A change to a line in the issue's `## Decisions` section is always the user's, also when the build would only bend it, for example when a fact found during the build makes the decision impossible as written. **Stop** with a question that names the decision line, the fact you found, the question, and your own recommendation. This rule wins over the others below.
-- A review finding with the type `UNDECIDED CASE` is always the user's: **stop** with the case as the question, and build nothing for it. This rule wins over the next one.
+- A review finding about a case nobody decided, one that says the case is the user's choice, is always the user's: **stop** with the case as the question, and build nothing for it. This rule wins over the next one.
 - A new open decision during the build: take your own recommendation, or **stop** when the decision is really the user's.
 
 To **stop**: write the question in the issue's open question section, or leave the one that is there, as the issue tracker docs name it, and move the issue to `TO_CLARIFY`. When the docs map no `TO_CLARIFY`, the issue stays in its status: say that it needs a manual move. Then end, and say that the build stopped. When there is no issue, or the docs name no such section, print the question, leave the status alone, and end.
 
 ## Open decisions
 
-Build from the issue's `## Decisions` section. When an open decision comes up during the build, stop and call the Skill tool with "prepare", the issue reference or spec, `--keep-status` and that decision. A review finding that says the spec or the design is wrong is a new open decision too, and so is a finding with the type `UNDECIDED CASE`, and so is a build that would change or bend a line in `## Decisions`. Build on the answer, never on a guess.
+Build from the issue's `## Decisions` section. When an open decision comes up during the build, stop and call the Skill tool with "prepare", the issue reference or spec, `--keep-status` and that decision. A review finding that says the spec or the design is wrong is a new open decision too, and so is a finding about a case nobody decided, and so is a build that would change or bend a line in `## Decisions`. Build on the answer, never on a guess.
 
 ## Worktree
 

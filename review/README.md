@@ -28,31 +28,23 @@ A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets 
 |---|---|---|
 | Open thread, someone else has the last word | Checked against the code: FIXED, FIX, DISMISS, DISCUSS or CLARIFY, with a draft reply | Your threads and answered bot threads: RESOLVED, NOT RESOLVED (with the example that still fails) or NEW PROBLEM, with a draft reply |
 | Resolved thread | Checked again: you want your PR spotless before it goes out of draft | Settled: never raised again |
-| You have the last word | Triaged when you answered the build or a bot, or when only you wrote in it. Listed as waiting when you answered a colleague. | Listed as waiting |
-| The build has the last word (a reply under your login that starts with `🤖 `), or only bots answered the build's reply | Listed as waiting; checked again once you answer | |
+| You have the last word | Triaged when you answered a bot, or when only you wrote in it. Listed as waiting when you answered a colleague. | Listed as waiting |
 | Your line comment in a review you have not submitted yet | Skipped | Not checked and no draft reply. A finding about the same problem is dropped. |
 
 A finding that is already in a thread is not reported twice. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
 
-**Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you when a fix needs your choice, or would change a line in the issue's `## Decisions` section, as `prepare` writes it.
+**Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you, with its recommendation, when a fix needs a choice the issue doesn't make, or goes against the issue.
 
-It posts the build's comments under your login, each starting with `🤖 `, with and without `--afk`:
+It posts only on bot threads, for example Copilot threads, under your login. Each gets a short reply, and is resolved, both the fixed and the dismissed ones. When it can't decide on a bot thread, it asks you. When you answer on a bot thread, the next run does what you ask. Human threads are yours to answer: `review` drafts the replies.
 
-- Copilot and other bot threads get a short reply and are resolved, both the fixed and the dismissed ones. A bot thread it can't decide on gets a skip reply.
-- A **skip reply**, `🤖 <url> Skipped: this one is your call.`, goes on a thread whose decision it leaves to you. The thread stays open. `ready-for-review` leaves it out until someone other than a bot writes on it again, and `review` lists it as waiting.
-- When you answer the build on a bot thread, the next run triages your answer as a human thread: it does what you ask, or replies with the reason it changes nothing.
+The first round reuses a review of the same commit from earlier in the session. After a review of an older commit, it reviews only what changed since. Every later round reviews only the fixes of the round before. After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready. It refuses PRs that are not yours.
 
-With `--afk` it asks nothing: it takes its own recommendation, also answers your own threads (with the commit that fixed it, or with the reason it changes nothing), and leaves the PR in draft when something only you can decide is left.
-
-The first round reuses a review of the same commit from earlier in the session. After a review of an older commit, it reviews only what changed since. Every later round reviews only the fixes of the round before. After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready, and moves its issue to `READY_FOR_REVIEW`. It refuses PRs that are not yours.
-
-Some suggestions are left open: nobody decided on them. These are the new suggestions of rounds after the first, and with `--afk` also the suggestions it skipped. Where they go depends on the `Reviewer:` line:
+Some suggestions are left open: nobody decided on them. These are the new suggestions of rounds after the first. Where they go depends on the `Reviewer:` line:
 
 - `Reviewer: me`: in an `## Open suggestions` section at the end of the PR description.
-- `Reviewer: team`, without `--afk`: in the final output only, so the description stays clean for colleagues.
-- `Reviewer: team`, with `--afk`: in an `## Open suggestions` section in the issue.
+- `Reviewer: team`: in the final output only, so the description stays clean for colleagues.
 
-On a solo project (`Reviewer: me`), `ready-for-review` runs one light review and no repeat rounds. It applies the suggestions in that pass. A one-line fix, a test or a refactoring gets no further look, and one agent reads any other fix once. A case nobody decided becomes a new issue in `USEFUL`, and the PR goes ready without it. On a team project the rounds stay, and a case nobody decided stops the build and goes to the user.
+On a solo project (`Reviewer: me`), `ready-for-review` runs one light review and no repeat rounds. It applies the suggestions in that pass. A one-line fix, a test or a refactoring gets no further look, and one agent reads any other fix once. On a team project the rounds stay.
 
 ## What it does
 
@@ -116,7 +108,7 @@ All nineteen skills must sit next to each other: the checks read the shared step
 
 ## Set up your project
 
-Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads there which status `READY_FOR_REVIEW` maps to, and moves the issue to it when the PR is ready. It also reads who reviews your PRs there, from a `Reviewer: me` or `Reviewer: team` line. No line counts as `team`. The [development README](../development/README.md#faber-statuses) lists the Faber statuses.
+Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads who reviews your PRs there, from a `Reviewer: me` or `Reviewer: team` line. No line counts as `team`.
 
 Example:
 

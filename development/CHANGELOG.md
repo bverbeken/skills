@@ -6,6 +6,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 - `implement` runs every test run with its new `run-tests` script. It prints the exit code, the log path, and only the failures and the last lines. The full output stays in the log file.
 - The `Test runs` rules move from `tdd` to `implement`. `tdd` points to them.
+- `implement` spots a review finding about a case nobody decided by what it says: the case is the user's choice. `review` no longer gives such a finding the type `UNDECIDED CASE`.
 
 ## 2026-11-10
 
