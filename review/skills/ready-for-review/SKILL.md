@@ -227,4 +227,4 @@ Post the reply and resolve the thread with `gh api graphql`: `addPullRequestRevi
 
 When the `implement` skill is installed, run the tests with the `run-tests` script in its folder, as the `Test runs` section of `implement` says. For example: `run-tests 10m ./mvnw test`.
 
-Otherwise run the tests yourself, and read only the summary line and the failures. For example, run `./mvnw test > test.log 2>&1`, then read the lines that match `fail` or `error` and the last 15 lines of `test.log`.
+Otherwise run the tests yourself, and read only the summary line and the failures. Keep the output out of the working tree. For example, run `log=$(mktemp); ./mvnw test > "$log" 2>&1`, then read the lines that match `fail` or `error` and the last 15 lines of `$log`.
