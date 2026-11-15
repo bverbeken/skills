@@ -98,6 +98,14 @@ test_a_passing_run_prints_the_exit_code_the_log_and_the_last_5_lines() {
   expect_equal "$(cat "$stubs/timeout-args")" "-k 1m 10m bash -c for i in \$(seq 1 20); do echo \"line \$i\"; done"
 }
 
+test_without_a_limit_and_a_command_it_prints_how_to_call_it() {
+  passing_timeout_stub "$stubs/timeout"
+  run 10m
+  expect_equal "$status" 2
+  expect_line "Usage: run-tests <limit> <test command...>"
+  expect_not_contains "Exit code:"
+}
+
 test_the_stderr_of_the_command_goes_to_the_log_only() {
   passing_timeout_stub "$stubs/timeout"
   run 10m bash -c 'for i in $(seq 1 20); do echo "err $i" >&2; done; echo done'
