@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-15
+
+- `ready-for-review` runs the tests with `run-tests` from `implement` when that skill is installed. Otherwise it reads only the summary line and the failures.
+
 ## 2026-11-12
 
 - `review`: on a colleague's PR, a line thread of your own review that is not submitted yet (`PENDING`) drops a finding about the same problem. It gets no agent and no draft reply. The threads line counts these threads as `pending`.

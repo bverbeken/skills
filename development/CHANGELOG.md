@@ -2,6 +2,11 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-15
+
+- `implement` runs every test run with its new `run-tests` script. It prints the exit code, the log path, and only the failures and the last lines. The full output stays in the log file.
+- The `Test runs` rules move from `tdd` to `implement`. `tdd` points to them.
+
 ## 2026-11-10
 
 - The statuses are now called Faber statuses.
