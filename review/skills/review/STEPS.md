@@ -56,7 +56,7 @@ There is always some spec: everything that says what the change should do. Colle
 - Every link in those that you have a tool for: support conversations, docs, other issues, PRs, designs. Follow them one level deep.
 - The PR description and the commit messages.
 
-Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and the `## Open suggestions` and `## Follow-ups` sections in the PR description. They list review findings, not requirements.
+Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, the `## Open suggestions` and `## Follow-ups` sections in the PR description, and an `## Open suggestions` section in the issue. They list review findings, not requirements.
 
 Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the changed lines, the changed files and their commits. List each source by name or link at the top.
 
