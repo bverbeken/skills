@@ -15,7 +15,7 @@ make_tools_dir() {
   done
 }
 
-passing_timeout_stub() {
+pass_through_timeout_stub() {
   cat > "$1" <<'STUB'
 #!/usr/bin/env bash
 echo "$@" > "$(dirname "$0")/timeout-args"
@@ -88,7 +88,7 @@ log_path() {
 }
 
 test_a_passing_run_prints_the_exit_code_the_log_and_the_last_5_lines() {
-  passing_timeout_stub "$stubs/timeout"
+  pass_through_timeout_stub "$stubs/timeout"
   run 10m bash -c 'for i in $(seq 1 20); do echo "line $i"; done'
   expect_equal "$status" 0
   expect_contains "Exit code: 0"
@@ -99,7 +99,7 @@ test_a_passing_run_prints_the_exit_code_the_log_and_the_last_5_lines() {
 }
 
 test_without_a_limit_and_a_command_it_prints_how_to_call_it() {
-  passing_timeout_stub "$stubs/timeout"
+  pass_through_timeout_stub "$stubs/timeout"
   run 10m
   expect_equal "$status" 2
   expect_line "Usage: run-tests <limit> <test command...>"
@@ -107,7 +107,7 @@ test_without_a_limit_and_a_command_it_prints_how_to_call_it() {
 }
 
 test_the_stderr_of_the_command_goes_to_the_log_only() {
-  passing_timeout_stub "$stubs/timeout"
+  pass_through_timeout_stub "$stubs/timeout"
   run 10m bash -c 'for i in $(seq 1 20); do echo "err $i" >&2; done; echo done'
   expect_equal "$status" 0
   expect_no_line "err 1"
@@ -115,7 +115,7 @@ test_the_stderr_of_the_command_goes_to_the_log_only() {
 }
 
 test_a_failing_run_prints_the_failures_with_context_and_the_last_15_lines() {
-  passing_timeout_stub "$stubs/timeout"
+  pass_through_timeout_stub "$stubs/timeout"
   cat > "$work/suite" <<'SUITE'
 for i in $(seq 1 100); do
   case $i in
@@ -149,7 +149,7 @@ SUITE
 }
 
 test_a_failing_run_prints_at_most_50_failures() {
-  passing_timeout_stub "$stubs/timeout"
+  pass_through_timeout_stub "$stubs/timeout"
   run 10m bash -c 'for i in $(seq 1 200); do echo "FAIL $i"; done; exit 1'
   expect_line "FAIL 1"
   expect_line "FAIL 50"
@@ -180,7 +180,7 @@ test_a_run_killed_after_the_limit_prints_the_last_40_lines() {
 }
 
 test_without_timeout_it_runs_under_gtimeout() {
-  passing_timeout_stub "$stubs/gtimeout"
+  pass_through_timeout_stub "$stubs/gtimeout"
   run 10m echo "all green"
   expect_equal "$status" 0
   expect_line "all green"
