@@ -171,6 +171,17 @@ test_without_timeout_it_runs_under_gtimeout() {
   expect_equal "$(cat "$stubs/timeout-args")" "-k 1m 10m echo all green"
 }
 
+test_without_timeout_and_gtimeout_it_stops_and_says_how_to_install_them() {
+  run 10m touch "$work/ran"
+  expect_equal "$status" 127
+  expect_contains "brew install coreutils"
+  expect_no_line "Exit code: 0"
+  if [ -e "$work/ran" ]; then
+    echo "  expected the command not to run"
+    failed=1
+  fi
+}
+
 for test in $(declare -F | awk '{print $3}' | grep '^test_'); do
   failed=0
   setup

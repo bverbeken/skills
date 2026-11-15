@@ -4,8 +4,14 @@ set -u
 limit="$1"
 shift
 
-timeout_command=timeout
-command -v timeout > /dev/null || timeout_command=gtimeout
+if command -v timeout > /dev/null; then
+  timeout_command=timeout
+elif command -v gtimeout > /dev/null; then
+  timeout_command=gtimeout
+else
+  echo "run-tests needs timeout or gtimeout. Install them with: brew install coreutils" >&2
+  exit 127
+fi
 
 log="$(mktemp "${TMPDIR:-/tmp}/run-tests.XXXXXX")"
 
