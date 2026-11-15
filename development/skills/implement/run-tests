@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -u
+
+if [ "$#" -lt 2 ]; then
+  echo "Usage: run-tests <limit> <test command...>" >&2
+  exit 2
+fi
+
+limit="$1"
+shift
+
+if command -v timeout > /dev/null; then
+  timeout_command=timeout
+elif command -v gtimeout > /dev/null; then
+  timeout_command=gtimeout
+else
+  echo "run-tests needs timeout or gtimeout. Install them with: brew install coreutils" >&2
+  exit 127
+fi
+
+log="$(mktemp "${TMPDIR:-/tmp}/run-tests.XXXXXX")"
+
+"$timeout_command" -k 1m "$limit" "$@" > "$log" 2>&1
+code=$?
+
+echo "Exit code: $code"
+echo "Log: $log"
+case "$code" in
+  0)
+    tail -n 5 "$log"
+    ;;
+  124 | 137)
+    echo "Hit the time limit of $limit."
+    tail -n 40 "$log"
+    ;;
+  *)
+    grep -i -E -C 5 -m 50 'fail|error|✕|✗' "$log"
+    echo "Last 15 lines:"
+    tail -n 15 "$log"
+    ;;
+esac
+exit "$code"

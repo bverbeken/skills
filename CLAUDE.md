@@ -1,1 +1,3 @@
 When a change under `review/` or `development/` changes what a skill does, add a line to that folder's `CHANGELOG.md` in the same PR. Any commit of the PR can hold the line. Wording-only changes need no line.
+
+Tests: `development/tests/run-tests.test.sh`, limit 2 minutes.

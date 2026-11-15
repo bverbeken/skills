@@ -14,7 +14,7 @@ With `--afk`, nobody watches. Ask nothing. Where step 6 says to stop and ask, do
 - A finding with the type `UNDECIDED CASE`, on a team project: skip the item and build nothing for it. The case is the user's. This rule wins over the others below.
 - The fix needs a choice: take your own recommendation. When the choice is really the user's, as the spec or the issue leaves it to them, skip the item.
 - The fix changes code outside the PR's files, or needs a new issue: fix a blocking item, skip a suggestion.
-- Merge conflicts: merge `origin/<base>` into the branch, as one merge commit, fix the conflicts, run the tests, and push. A merge keeps the head of the round before in the history, so the next round can review only what changed since. When a conflict needs a choice that is really the user's, skip it.
+- Merge conflicts: merge `origin/<base>` into the branch, as one merge commit, fix the conflicts, run the tests as `Test runs` says, and push. A merge keeps the head of the round before in the history, so the next round can review only what changed since. When a conflict needs a choice that is really the user's, skip it.
 - Unpushed commits: push them.
 - An open human thread with a DISMISS verdict: post a reply with the reason, and leave the thread open.
 - An open human thread with a FIXED verdict: post a reply that names the commit that fixed it, and resolve the thread.
@@ -138,7 +138,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 
    Ask about one item per message, with the options you see. For merge conflicts, recommend a merge of `origin/<base>`: a rebase rewrites the branch, and the next round then stops the review loop. When the user says to skip an item, delete it from the list, note it as skipped, and post a skip reply as "Skip replies" says.
 2. Fix it. For a bug or a missing test: write the test first and see it fail, then fix the code. For failing CI: read the failing job's log (`gh run view <run-id> --log-failed`) and fix the cause. For pending CI: wait for it (`gh pr checks <num> --watch`). For a description finding: edit the description outside the markers, with no commit. For a screenshot finding: make and upload the images as `SCREENSHOTS.md` in this skill's folder says.
-3. Run the tests that cover the change. They pass.
+3. Run the tests that cover the change, as `Test runs` says. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
 5. Tick the item in the PR description.
 6. When the item came from a bot thread, also an answered bot thread: post a bot reply that names the commit, and resolve the thread.
@@ -222,3 +222,9 @@ A bot reply says in one sentence what happened. A teammate who never saw the cod
 Before you post, check the reply with a cold read: start one `Agent` (general-purpose) and give it only the bot's comment and the reply. The brief: "Say in your own words what was decided and why. Say if you had to read the reply twice." Rewrite the reply when the reader got it wrong or read it twice. In step 5, check all the replies of that step in one agent.
 
 Post the reply and resolve the thread with `gh api graphql`: `addPullRequestReviewThreadReply` with the thread's `id` and the body, then `resolveReviewThread` with the same `id`. A review body or a PR comment has no thread `id`: post the reply with `gh pr comment <num> -R <owner>/<repo> --body-file <file>`, and resolve nothing. Put the URL of the comment you answer right after the `🤖 ` marker, so `review` joins the reply to it.
+
+## Test runs
+
+When the `implement` skill is installed, run the tests with the `run-tests` script in its folder, as the `Test runs` section of `implement` says. For example: `run-tests 10m ./mvnw test`.
+
+Otherwise run the tests yourself, and read only the summary line and the failures. Keep the output out of the working tree. For example, run `log=$(mktemp); ./mvnw test > "$log" 2>&1`, then read the lines that match `fail` or `error` and the last 15 lines of `$log`.

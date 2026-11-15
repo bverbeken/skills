@@ -63,7 +63,7 @@ Before the first tdd cycle, run one existing test near the code the change touch
 - Without `--afk`: ask the user to fix the machine, and wait. When they say it is fixed, **merge the default branch**, below, then run the failing test again, and go on in the same session once it passes.
 - With `--afk`: **stop** with the cause as the question.
 
-A test that fails later in the build for a reason outside the change gets the same treatment. So does an existing test that also hits its time limit on the base, as the `Test runs` section of `tdd` says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine, or fixes the cause on the default branch. The build keeps every test enabled, and leaves every tool and database on the machine as it is.
+A test that fails later in the build for a reason outside the change gets the same treatment. So does an existing test that also hits its time limit on the base, as `Test runs` below says. For a time limit, the cause names the command, the limit and the last lines of output. The user fixes the machine, or fixes the cause on the default branch. The build keeps every test enabled, and leaves every tool and database on the machine as it is.
 
 ## Merge the default branch
 
@@ -71,7 +71,7 @@ A fix on the default branch reaches the branch only through a merge. Run `git fe
 
 When `git status --porcelain` shows anything, also untracked files, stash it first, with a message you print and keep: `msg="implement <branch> $(date +%s)"; echo "$msg"; git stash push -u -m "$msg"`. All worktrees of a repo share one stash list, so it can hold entries of the user or of other builds. Pop only this entry, by its ref. Look the ref up by the entry's full message in the same command as the pop, as another worktree can shift it: `git stash pop "$(git stash list | grep -F "$msg" | cut -d: -f1)"`. Drop it the same way. Pop it after the merge commit. When the merge changed setup or dependency files, such as a lockfile, run steps 4 and 5 of `Worktree` again before the next test run.
 
-On a conflict, in the merge or in the pop, resolve it yourself, run the tests, and go on. A pop also fails when the merge added a file at the path of a stashed untracked file: treat that as a pop conflict. A pop with a conflict keeps the entry: once the conflict is resolved, drop it, as above. When you can't resolve a conflict, name the conflicting files and what each side changed:
+On a conflict, in the merge or in the pop, resolve it yourself, run the tests as `Test runs` below says, and go on. A pop also fails when the merge added a file at the path of a stashed untracked file: treat that as a pop conflict. A pop with a conflict keeps the entry: once the conflict is resolved, drop it, as above. When you can't resolve a conflict, name the conflicting files and what each side changed:
 
 - Without `--afk`: ask the user how to resolve it.
 - With `--afk`: put the worktree back as it was before the merge, so a retry can merge again. On a merge conflict, run `git merge --abort`, then pop the stash entry, if there is one. On a pop conflict, undo the merge too: run `git reset --hard <the commit before the merge>`, then `git clean -fd`, then pop the entry. The entry took every untracked file and folder, so `git clean -fd` removes only what the failed pop brought back. On the commit before the merge, the entry applies without a conflict. Then **stop** with the conflict as the question.
@@ -80,9 +80,38 @@ On a conflict, in the merge or in the pop, resolve it yourself, run the tests, a
 
 Call the Skill tool with "tdd" where possible, at pre-agreed seams.
 
-Run typechecking regularly, single test files regularly, and the full test suite once at the end. Every test run, also the check before the first tdd cycle and the full suite, has a time limit: run it as the `Test runs` section of `tdd` says.
+Run typechecking regularly, single test files regularly, and the full test suite once at the end. Every test run, also the check before the first tdd cycle and the full suite, has a time limit: run it as `Test runs` below says.
 
 Commit to the worktree's branch as you go, in small commits: one per green tdd cycle, and one for each other step (a prefactor, wiring, a fix for a review finding). Each commit holds one step, so the history reads as the order the work was built in.
+
+## Test runs
+
+Run every test run with `run-tests`, in this skill's folder: `run-tests <limit> <test command>`. Find the test command as before and pass it in. Examples: `run-tests 10m ./mvnw test`, `run-tests 30m yarn test`, `run-tests 10m bash -c 'cd api && pytest'`.
+
+`run-tests` runs the command under `timeout -k 1m <limit>`, with all output in a log file. It prints the exit code and the path of the log, then:
+
+- on success: the last 5 lines
+- on a failure: the lines that match `fail`, `error`, `✕` or `✗`, with 5 lines of context and at most 50 matches, then the last 15 lines
+- at the limit (exit 124 or 137): the last 40 lines
+
+Read the log only when that output does not say enough.
+
+`run-tests` uses `timeout`, else `gtimeout`. When both are missing, it stops and says to run `brew install coreutils`. That cause is outside the change, as below.
+
+Every test run has a time limit. The default is 10 minutes. A repo can set its own limit next to its test command, in its `README.md`, `CLAUDE.md` or `AGENTS.md`, for example "Full suite: `./gradlew test`, limit 30 minutes."
+
+- A limit of 8 minutes or less: run `run-tests` in the foreground, with the Bash tool's `timeout` set to the limit plus 2 minutes. The Bash tool waits at most 10 minutes in the foreground.
+- A longer limit, also the default of 10 minutes: run `run-tests` in the background, with the Bash tool's `timeout` set to the limit plus 2 minutes. Without it, the Bash tool stops a background command after 10 minutes. It allows at most 2 hours.
+
+Wait for the notice that the run ended or hit its limit. A poll loop with `sleep` and no end can hold a build for hours.
+
+When a run hits its limit, find the tests that hang. The last lines of output often name the tests that were still running. When they name none, run only the tests this change added or changed, with the same limit. When that run ends in time, the hang is in an existing test.
+
+- Only tests this change added or changed: count it as a failing test, with the reason "timed out", and make it pass in the tdd loop.
+- An existing test, while the branch has no commits of its own and no uncommitted changes: the cause is outside the change.
+- Any other existing test: run it once on the commit the branch started from, with the same limit. Run it in a detached worktree, with the ignored setup files and the installs of steps 4 and 5 of `Worktree`. When it passes there, the change made it hang: count it as a failing test, with the reason "timed out", and make it pass in the tdd loop. When it hangs or fails there too, the cause is outside the change.
+
+When the cause is outside the change, stop the tdd loop. In a build, handle it as a setup failure. When `tdd` runs on its own, show the user the command, the limit and the last lines of output, and ask.
 
 ## Reread the diff
 
