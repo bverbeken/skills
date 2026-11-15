@@ -4,6 +4,9 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-11-15
 
+- `ready-for-review` has no `--afk`, and moves no issue. `faber` does both. It posts only on bot threads, without the `🤖 ` marker, and resolves each thread it answers. It posts no skip replies and no replies on human threads. A bot thread with a DISCUSS or CLARIFY verdict goes to the user.
+- `ready-for-review` asks, with a recommendation, when a fix needs a choice the issue doesn't make, or goes against the issue. On a solo project it no longer makes a follow-up issue by itself. When your answer makes an item a follow-up issue, it goes under `## Follow-ups` in the PR description.
+- `review`: comments under your login that start with `🤖 ` are yours, as all your other comments. A case nobody decided no longer gets the type `UNDECIDED CASE`: the finding says the case is your choice, with a recommendation.
 - `ready-for-review` runs the tests with `run-tests` from `implement` when that skill is installed. Otherwise it reads only the summary line and the failures.
 
 ## 2026-11-12
