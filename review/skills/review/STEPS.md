@@ -56,7 +56,7 @@ There is always some spec: everything that says what the change should do. Colle
 - Every link in those that you have a tool for: support conversations, docs, other issues, PRs, designs. Follow them one level deep.
 - The PR description and the commit messages.
 
-Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and an `## Open suggestions` section in the PR description or the issue. They list review findings, not requirements.
+Leave out what `ready-for-review` writes for itself: the TODO list between the `<!-- ready-for-review:todo -->` markers, and the `## Open suggestions` and `## Follow-ups` sections in the PR description. They list review findings, not requirements.
 
 Write the sources and their content to `<contextFile>`, a file in a new temp folder (`mktemp -d`), together with the target, the mode, `<reviewDir>`, the diff command, the commit list, the PR data and the CI status. With `--since`, also write the changed lines, the changed files and their commits. List each source by name or link at the top.
 
@@ -89,13 +89,13 @@ In **own** mode, a finding blocks when it is one of these seven kinds, whatever 
 - a broken rule in force;
 - a name or a text that makes a reader understand the change wrong;
 - test steps the PR needs and lacks, or a screenshot, before/after or video when the repo's review settings require one (`review-description`, PR material);
-- a finding with the type `UNDECIDED CASE`.
+- a case nobody decided.
 
 Everything else is a suggestion in own mode too: duplication, style taste, a test at another level, a risk that needs unlikely input, performance that costs little.
 
 ### Cases nobody decided
 
-A finding is about a **case nobody decided** when the change does what the issue asks, and the issue and its `## Decisions` section don't say what should happen in the case the finding names. Example: nobody said what happens to a run when the tracker is down at the moment the build ends. Give such a finding the type `UNDECIDED CASE`. A finding that breaks what the issue asked for is a bug, and never gets this type. Without an issue, no finding gets this type.
+A finding is about a **case nobody decided** when the change does what the issue asks, and the issue doesn't say what should happen in the case the finding names. Example: nobody said what happens to a run when the tracker is down at the moment the build ends. The finding says that the case is the user's choice, and gives your recommendation in `fix`. A finding that breaks what the issue asked for is a bug. Without an issue, no finding is about a case nobody decided.
 
 ### Rules in force
 
