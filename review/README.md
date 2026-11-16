@@ -29,13 +29,14 @@ A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets 
 | Open thread, someone else has the last word | Checked against the code: FIXED, FIX, DISMISS, DISCUSS or CLARIFY, with a draft reply | Your threads and answered bot threads: RESOLVED, NOT RESOLVED (with the example that still fails) or NEW PROBLEM, with a draft reply |
 | Resolved thread | Checked again: you want your PR spotless before it goes out of draft | Settled: never raised again |
 | You have the last word | Triaged when you answered a bot, or when only you wrote in it. Listed as waiting when you answered a colleague. | Listed as waiting |
+| Bot thread you skipped, and no person wrote after your skip reply | Listed as waiting, also when the bot wrote again | Checked again, as an answered bot thread |
 | Your line comment in a review you have not submitted yet | Skipped | Not checked and no draft reply. A finding about the same problem is dropped. |
 
 A finding that is already in a thread is not reported twice. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
 
 **Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you, with its recommendation, when a fix needs a choice the issue doesn't make, or goes against the issue.
 
-It posts only on bot threads, for example Copilot threads, under your login. Each gets a short reply, and is resolved, both the fixed and the dismissed ones. When it can't decide on a bot thread, it asks you. When you answer on a bot thread, the next run does what you ask. Human threads are yours to answer: `review` drafts the replies.
+It posts only on bot threads, for example Copilot threads, under your login. Each gets a short reply, and is resolved, both the fixed and the dismissed ones. When it can't decide on a bot thread, it asks you. When you say to skip it, it replies `Skipped: this one is your call.` and leaves the thread open. The next run leaves that thread out until a person writes on it, also when the bot writes again. When you answer on a bot thread, the next run does what you ask. Human threads are yours to answer: `review` drafts the replies.
 
 The first round reuses a review of the same commit from earlier in the session. After a review of an older commit, it reviews only what changed since. Every later round reviews only the fixes of the round before. After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready. It refuses PRs that are not yours.
 

@@ -1,6 +1,6 @@
 # Threads
 
-How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code, or `ready-for-review`) carry the user's login, so they count as the user's. `ready-for-review` replies only on bot threads, and resolves each thread it replies on.
+How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code, or `ready-for-review`) carry the user's login, so they count as the user's. `ready-for-review` replies only on bot threads, and resolves each thread it replies on, except a thread it skips with the skip reply (step 1).
 
 ## 1. Fetch
 
@@ -40,6 +40,8 @@ Example: the user writes "Rename this" and submits the review. A colleague repli
 
 The **starter** is the author of a thread's first comment. A **bot** is an author whose `__typename` is `Bot`, or a login that ends in `[bot]` or matches `copilot` (case-insensitive). GraphQL gives an app's login without `[bot]`: CodeRabbit is `coderabbitai`. Everyone else is a human.
 
+The **skip reply** is a comment from your login with exactly the text `Skipped: this one is your call.` A **skipped bot thread** is an open thread that a bot started, where the last comment from a person is the skip reply. Bot comments after the skip reply don't change that. A new comment from a person, a colleague or you, does.
+
 If there are no threads, stop here: `review` runs as for a new PR.
 
 ## 2. Sort
@@ -50,6 +52,7 @@ Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
 | Thread | Group |
 |---|---|
+| A skipped bot thread | **waiting** |
 | Open, and someone else has the last word | **triage** |
 | Open, and only you commented in it (a note from you or your tools) | **triage** |
 | Open, and you have the last word after a bot | **triage** |

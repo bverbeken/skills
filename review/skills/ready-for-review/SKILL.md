@@ -56,7 +56,7 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads started by a human (the query in step 1 of `../review/THREADS.md`, `isResolved`). An open bot thread where a person wrote is an **answered bot thread**. It counts as a human thread in every step: do what the last answer of a person asks. An open bot thread where no person wrote is an **unanswered bot thread**: step 5 handles it. Leave out, in every step, the review threads that step 1 of `../review/THREADS.md` skips because of a `PENDING` review, the threads where the user's last comment answers a colleague, as they wait on the colleague, and the threads the user said to skip in this run.
+- Unresolved review threads started by a human (the query in step 1 of `../review/THREADS.md`, `isResolved`). An open bot thread where a person wrote is an **answered bot thread**. It counts as a human thread in every step: do what the last answer of a person asks. An open bot thread where no person wrote is an **unanswered bot thread**: step 5 handles it. Step 1 of `../review/THREADS.md` defines the **skip reply** and a **skipped bot thread**. Leave out, in every step, the skipped bot threads, the review threads that step 1 of `../review/THREADS.md` skips because of a `PENDING` review, the threads where the user's last comment answers a colleague, as they wait on the colleague, and the threads the user said to skip in this run.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
 
 A **round** is one pass through steps 2 and 3. After step 3, check whether the review loop ends:
@@ -99,7 +99,7 @@ Step 1 of `../review/THREADS.md` defines a **bot**. Answer every unanswered bot 
 
 - DISMISS: post a **bot reply** and resolve the thread, as "Bot replies" says.
 - FIXED: post a bot reply that names the commit that fixed it, and resolve the thread.
-- DISCUSS or CLARIFY: ask the user, as step 6 says. When the answer is a fix, the thread is a step 6 item. When it changes nothing, post a bot reply with the reason, and resolve the thread. When the user says to skip it, leave the thread open.
+- DISCUSS or CLARIFY: ask the user, as step 6 says. When the answer is a fix, the thread is a step 6 item. When it changes nothing, post a bot reply with the reason, and resolve the thread. When the user says to skip it, post the skip reply (step 1 of `../review/THREADS.md`), and leave the thread open. The next run leaves the thread out, as step 3 says, until a person writes on it.
 
 A bot thread with a FIX verdict is already a TODO item: it gets its reply in step 6, once it is fixed.
 
@@ -179,14 +179,14 @@ Each run rewrites the section, and removes it when no open suggestion is left. O
 
 ## Bot replies
 
-A bot reply is the only comment this skill posts. It goes on a bot thread, and the thread is resolved after it. It says in one sentence what happened. A teammate who never saw the code understands it.
+A bot reply and the skip reply of step 5 are the only comments this skill posts. A bot reply goes on a bot thread, and the thread is resolved after it. The skip reply gets no cold read, and its thread stays open. It says in one sentence what happened. A teammate who never saw the code understands it.
 
 - Fixed: `Fixed in <short sha>: an empty cart now returns 0.`
 - Dismissed: `Not changing this: the caller already filters out null ids (OrderService.kt:18).`
 
 Before you post, check the reply with a cold read: start one `Agent` (general-purpose) and give it only the bot's comment and the reply. The brief: "Say in your own words what was decided and why. Say if you had to read the reply twice." Rewrite the reply when the reader got it wrong or read it twice. In step 5, check all the replies of that step in one agent.
 
-Post the reply and resolve the thread with `gh api graphql`: `addPullRequestReviewThreadReply` with the thread's `id` and the body, then `resolveReviewThread` with the same `id`. A review body or a PR comment has no thread to resolve: post nothing on it.
+Post the reply and resolve the thread with `gh api graphql`: `addPullRequestReviewThreadReply` with the thread's `id` and the body, then `resolveReviewThread` with the same `id`. Post the skip reply with `addPullRequestReviewThreadReply` only, so its thread stays open. A review body or a PR comment has no thread to resolve: post nothing on it.
 
 ## Test runs
 

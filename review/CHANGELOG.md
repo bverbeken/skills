@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-16
+
+- `ready-for-review`: when you skip a bot thread with a DISCUSS or CLARIFY verdict, it replies `Skipped: this one is your call.` and leaves the thread open. Later runs, and `review` in own mode, leave that thread out until a person writes after the reply. A new bot comment doesn't count.
+
 ## 2026-11-15
 
 - `ready-for-review` has no `--afk`, and moves no issue. `faber` does both. It posts only on bot threads, without the `🤖 ` marker, and resolves each thread it answers. It posts no skip replies and no replies on human threads. A bot thread with a DISCUSS or CLARIFY verdict goes to the user.
