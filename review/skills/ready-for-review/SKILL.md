@@ -186,7 +186,7 @@ A bot reply and the skip reply of step 5 are the only comments this skill posts.
 
 Before you post, check the reply with a cold read: start one `Agent` (general-purpose) and give it only the bot's comment and the reply. The brief: "Say in your own words what was decided and why. Say if you had to read the reply twice." Rewrite the reply when the reader got it wrong or read it twice. In step 5, check all the replies of that step in one agent.
 
-Post the reply and resolve the thread with `gh api graphql`: `addPullRequestReviewThreadReply` with the thread's `id` and the body, then `resolveReviewThread` with the same `id`. A review body or a PR comment has no thread to resolve: post nothing on it.
+Post the reply and resolve the thread with `gh api graphql`: `addPullRequestReviewThreadReply` with the thread's `id` and the body, then `resolveReviewThread` with the same `id`. Post the skip reply with `addPullRequestReviewThreadReply` only, so its thread stays open. A review body or a PR comment has no thread to resolve: post nothing on it.
 
 ## Test runs
 
