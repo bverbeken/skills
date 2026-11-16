@@ -56,7 +56,7 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads started by a human (the query in step 1 of `../review/THREADS.md`, `isResolved`). An open bot thread where a person wrote is an **answered bot thread**. It counts as a human thread in every step: do what the last answer of a person asks. An open bot thread where no person wrote is an **unanswered bot thread**: step 5 handles it. An open bot thread whose last comment from a person is the **skip reply** from the user's login, `Skipped: this one is your call.` in exactly those words, is a **skipped bot thread**. Bot comments after the skip reply don't change that: only a new comment from a person, a colleague or the user, makes it count again. Leave out, in every step, the skipped bot threads, the review threads that step 1 of `../review/THREADS.md` skips because of a `PENDING` review, the threads where the user's last comment answers a colleague, as they wait on the colleague, and the threads the user said to skip in this run.
+- Unresolved review threads started by a human (the query in step 1 of `../review/THREADS.md`, `isResolved`). An open bot thread where a person wrote is an **answered bot thread**. It counts as a human thread in every step: do what the last answer of a person asks. An open bot thread where no person wrote is an **unanswered bot thread**: step 5 handles it. Step 1 of `../review/THREADS.md` defines the **skip reply** and a **skipped bot thread**. Leave out, in every step, the skipped bot threads, the review threads that step 1 of `../review/THREADS.md` skips because of a `PENDING` review, the threads where the user's last comment answers a colleague, as they wait on the colleague, and the threads the user said to skip in this run.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
 
 A **round** is one pass through steps 2 and 3. After step 3, check whether the review loop ends:
@@ -99,7 +99,7 @@ Step 1 of `../review/THREADS.md` defines a **bot**. Answer every unanswered bot 
 
 - DISMISS: post a **bot reply** and resolve the thread, as "Bot replies" says.
 - FIXED: post a bot reply that names the commit that fixed it, and resolve the thread.
-- DISCUSS or CLARIFY: ask the user, as step 6 says. When the answer is a fix, the thread is a step 6 item. When it changes nothing, post a bot reply with the reason, and resolve the thread. When the user says to skip it, post the skip reply, `Skipped: this one is your call.`, and leave the thread open. The next run leaves the thread out, as step 3 says, until a person writes on it.
+- DISCUSS or CLARIFY: ask the user, as step 6 says. When the answer is a fix, the thread is a step 6 item. When it changes nothing, post a bot reply with the reason, and resolve the thread. When the user says to skip it, post the skip reply (step 1 of `../review/THREADS.md`), and leave the thread open. The next run leaves the thread out, as step 3 says, until a person writes on it.
 
 A bot thread with a FIX verdict is already a TODO item: it gets its reply in step 6, once it is fixed.
 
