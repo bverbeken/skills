@@ -1,6 +1,6 @@
 # Threads
 
-How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code, or `ready-for-review`) carry the user's login, so they count as the user's. `ready-for-review` replies only on bot threads, and resolves each thread it replies on.
+How `review` handles a PR that already has comments. "You" is the user: `gh api user -q .login`. Comments that the user's own tools post (for example their Claude Code, or `ready-for-review`) carry the user's login, so they count as the user's. `ready-for-review` replies only on bot threads, and resolves each thread it replies on, except a thread it skips with the reply `Skipped: this one is your call.`
 
 ## 1. Fetch
 
@@ -50,6 +50,7 @@ Put every thread in exactly one group. The mode comes from step 1 of `STEPS.md`.
 
 | Thread | Group |
 |---|---|
+| Open, a bot started it, and the last comment from a person is your reply `Skipped: this one is your call.` | **waiting** |
 | Open, and someone else has the last word | **triage** |
 | Open, and only you commented in it (a note from you or your tools) | **triage** |
 | Open, and you have the last word after a bot | **triage** |
