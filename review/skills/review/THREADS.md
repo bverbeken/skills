@@ -115,17 +115,14 @@ When all agents have answered, compare each finding from the checks with the thr
 
 | The finding matches | What to do |
 |---|---|
-| A **triage** thread that a bot started, where no person wrote yet, with a DISCUSS or CLARIFY verdict | Keep the finding. Add the thread to it: `Also raised by <starter>: <thread URL>`. The thread keeps its verdict and draft reply. When the user skips the thread later, the finding stays. |
+| A **skipped bot thread**, or a **triage** thread that a bot started, where no person wrote yet, with a DISCUSS or CLARIFY verdict | Keep the finding. Add the thread to it: `Also raised by <starter>: <thread URL>`. A skipped bot thread stays in **waiting**. A triage thread keeps its verdict and draft reply. |
 | A **triage** or **recheck** thread | Drop the finding. The thread's verdict covers it. |
-| A **skipped bot thread** | Keep the finding. Add the thread to it: `Also raised by <starter>: <thread URL>`. The thread stays in **waiting**. |
 | A **waiting** thread | Drop the finding. The thread is listed under "Waiting". |
 | A **pending** thread | Drop the finding. You raised it already, in the review you have not submitted. |
 | A **settled** thread | Drop the finding. |
 | A **context** thread | Move it to "Already raised", with the thread's starter and URL. |
 
-Example: on your PR, Copilot wrote "returns null for an empty cart", and you skipped the thread. The bugs check finds the same null return as blocking. The finding stays blocking, with `Also raised by copilot: <thread URL>`. It does not go to "Already raised": that list does not block, so `ready-for-review` would mark the PR ready with the bug still in the code.
-
-Example: on your PR, Copilot wrote "returns null for an empty cart", and nobody answered yet. Triage gives the thread DISCUSS. The bugs check finds the same null return as blocking. The finding stays blocking, with `Also raised by copilot: <thread URL>`. When you skip the thread in `ready-for-review`, the finding is still in the report, and the PR stays in draft until it is fixed. A later run at the same commit reuses that report, so the finding is there too.
+Example: on your PR, Copilot wrote "returns null for an empty cart", and nobody answered yet. Triage gives the thread DISCUSS. The bugs check finds the same null return as blocking. The finding stays blocking, with `Also raised by copilot: <thread URL>`. When you skip the thread in `ready-for-review`, the thread becomes a skipped bot thread, and a later run keeps the finding by the same row. It does not go to "Already raised": that list does not block, so `ready-for-review` would mark the PR ready with the bug still in the code.
 
 Example: on a colleague's PR you wrote "this returns null for an empty cart" in a review you have not submitted yet. The bugs check finds the same problem. The report drafts no comment for it.
 
