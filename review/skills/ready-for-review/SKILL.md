@@ -111,7 +111,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
    - The fix needs a choice that the issue, the spec, the code and the item don't make.
    - The fix goes against the issue.
    - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user. A blocking screenshot whose upload fails in step 2 also stops here.
-   - The thread's verdict is DISCUSS or CLARIFY, and it is not an answered bot thread.
+   - The thread's verdict is DISCUSS or CLARIFY, and it is not an answered bot thread. A finding that names a thread (`Also raised by`) is not a thread item: step 5 already asked about the thread, so the other rules here decide.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread other than an answered bot thread.
    - You tried and the item is still not fixed.
