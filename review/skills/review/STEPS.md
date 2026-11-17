@@ -165,6 +165,7 @@ Threads: <the line from THREADS.md step 2, or: none>
 
 **Blocking** (verified)
 - [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>. [D<n>]
+- [<check>] <TYPE> `<location>` — <finding>. Fix: <fix>. Also raised by <starter>: <thread URL>.      (a finding that matches a skipped bot thread, step 4 of THREADS.md)
 
 **Threads**
 - [<starter>] `<location>` <VERDICT> (blocking) — <one sentence>. [D<n>]

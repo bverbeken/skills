@@ -111,15 +111,18 @@ Give one verdict:
 
 ## 4. Remove duplicate findings
 
-When all agents have answered, compare each finding from the checks with the threads. A finding matches a thread when it is about the same problem in the same code, even if the words differ.
+When all agents have answered, compare each finding from the checks with the threads. A finding matches a thread when it is about the same problem in the same code, even if the words differ. The first row that matches wins.
 
 | The finding matches | What to do |
 |---|---|
 | A **triage** or **recheck** thread | Drop the finding. The thread's verdict covers it. |
+| A **skipped bot thread** | Keep the finding. Add the thread to it: `also raised by <starter>: <thread URL>`. The thread stays in **waiting**. |
 | A **waiting** thread | Drop the finding. The thread is listed under "Waiting". |
 | A **pending** thread | Drop the finding. You raised it already, in the review you have not submitted. |
 | A **settled** thread | Drop the finding. |
 | A **context** thread | Move it to "Already raised", with the thread's starter and URL. |
+
+Example: on your PR, Copilot wrote "returns null for an empty cart", and you skipped the thread. The bugs check finds the same null return as blocking. The finding stays blocking, with `also raised by copilot: <thread URL>`. It does not go to "Already raised": that list does not block, so `ready-for-review` would mark the PR ready with the bug still in the code.
 
 Example: on a colleague's PR you wrote "this returns null for an empty cart" in a review you have not submitted yet. The bugs check finds the same problem. The report drafts no comment for it.
 
