@@ -50,7 +50,7 @@ Write the answers in a `## Decisions` section, one line per decision, in the wor
 - When the issue has a `## Decisions` section, add the new answers below the last line, and replace the lines a new answer overrules.
 - Otherwise add the section right after the text that says what the issue delivers, before `## Done when` or the acceptance criteria.
 - Remove the open question section once its answer is in the decisions.
-- Write your own decisions in the same section, each line ending with `(decided by prepare)`. The user sees them at the ok and can overrule any one.
+- Write your own decisions under `### Decided by prepare`, at the end of the `## Decisions` section. Number them. Per line: the question in bold, your answer after `→`, and the option you did not pick. When you show the section for the ok, tell the user they can overrule one by its number. An overruled line moves up to the user's decisions.
 
 Show the user the full section, and the open question section you will remove, and ask for an ok. After the ok, write the section in the issue body, the text of the issue itself, never in a comment. For a spec without an issue, the decisions stay in the conversation.
 

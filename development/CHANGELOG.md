@@ -4,7 +4,7 @@ Changes in what the development skills do, newest first. Wording-only changes ar
 
 ## 2026-11-17
 
-- `prepare` asks only the decisions that change what users see, what can be lost, names, where things live, scope, order of work or process. It decides the details itself and marks them `(decided by prepare)` in `## Decisions`.
+- `prepare` asks only the decisions that change what users see, what can be lost, names, where things live, scope, order of work or process. It decides the details itself and lists them, numbered, under `### Decided by prepare` in `## Decisions`, each with the option it did not pick. The user overrules one by its number.
 - `prepare` first checks that the issue is still current.
 
 ## 2026-11-10
