@@ -115,7 +115,7 @@ When all agents have answered, compare each finding from the checks with the thr
 
 | The finding matches | What to do |
 |---|---|
-| A **triage** thread that a bot started, with a DISCUSS or CLARIFY verdict | Keep the finding. Add the thread to it: `Also raised by <starter>: <thread URL>`. The thread keeps its verdict and draft reply. When the user skips the thread later, the finding stays. |
+| A **triage** thread that a bot started, where no person wrote yet, with a DISCUSS or CLARIFY verdict | Keep the finding. Add the thread to it: `Also raised by <starter>: <thread URL>`. The thread keeps its verdict and draft reply. When the user skips the thread later, the finding stays. |
 | A **triage** or **recheck** thread | Drop the finding. The thread's verdict covers it. |
 | A **skipped bot thread** | Keep the finding. Add the thread to it: `Also raised by <starter>: <thread URL>`. The thread stays in **waiting**. |
 | A **waiting** thread | Drop the finding. The thread is listed under "Waiting". |
