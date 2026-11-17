@@ -4,7 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-11-17
 
-- `review` in own mode also keeps a check finding that matches a bot thread with a DISCUSS or CLARIFY verdict, and names the thread next to it: `Also raised by <starter>: <thread URL>`. Before, the finding was dropped. When you then skipped the thread in `ready-for-review`, the problem was gone from the report, also from a later run at the same commit, and the PR could go ready with it still in the code.
+- `review` in own mode also keeps a check finding that matches a bot thread that nobody answered yet, with a DISCUSS or CLARIFY verdict, and names the thread next to it: `Also raised by <starter>: <thread URL>`. Before, the finding was dropped. When you then skipped the thread in `ready-for-review`, the problem was gone from the report, also from a later run at the same commit, and the PR could go ready with it still in the code.
 - `review` in own mode keeps a check finding that matches a skipped bot thread, and names the thread next to it: `Also raised by <starter>: <thread URL>`. Before, the finding was dropped, and `ready-for-review` could mark the PR ready with the problem still in the code. When `ready-for-review` fixes such a finding, it replies on the thread with the fix commit and resolves it.
 
 ## 2026-11-16
