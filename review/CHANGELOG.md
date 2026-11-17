@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-17
+
+- `review` in own mode keeps a check finding that matches a skipped bot thread, and names the thread next to it: `Also raised by <starter>: <thread URL>`. Before, the finding was dropped, and `ready-for-review` could mark the PR ready with the problem still in the code. When `ready-for-review` fixes such a finding, it replies on the thread with the fix commit and resolves it.
+
 ## 2026-11-16
 
 - `ready-for-review`: when you skip a bot thread with a DISCUSS or CLARIFY verdict, it replies `Skipped: this one is your call.` and leaves the thread open. Later runs, and `review` in own mode, leave that thread out until a person writes after the reply. A new bot comment doesn't count.
