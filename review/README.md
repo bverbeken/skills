@@ -32,7 +32,7 @@ A diff that holds only Markdown text, for example a change to `CLAUDE.md`, gets 
 | Bot thread you skipped, and no person wrote after your skip reply | Listed as waiting, also when the bot wrote again. A check finding about the same problem stays, and names the thread. | Checked again, as an answered bot thread |
 | Your line comment in a review you have not submitted yet | Skipped | Not checked and no draft reply. A finding about the same problem is dropped. |
 
-A finding that is already in a thread is not reported twice. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
+A finding that is already in a thread is not reported twice. One exception on your PR: a check finding about the same problem as a bot thread with a DISCUSS or CLARIFY verdict stays, and names the thread. When you skip that thread later, the finding still blocks. On a colleague's PR, a finding someone else already raised is listed under "Already raised".
 
 **Ready for review.** `/ready-for-review 142` gets your own draft PR ready and takes it out of draft. It runs `review` in own mode and writes a TODO checklist in the PR description: blocking items first, then suggestions. Then it fixes them one by one, with a commit per item, and ticks each one off. It stops and asks you, with its recommendation, when a fix needs a choice the issue doesn't make, or goes against the issue.
 
