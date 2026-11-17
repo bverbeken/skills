@@ -89,7 +89,7 @@ Otherwise put a **TODO list** in the PR description, between two markers, after 
 
 - **Blocking**: every finding problem, then every state problem.
 - **Suggestions**: every suggestion from the review, most useful first.
-- One line per item: the check or state, the location, one sentence. A finding that names a skipped bot thread keeps its `Also raised by <starter>: <thread URL>.`
+- One line per item: the check or state, the location, one sentence. A finding that names a skipped bot thread keeps its `Also raised by` sentence (step 4 of `../review/THREADS.md`).
 
 Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers, the `## Open suggestions` section and the `## Follow-ups` section: the rest of the description is the user's. A `## Skipped: your call` section, from an older version of this skill, is this skill's too: its items are open suggestions, so remove the section. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
 
