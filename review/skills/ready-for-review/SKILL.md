@@ -89,7 +89,7 @@ Otherwise put a **TODO list** in the PR description, between two markers, after 
 
 - **Blocking**: every finding problem, then every state problem.
 - **Suggestions**: every suggestion from the review, most useful first.
-- One line per item: the check or state, the location, one sentence. A finding that names a skipped bot thread keeps its `Also raised by` sentence (step 4 of `../review/THREADS.md`).
+- One line per item: the check or state, the location, one sentence. A finding that names a bot thread keeps its `Also raised by` sentence (step 4 of `../review/THREADS.md`).
 
 Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers, the `## Open suggestions` section and the `## Follow-ups` section: the rest of the description is the user's. A `## Skipped: your call` section, from an older version of this skill, is this skill's too: its items are open suggestions, so remove the section. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
 
@@ -99,7 +99,7 @@ Step 1 of `../review/THREADS.md` defines a **bot**. Answer every unanswered bot 
 
 - DISMISS: post a **bot reply** and resolve the thread, as "Bot replies" says.
 - FIXED: post a bot reply that names the commit that fixed it, and resolve the thread.
-- DISCUSS or CLARIFY: ask the user, as step 6 says. When the answer is a fix, the thread is a step 6 item. When it changes nothing, post a bot reply with the reason, and resolve the thread. When the user says to skip it, post the skip reply (step 1 of `../review/THREADS.md`), and leave the thread open. The next run leaves the thread out, as step 3 says, until a person writes on it.
+- DISCUSS or CLARIFY: ask the user, as step 6 says. When the answer is a fix, the thread is a step 6 item. When it changes nothing, post a bot reply with the reason, and resolve the thread. When the user says to skip it, post the skip reply (step 1 of `../review/THREADS.md`), and leave the thread open. The next run leaves the thread out, as step 3 says, until a person writes on it. When a finding names the thread (`Also raised by`), that finding is the thread's item: it stays on the list, also when the user says to skip the thread.
 
 A bot thread with a FIX verdict is already a TODO item: it gets its reply in step 6, once it is fixed.
 
@@ -111,7 +111,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
    - The fix needs a choice that the issue, the spec, the code and the item don't make.
    - The fix goes against the issue.
    - The fix needs something only the user can make, such as a video, or a screenshot that `SCREENSHOTS.md` leaves to the user. A blocking screenshot whose upload fails in step 2 also stops here.
-   - The thread's verdict is DISCUSS or CLARIFY, and it is not an answered bot thread.
+   - The thread's verdict is DISCUSS or CLARIFY, and it is not an answered bot thread. A finding that names a thread (`Also raised by`) is not a thread item: step 5 already asked about the thread, so the other rules here decide.
    - The fix changes code outside the PR's files, or behavior the PR does not touch.
    - It is a state problem other than failing or pending CI: uncommitted changes, unpushed commits, merge conflicts, or an open human thread other than an answered bot thread.
    - You tried and the item is still not fixed.
@@ -121,7 +121,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 3. Run the tests that cover the change, as `Test runs` says. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
 5. Tick the item in the PR description.
-6. When the item came from a bot thread, also an answered bot thread, or names a skipped bot thread (`Also raised by`): post a bot reply that names the commit, and resolve the thread.
+6. When the item came from a bot thread, also an answered bot thread, or names a bot thread (`Also raised by`): post a bot reply that names the commit, and resolve the thread.
 
 The loop is done when every item on the list is ticked.
 
