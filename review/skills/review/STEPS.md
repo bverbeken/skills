@@ -203,7 +203,7 @@ _Why:_ <one sentence, from the code>
 
 - **Head** says `+ uncommitted changes` when the review ran in place and `git -C <reviewDir> status --porcelain` showed anything, so the diff held more than the commit. `ready-for-review` reads this line to reuse a review of the same commit.
 - **Since** is printed only with `--since`.
-- A finding that matches a skipped bot thread, blocking or suggestion, ends with the `Also raised by` sentence of step 4 of `THREADS.md`, after its `Fix:` sentence.
+- A finding that step 4 of `THREADS.md` keeps for a bot thread, blocking or suggestion, ends with its `Also raised by` sentence, after its `Fix:` sentence.
 - **Threads** lists every thread in the triage and recheck groups of `THREADS.md`, with its verdict. Add `(blocking)` when its finding is blocking.
 - **Drafts** are only written by `review`, never by a check run on its own. Number them in the order they appear in the report, and put the `[D<n>]` tag on the line they belong to.
   - A reply for each thread with a draft reply from `THREADS.md` step 3. Quote the comment you answer verbatim: the newest one when the thread has answers, after one line that sums up the earlier exchange. Trim a quote longer than 12 lines and end it with `> …(trimmed)`.
