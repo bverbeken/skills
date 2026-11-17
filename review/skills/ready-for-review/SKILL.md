@@ -100,9 +100,9 @@ Step 1 of `../review/THREADS.md` defines a **bot**. Answer every unanswered bot 
 - DISMISS: post a **bot reply** and resolve the thread, as "Bot replies" says.
 - FIXED: post a bot reply that names the commit that fixed it, and resolve the thread.
 - DISCUSS or CLARIFY: ask the user, as step 6 says. When the answer is a fix, the thread is a step 6 item. When it changes nothing, post a bot reply with the reason, and resolve the thread. When the user says to skip it, post the skip reply (step 1 of `../review/THREADS.md`), and leave the thread open. The next run leaves the thread out, as step 3 says, until a person writes on it. When a finding names the thread (`Also raised by`), the user's answer on the thread also settles that finding:
-  - A fix: the finding is the thread's only step 6 item.
+  - A fix: the finding is the one step 6 item for both.
   - Changes nothing: delete the finding from the TODO list. It is not a skipped item.
-  - Skip: the finding stays on the list, as the thread's item.
+  - Skip: the finding stays on the list. Its fix in step 6 also gets the thread its bot reply.
 
 A bot thread with a FIX verdict is already a TODO item: it gets its reply in step 6, once it is fixed.
 
