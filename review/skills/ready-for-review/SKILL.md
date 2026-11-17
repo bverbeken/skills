@@ -56,7 +56,7 @@ After the review, collect every remaining state problem:
 
 - CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
-- Unresolved review threads started by a human (the query in step 1 of `../review/THREADS.md`, `isResolved`). An open bot thread where a person wrote is an **answered bot thread**. It counts as a human thread in every step: do what the last answer of a person asks. An open bot thread where no person wrote is an **unanswered bot thread**: step 5 handles it. Step 1 of `../review/THREADS.md` defines the **skip reply** and a **skipped bot thread**. Leave out, in every step, the skipped bot threads, the review threads that step 1 of `../review/THREADS.md` skips because of a `PENDING` review, the threads where the user's last comment answers a colleague, as they wait on the colleague, and the threads the user said to skip in this run.
+- Unresolved review threads started by a human (the query in step 1 of `../review/THREADS.md`, `isResolved`). An open bot thread where a person wrote is an **answered bot thread**. It counts as a human thread in every step: do what the last answer of a person asks. An open bot thread where no person wrote is an **unanswered bot thread**: step 5 handles it. Step 1 of `../review/THREADS.md` defines the **skip reply** and a **skipped bot thread**. Leave out, in every step, the skipped bot threads, the review threads that step 1 of `../review/THREADS.md` skips because of a `PENDING` review, the threads where the user's last comment answers a colleague, as they wait on the colleague, and the threads the user said to skip in this run. One exception: a skipped bot thread that a finding names (`Also raised by`) gets a bot reply in step 6, once that finding is fixed.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
 
 A **round** is one pass through steps 2 and 3. After step 3, check whether the review loop ends:
@@ -89,7 +89,7 @@ Otherwise put a **TODO list** in the PR description, between two markers, after 
 
 - **Blocking**: every finding problem, then every state problem.
 - **Suggestions**: every suggestion from the review, most useful first.
-- One line per item: the check or state, the location, one sentence.
+- One line per item: the check or state, the location, one sentence. A finding that names a skipped bot thread keeps its `Also raised by <starter>: <thread URL>.`
 
 Edit the body with `gh pr view <num> --json body`, then `gh pr edit <num> --body-file <file>`. Change only the text between the markers, the `## Open suggestions` section and the `## Follow-ups` section: the rest of the description is the user's. A `## Skipped: your call` section, from an older version of this skill, is this skill's too: its items are open suggestions, so remove the section. When the markers are already there, keep the items in it and add only problems that are not on the list yet.
 
@@ -121,7 +121,7 @@ Take the unticked items one by one, blocking first, then suggestions, in list or
 3. Run the tests that cover the change, as `Test runs` says. They pass.
 4. Commit only this item's change, with a message that says what it fixes. Push.
 5. Tick the item in the PR description.
-6. When the item came from a bot thread, also an answered bot thread: post a bot reply that names the commit, and resolve the thread.
+6. When the item came from a bot thread, also an answered bot thread, or names a skipped bot thread (`Also raised by`): post a bot reply that names the commit, and resolve the thread.
 
 The loop is done when every item on the list is ticked.
 
