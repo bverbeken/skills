@@ -2,6 +2,10 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-19
+
+- `ready-for-review` reads who reviews your PRs from `reviewer: me` or `reviewer: team` in the frontmatter of your issue tracker doc. A doc without the key still works with its `Reviewer:` line. When a doc has both, the key wins.
+
 ## 2026-11-17
 
 - `ready-for-review`: when a run reuses a review from earlier in the session, it drops a kept finding whose `Also raised by` bot thread is resolved. Before, a second run brought back a finding you had settled with "changes nothing" on its thread, and fixed it against your answer. A finding whose thread you skipped stays.
