@@ -1,13 +1,13 @@
 # development
 
-Skills for building software with an agent, from an issue to a draft PR. `prepare` asks you every open decision of an issue and writes your answers in it. `implement` builds the issue test-first in its own git worktree. `draft-pr` pushes the branch and opens a draft PR. Call them one by one, or from your own skill.
+Skills for building software with an agent, from an issue to a draft PR. `prepare` asks you the decisions of an issue that matter, decides the details itself, and writes both in it. `implement` builds the issue test-first in its own git worktree. `draft-pr` pushes the branch and opens a draft PR. Call them one by one, or from your own skill.
 
 ## The skills
 
 | Skill | What it does |
 |---|---|
 | `implement` | Builds an issue or a spec with `tdd` in a separate worktree, one commit per step, and fixes the review findings it gets. Before it creates a worktree, it removes the local branches whose PR is merged, with their worktrees. It asks a new open decision through `prepare`. It runs every test run with its `run-tests` script, which prints only the failures and the last lines, and keeps the full output in a log file. It stops when a test fails or hangs for a reason outside the change, such as a database version, and never works around it. |
-| `prepare` | Lists the decisions an issue leaves open, asks you about them with `grilling`, and writes your answers in the issue under `## Decisions`. |
+| `prepare` | Lists the decisions an issue leaves open, asks you about the ones that change what users see, what can be lost, names, where things live, scope, order of work or process, with `grilling`, and decides the details itself. Writes both in the issue under `## Decisions`. |
 | `grilling` | Asks you one question at a time, with a recommended answer, until every decision is settled. |
 | `tdd` | The red → green loop: what a good test is, where tests go, and one commit per green cycle. |
 | `codebase-design` | Shared words for designing deep modules: module, interface, depth, seam, adapter. |
