@@ -2,10 +2,20 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-18
+
+- `draft-pr` takes no seams anymore, and a PR description has no `## Seams I chose` section.
+
 ## 2026-11-17
 
 - `prepare` asks only the decisions that change what users see, what can be lost, names, where things live, scope, order of work or process. It decides the details itself and lists them, numbered, under `### Decided by prepare` in `## Decisions`, each with the option it did not pick. The user overrules one by its number.
 - `prepare` first checks that the issue is still current.
+
+## 2026-11-15
+
+- `implement` runs every test run with its new `run-tests` script. It prints the exit code, the log path, and only the failures and the last lines. The full output stays in the log file.
+- The `Test runs` rules move from `tdd` to `implement`. `tdd` points to them.
+- `implement` spots a review finding about a case nobody decided by what it says: the case is the user's choice. `review` no longer gives such a finding the type `UNDECIDED CASE`.
 
 ## 2026-11-10
 

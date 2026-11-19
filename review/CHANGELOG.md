@@ -2,6 +2,24 @@
 
 Changes in what the review skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-17
+
+- `ready-for-review`: when a run reuses a review from earlier in the session, it drops a kept finding whose `Also raised by` bot thread is resolved. Before, a second run brought back a finding you had settled with "changes nothing" on its thread, and fixed it against your answer. A finding whose thread you skipped stays.
+- `ready-for-review` deletes a finding that names a bot thread (`Also raised by`) from the TODO list when you answer that thread with "changes nothing". When you answer with a fix, the finding is the thread's only item. Before, the finding stayed blocking after the thread was resolved, and step 6 fixed it anyway, against your answer.
+- `review` in own mode also keeps a check finding that matches a bot thread that nobody answered yet, with a DISCUSS or CLARIFY verdict, and names the thread next to it: `Also raised by <starter>: <thread URL>`. Before, the finding was dropped. When you then skipped the thread in `ready-for-review`, the problem was gone from the report, also from a later run at the same commit, and the PR could go ready with it still in the code.
+- `review` in own mode keeps a check finding that matches a skipped bot thread, and names the thread next to it: `Also raised by <starter>: <thread URL>`. Before, the finding was dropped, and `ready-for-review` could mark the PR ready with the problem still in the code. When `ready-for-review` fixes such a finding, it replies on the thread with the fix commit and resolves it.
+
+## 2026-11-16
+
+- `ready-for-review`: when you skip a bot thread with a DISCUSS or CLARIFY verdict, it replies `Skipped: this one is your call.` and leaves the thread open. Later runs, and `review` in own mode, leave that thread out until a person writes after the reply. A new bot comment doesn't count.
+
+## 2026-11-15
+
+- `ready-for-review` has no `--afk`, and moves no issue. `faber` does both. It posts only on bot threads, without the `🤖 ` marker, and resolves each thread it answers. It posts no skip replies and no replies on human threads. A bot thread with a DISCUSS or CLARIFY verdict goes to the user.
+- `ready-for-review` asks, with a recommendation, when a fix needs a choice the issue doesn't make, or goes against the issue. On a solo project it no longer makes a follow-up issue by itself. When your answer makes an item a follow-up issue, it goes under `## Follow-ups` in the PR description.
+- `review`: comments under your login that start with `🤖 ` are yours, as all your other comments. A case nobody decided no longer gets the type `UNDECIDED CASE`: the finding says the case is your choice, with a recommendation.
+- `ready-for-review` runs the tests with `run-tests` from `implement` when that skill is installed. Otherwise it reads only the summary line and the failures.
+
 ## 2026-11-12
 
 - `review`: on a colleague's PR, a line thread of your own review that is not submitted yet (`PENDING`) drops a finding about the same problem. It gets no agent and no draft reply. The threads line counts these threads as `pending`.
