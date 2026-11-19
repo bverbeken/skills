@@ -2,6 +2,10 @@
 
 Changes in what the development skills do, newest first. Wording-only changes are left out.
 
+## 2026-11-18
+
+- `draft-pr` takes no seams anymore, and a PR description has no `## Seams I chose` section.
+
 ## 2026-11-15
 
 - `implement` runs every test run with its new `run-tests` script. It prints the exit code, the log path, and only the failures and the last lines. The full output stays in the log file.
