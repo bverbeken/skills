@@ -40,12 +40,12 @@ It posts only on bot threads, for example Copilot threads, under your login. Eac
 
 The first round reuses a review of the same commit from earlier in the session. After a review of an older commit, it reviews only what changed since. Every later round reviews only the fixes of the round before. After 5 rounds with blocking items, or when a blocking finding it fixed comes back, it stops and leaves the PR in draft. When a new review round finds nothing that blocks and CI is green, it removes the ticked items from the description and marks the PR ready. It refuses PRs that are not yours.
 
-Some suggestions are left open: nobody decided on them. These are the new suggestions of rounds after the first. Where they go depends on the `Reviewer:` line:
+Some suggestions are left open: nobody decided on them. These are the new suggestions of rounds after the first. Where they go depends on the `reviewer` key in the frontmatter of your issue tracker doc:
 
-- `Reviewer: me`: in an `## Open suggestions` section at the end of the PR description.
-- `Reviewer: team`: in the final output only, so the description stays clean for colleagues.
+- `reviewer: me`: in an `## Open suggestions` section at the end of the PR description.
+- `reviewer: team`: in the final output only, so the description stays clean for colleagues.
 
-On a solo project (`Reviewer: me`), `ready-for-review` runs one light review and no repeat rounds. It applies the suggestions in that pass. A one-line fix, a test or a refactoring gets no further look, and one agent reads any other fix once. On a team project the rounds stay.
+On a solo project (`reviewer: me`), `ready-for-review` runs one light review and no repeat rounds. It applies the suggestions in that pass. A one-line fix, a test or a refactoring gets no further look, and one agent reads any other fix once. On a team project the rounds stay.
 
 ## What it does
 
@@ -109,7 +109,15 @@ All nineteen skills must sit next to each other: the checks read the shared step
 
 ## Set up your project
 
-Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads who reviews your PRs there, from a `Reviewer: me` or `Reviewer: team` line. No line counts as `team`.
+Tell Claude about your project in a `CLAUDE.md`: in the repo, in the folder that holds your checkouts, or in `~/.claude/CLAUDE.md`. Without it, the review still works, but `review-spec` may miss the issue and `review-consumers` checks nothing. When it names an issue tracker doc, `ready-for-review` reads who reviews your PRs there, from `reviewer: me` or `reviewer: team` in its frontmatter:
+
+```yaml
+---
+reviewer: me
+---
+```
+
+A doc without the key falls back to a `Reviewer: me` or `Reviewer: team` line. When a doc has both, the key wins. Neither counts as `team`.
 
 Example:
 
