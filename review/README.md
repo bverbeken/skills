@@ -119,7 +119,7 @@ reviewer: me
 ---
 ```
 
-A doc without the key falls back to a `Reviewer: me` or `Reviewer: team` line. When a doc has both, the key wins. Neither counts as `team`.
+A doc without the key counts as `team`.
 
 Example:
 

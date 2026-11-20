@@ -4,6 +4,7 @@ Changes in what the review skills do, newest first. Wording-only changes are lef
 
 ## 2026-11-20
 
+- `ready-for-review` reads who reviews your PRs only from the `reviewer` key in the frontmatter of your issue tracker doc. A `Reviewer: me` line in the text no longer makes a project solo: move it to `reviewer: me` in the frontmatter.
 - `ready-for-review` takes `--afk`. With it, on a solo project (`reviewer: me`), it does not wait for pending CI when the full test suite passed locally on the PR's head, and it ends with `CI still running on <sha>; the job checks it before the merge`. A failed check still blocks. Before, it always waited for CI, 10 to 20 minutes per build.
 
 ## 2026-11-19
