@@ -8,7 +8,7 @@ Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean
 
 ## Solo project
 
-A project is **solo** when the frontmatter of the issue tracker docs has `reviewer: me`. Docs without a `reviewer` key fall back to a line that starts with `Reviewer: me`, after an optional list dash. When the docs have both, the key wins. `reviewer: team`, neither, or no docs is a team project, and this section does not apply. On a solo project, these rules replace the matching parts of the steps below:
+A project is **solo** when the frontmatter of the issue tracker docs has `reviewer: me`. `reviewer: team`, no key, or no docs is a team project, and this section does not apply. On a solo project, these rules replace the matching parts of the steps below:
 
 - **One review pass, in step 2.** Run the first of these that fits, and no review it does not name:
   1. The PR has an open human thread or an answered bot thread that step 3 does not leave out, or an unanswered bot thread (step 3) when the PR was out of draft before (its timeline has a `ready_for_review` event): run `review --only threads`, and keep the findings of a report that rule 2 accepts.
