@@ -176,7 +176,7 @@ Follow-ups: <the lines under `## Follow-ups`, or: none>
 CI still running on <short sha>; the job checks it before the merge
 ```
 
-Print the `CI still running` line only when step 3 skipped a pending check, as "Pending CI with --afk" says, with that head.
+Print the `CI still running` line only when the last step 3 skipped a pending check, as "Pending CI with --afk" says, with the head of that step 3.
 
 ## Open suggestions
 
