@@ -47,6 +47,8 @@ Some suggestions are left open: nobody decided on them. These are the new sugges
 
 On a solo project (`reviewer: me`), `ready-for-review` runs one light review and no repeat rounds. It applies the suggestions in that pass. A one-line fix, a test or a refactoring gets no further look, and one agent reads any other fix once. On a team project the rounds stay.
 
+With `--afk` on a solo project, `ready-for-review` does not wait for CI checks that are still pending, when the full test suite passed locally on the PR's head. It ends with `CI still running on <sha>; the job checks it before the merge`. A check that already failed still blocks. Without `--afk`, or on a team project, it waits for CI.
+
 ## What it does
 
 - **Takes any target.** A PR number, a GitHub PR link, an issue ID or link, a Linear review link, a branch name, or nothing for the current branch (uncommitted changes included).
