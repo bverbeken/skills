@@ -1,7 +1,7 @@
 ---
 name: ready-for-review
 description: "Take one of your own PRs out of draft: run an own-mode review, put the findings as a TODO checklist in the PR description, fix them one by one, and mark the PR ready once it is clean. Use whenever the user asks to take a PR out of draft or mark it ready for review, in any wording (\"PR out of draft\", \"make it ready\", \"undraft it\")."
-argument-hint: "[PR number | PR link | empty] [issue]"
+argument-hint: "[PR number | PR link | empty] [issue] [--afk]"
 ---
 
 Get the draft PR in `$ARGUMENTS` **clean**, then mark it ready for review. Clean means: the last round's review finds no blocking finding, and nothing about the PR's state on GitHub stops it. `../review/STEPS.md` (next to this skill's folder) holds the shared steps: read it first.
@@ -18,6 +18,17 @@ A project is **solo** when the frontmatter of the issue tracker docs has `review
 - **Suggestions, in step 6.** Apply each one in its own commit, and the tests must pass. A suggestion that changes code outside the PR's files stays open: delete it from the list.
 - **A look at fixes, in step 6.** A one-line fix, a test or a refactoring needs no further look. Any other fix that adds a branch, an error path or a change in behavior gets one read, after its commit. Start one `Agent` (general-purpose) with the finding and the commit's diff, and this brief: "Read this fix. Does it introduce a bug? Name the case that fails, or answer `none`." Fix what it finds in its own commit, without another look.
 - **One round, in steps 3 and 6.** A commit this run made is not a state problem. When every item is ticked and an unanswered bot thread has no verdict from this run, run `review --only threads` for it, and add a FIX verdict to the TODO list as a step 6 item. When that list is done too, wait for CI on the new head (`gh pr checks <num> --watch`). Fix a check that fails, as a step 6 item, and wait for CI on that head too. `gh pr checks` exits with `no checks reported` until GitHub registers the checks of a new head. When the head before had checks, retry for up to 2 minutes, and count a head that still has none as pending CI. Then run step 3 once more for the state of the PR, and go to step 7, not back to step 2. A state problem still left then counts as a skipped blocking item, so it goes in the NOT READY output of step 7.
+
+### Pending CI with --afk
+
+`--afk` means nobody watches the run. On a solo project, it changes one thing: a run with `--afk` does not wait for pending CI when the full test suite passed locally on the head that CI runs on.
+
+Before each wait for CI, also the wait for a pending check in step 6, look for a run of the full test suite on the PR's current head, from this session, with no uncommitted changes. When there is none, run the full suite now, as `Test runs` says, in the PR's worktree. Take the test command and its limit from the repo's `README.md`, `CLAUDE.md` or `AGENTS.md`.
+
+- The suite passed on the head: skip the wait. A check that is still pending is not a state problem in step 3. Note the head for the READY output of step 7.
+- The suite failed, timed out, or there is no test command: wait for CI as above.
+
+A check that failed or was cancelled stays a state problem, with or without the local run. On a team project, or without `--afk`, every run waits for CI as above.
 
 ## 1. Check the PR
 
@@ -56,7 +67,7 @@ Each blocking finding in the report is a **finding problem**. So is every thread
 
 After the review, collect every remaining state problem:
 
-- CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine.
+- CI: any check that failed, was cancelled, or is still pending (`gh pr checks`). No CI at all is fine. A run with `--afk` on a solo project can leave out a pending check, as "Pending CI with --afk" says.
 - Merge conflicts: `gh pr view --json mergeable` is `CONFLICTING`.
 - Unresolved review threads started by a human (the query in step 1 of `../review/THREADS.md`, `isResolved`). An open bot thread where a person wrote is an **answered bot thread**. It counts as a human thread in every step: do what the last answer of a person asks. An open bot thread where no person wrote is an **unanswered bot thread**: step 5 handles it. Step 1 of `../review/THREADS.md` defines the **skip reply** and a **skipped bot thread**. Leave out, in every step, the skipped bot threads, the review threads that step 1 of `../review/THREADS.md` skips because of a `PENDING` review, the threads where the user's last comment answers a colleague, as they wait on the colleague, and the threads the user said to skip in this run. One exception: a skipped bot thread that a finding names (`Also raised by`) gets a bot reply in step 6, once that finding is fixed.
 - New commits: the head commit is not the one this round's review checked. The review checked older code.
@@ -162,7 +173,10 @@ Review: reused from <short sha>
 Fixed: <n> blocking, <n> suggestions · Skipped: <one line each, or: none>
 Open suggestions: <one line each, or: none>
 Follow-ups: <the lines under `## Follow-ups`, or: none>
+CI still running on <short sha>; the job checks it before the merge
 ```
+
+Print the `CI still running` line only when step 3 skipped a pending check, as "Pending CI with --afk" says, with that head.
 
 ## Open suggestions
 
