@@ -23,7 +23,7 @@ A project is **solo** when the frontmatter of the issue tracker docs has `review
 
 `--afk` means nobody watches the run. On a solo project, it changes one thing: a run with `--afk` does not wait for pending CI when the full test suite passed locally on the head that CI runs on.
 
-When step 3 finds a pending check, and before each wait for CI, look for a run of the full test suite on the PR's current head, from this session, with no uncommitted changes. When there is none, run the full suite now, as `Test runs` says, in the PR's worktree. Take the test command and its limit from the repo's `README.md`, `CLAUDE.md` or `AGENTS.md`.
+When step 3 finds a pending check, and before each wait for CI, look for a run of the full test suite on the PR's current head, from this session, with no uncommitted changes. When there is none, run the full suite now, as `Test runs` says, on the PR's head commit: in the PR's worktree, or in a worktree of the head commit as in step 2 when step 1 found state problems. Take the test command and its limit from the repo's `README.md`, `CLAUDE.md` or `AGENTS.md`.
 
 - The suite passed on the head: skip the wait. A check that is still pending is not a state problem in step 3, so it never becomes a TODO item. Note the head for the READY output of step 7.
 - The suite failed, timed out, or there is no test command: wait for CI as above.
