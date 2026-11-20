@@ -32,7 +32,7 @@ A check that failed or was cancelled stays a state problem, with or without the 
 
 ## 1. Check the PR
 
-Run step 1 of `STEPS.md`. An empty argument means the open PR of the current branch. Then stop and say why when any of these is true:
+Take `--afk` out of the arguments first: only this skill uses it, so `review` never gets it. Then run step 1 of `STEPS.md`. An empty argument means the open PR of the current branch. Then stop and say why when any of these is true:
 
 - There is no PR.
 - The PR's author is not the user (`gh api user -q .login`). This skill only works on the user's own PRs.
